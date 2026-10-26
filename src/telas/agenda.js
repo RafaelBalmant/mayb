@@ -96,31 +96,37 @@ export function telaAgenda() {
     abrirModalAgendar({ mes, nomeMes, dias: atendidos.map(dia => ({ dia, locais: dias[dia] })) });
 }
 
-// "Agendar horário" em dois passos: 1) cidade, 2) qualquer dia do mês ou um dia em que ela atende
-// naquela cidade → WhatsApp.
+// "Agendar horário" em dois passos: 1) cidade, 2) qualquer dia do mês ou os dias preferidos entre os que ela
+// atende naquela cidade → WhatsApp. É um pedido: a Dra. confirma a disponibilidade.
 function abrirModalAgendar({ mes, nomeMes, dias }) {
   const m = (chave, vars) => esc(t(`agenda.modal.${chave}`, vars));
   const locais = t("agenda.locais");
   const semana = t("agenda.diasSemana");
-  const escolha = { local: null, dia: null }; // dia: "qualquer" ou o número do dia
+  // dias: os que a pessoa prefere (pode ser mais de um; a Dra. confirma a disponibilidade). qualquer: qualquer dia do mês.
+  const escolha = { local: null, qualquer: false, dias: [] };
   const diasDo = local => dias.filter(d => d.locais.includes(local)).map(d => d.dia);
   const nomeSemana = dia => semana[new Date(mes.getFullYear(), mes.getMonth(), dia).getDay()];
 
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo";
+  // a caixa do modal é criada uma vez só; cada toque troca apenas o conteúdo (senão a animação de abrir repete)
+  fundo.innerHTML = `<div class="modal modal-agendar" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"></div>`;
+  const modal = fundo.querySelector(".modal");
   document.body.append(fundo);
   document.body.classList.add("com-modal");
 
   const mensagem = () => {
     const vars = { cidade: locais[escolha.local], mes: nomeMes };
-    return escolha.dia === "qualquer"
-      ? t("agenda.mensagem.qualquerDia", vars)
-      : t("agenda.mensagem.diaEspecifico", { ...vars, dia: escolha.dia, semana: t("agenda.diasSemanaLongos")[new Date(mes.getFullYear(), mes.getMonth(), escolha.dia).getDay()] });
+    if (escolha.qualquer) return t("agenda.mensagem.qualquerDia", vars);
+    const longos = t("agenda.diasSemanaLongos");
+    const lista = escolha.dias.map(dia =>
+      t("agenda.mensagem.diaItem", { dia, mes: nomeMes, semana: longos[new Date(mes.getFullYear(), mes.getMonth(), dia).getDay()] }));
+    return t("agenda.mensagem.diasPreferidos", { ...vars, dias: lista.join("\n") });
   };
 
   const desenhar = () => {
     const passo = escolha.local ? 2 : 1;
-    const pronto = escolha.local && escolha.dia;
+    const pronto = escolha.local && (escolha.qualquer || escolha.dias.length > 0);
     const cabecalho = `
         <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
         <div class="contador">${m("passo", { atual: passo, total: 2 })}</div>
@@ -139,11 +145,12 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
           <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div></fieldset>
         <div class="modal-acoes"><button class="btn sec" id="modal-cancelar">${m("cancelar")}</button></div>`;
     } else {
+      const marcado = valor => (valor === "qualquer" ? escolha.qualquer : escolha.dias.includes(valor));
       const chipDia = (valor, rotulo) =>
-        `<button type="button" class="chip" data-dia="${valor}" aria-pressed="${escolha.dia === valor}">${esc(rotulo)}</button>`;
+        `<button type="button" class="chip" data-dia="${valor}" aria-pressed="${marcado(valor)}">${esc(rotulo)}</button>`;
       corpo = `
         <p class="sub">${m("explicacaoDia", { cidade: locais[escolha.local] })}</p>
-        <fieldset class="pergunta"><legend>${m("dia")}</legend>
+        <fieldset class="pergunta"><legend>${m("dia")} <span class="obs">${m("variosDias")}</span></legend>
           <div class="chips">${chipDia("qualquer", t("agenda.modal.qualquerDia"))}${
             diasDo(escolha.local).map(dia => chipDia(dia, t("agenda.modal.diaChip", { semana: nomeSemana(dia), dia }))).join("")}</div></fieldset>
         <div class="modal-acoes">
@@ -153,24 +160,33 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
         </div>`;
     }
 
-    fundo.innerHTML = `
-      <div class="modal modal-agendar" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">${cabecalho}${corpo}</div>`;
+    modal.innerHTML = cabecalho + corpo;
 
     fundo.querySelector("#modal-fechar").onclick = fechar;
     fundo.querySelectorAll("[data-local]").forEach(b => b.onclick = () => {
       escolha.local = b.dataset.local;
-      escolha.dia = null;
+      escolha.qualquer = false;
+      escolha.dias = [];
       redesenhar();
     });
     fundo.querySelectorAll("[data-dia]").forEach(b => b.onclick = () => {
-      escolha.dia = b.dataset.dia === "qualquer" ? "qualquer" : Number(b.dataset.dia);
+      // "qualquer dia" e dias específicos não se misturam: escolher um desmarca o outro
+      if (b.dataset.dia === "qualquer") {
+        escolha.qualquer = !escolha.qualquer;
+        escolha.dias = [];
+      } else {
+        const dia = Number(b.dataset.dia);
+        escolha.qualquer = false;
+        escolha.dias = escolha.dias.includes(dia) ? escolha.dias.filter(d => d !== dia) : [...escolha.dias, dia].sort((a, b) => a - b);
+      }
       redesenhar(`[data-dia="${b.dataset.dia}"]`);
     });
     fundo.querySelector("#modal-cancelar")?.addEventListener("click", fechar);
     fundo.querySelector("#modal-voltar")?.addEventListener("click", () => {
       const anterior = escolha.local;
       escolha.local = null;
-      escolha.dia = null;
+      escolha.qualquer = false;
+      escolha.dias = [];
       redesenhar(`[data-local="${anterior}"]`);
     });
     const enviar = fundo.querySelector("#modal-enviar");
@@ -182,10 +198,9 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
 
   // redesenha; dentro do mesmo passo mantém a rolagem e o foco no botão tocado
   const redesenhar = foco => {
-    const y = fundo.querySelector(".modal").scrollTop;
+    const y = modal.scrollTop;
     desenhar();
-    const modal = fundo.querySelector(".modal");
-    if (foco) modal.scrollTop = y;
+    modal.scrollTop = foco ? y : 0;
     ((foco && fundo.querySelector(foco)) || modal).focus({ preventScroll: true });
   };
 
@@ -200,5 +215,5 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
   fundo.onclick = e => { if (e.target === fundo) fechar(); };
 
   desenhar();
-  fundo.querySelector(".modal").focus({ preventScroll: true });
+  modal.focus({ preventScroll: true });
 }

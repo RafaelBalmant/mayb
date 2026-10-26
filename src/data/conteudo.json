@@ -263,25 +263,27 @@
         "titulo": "Agendar horário em {mes}",
         "passo": "Passo {atual} de {total}",
         "explicacaoCidade": "Primeiro, escolha a cidade.",
-        "explicacaoDia": "Agora escolha o dia em {cidade}. O WhatsApp vai abrir com a mensagem pronta para a Dra. Mayara.",
+        "explicacaoDia": "Agora escolha os dias em {cidade} que ficam bons para você. A Dra. Mayara confere a disponibilidade e te responde pelo WhatsApp.",
         "cidade": "Em qual cidade?",
         "semDiasCidade": "Sem datas neste mês",
         "diasNaCidade": {
           "um": "1 dia de atendimento",
           "varios": "{n} dias de atendimento"
         },
-        "dia": "Qual dia?",
+        "dia": "Quais dias você prefere?",
+        "variosDias": "Pode escolher mais de um.",
         "qualquerDia": "Qualquer dia do mês",
         "diaChip": "{semana}, {dia}",
         "enviar": "Enviar pelo WhatsApp",
-        "faltaEscolha": "Escolha o dia",
+        "faltaEscolha": "Escolha pelo menos um dia",
         "cancelar": "Cancelar",
         "voltar": "Voltar",
         "fechar": "Fechar"
       },
       "mensagem": {
-        "qualquerDia": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, em qualquer dia de {mes}.",
-        "diaEspecifico": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, no dia {dia} de {mes} ({semana})."
+        "qualquerDia": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}. Posso em qualquer dia de {mes}. Pode me dizer quais horários estão disponíveis?",
+        "diasPreferidos": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}. Os dias que ficam melhores para mim são:\n{dias}\nPode me dizer se há horário disponível em algum deles?",
+        "diaItem": "- {dia} de {mes} ({semana})"
       }
     },
     "abertura": {
