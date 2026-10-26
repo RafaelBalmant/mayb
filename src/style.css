@@ -235,3 +235,6 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .agenda-lista li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; font-size: 15px; }
 .agenda-lista strong { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .agenda-lista em { font-style: normal; font-size: 14px; color: var(--on-local); background: var(--local); border-radius: 999px; padding: 3px 10px; }
+.modal-agendar { max-height: 100%; overflow-y: auto; }
+.modal-agendar .modal-acoes { margin-top: auto; position: sticky; bottom: 0; background: var(--surface); padding-top: 8px; }
+.chip:disabled { opacity: .45; cursor: not-allowed; }
