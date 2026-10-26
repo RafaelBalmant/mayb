@@ -200,15 +200,11 @@ a.btn { display: block; text-align: center; text-decoration: none; color: inheri
 a.btn.pri { color: var(--on-accent); }
 a.btn[aria-disabled="true"] { opacity: .4; }
 .editar-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
-.aceite {
-  display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
-  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; font-size: 15px;
+.privacidade {
+  background: var(--surface); border: 1.5px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: var(--r); padding: 14px 16px; font-size: 15px;
 }
-.aceite:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
-.aceite input { width: 22px; height: 22px; flex: none; margin: 1px 0 0; accent-color: var(--accent); }
 .nota { font-size: 14px; }
-.falta { color: var(--perigo); font-weight: 600; font-size: 15px; }
-.falta:empty { display: none; }
 .modal:focus { outline: none; }
 
 /* Página inicial */
