@@ -23,10 +23,10 @@
   --ink: #3d322b;         /* texto principal e traço do desenho (marrom-acinzentado escuro) */
   --muted: #6f6158;       /* texto secundário */
   --line: #e3d5ca;        /* bordas (bege) */
-  --accent: #7a5c4b;      /* cor da marca: botões (#d5bdaf escurecido) */
-  --accent-soft: #edede9; /* fundo de itens marcados (cinza claro) */
+  --accent: #9a5f42;      /* cor da marca: botões (caramelo, mais vivo que #7a5c4b) */
+  --accent-soft: #f6e1d3; /* fundo de itens marcados (pêssego claro) */
   --on-accent: #ffffff;   /* texto sobre a cor da marca */
-  --destaque: #b8968a;    /* áreas do rosto e itens marcados (#d5bdaf um pouco mais forte) */
+  --destaque: #c9805f;    /* áreas do rosto e itens marcados (terracota rosado) */
   --perigo: #b3261e;      /* botão de excluir */
 
   /* desenho do rosto */
@@ -38,7 +38,7 @@
   --zone: color-mix(in srgb, var(--destaque) 5%, transparent);
   --zone-line: color-mix(in srgb, var(--destaque) 40%, transparent);
   --zone-hover: color-mix(in srgb, var(--destaque) 16%, transparent);
-  --zone-sel: color-mix(in srgb, var(--destaque) 60%, transparent);
+  --zone-sel: color-mix(in srgb, var(--destaque) 70%, transparent);
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
 
   /* 4. Forma */
@@ -50,7 +50,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
-    --accent: #d5bdaf; --accent-soft: #4a3d35; --destaque: #d5bdaf; --on-accent: #2a241f; --perigo: #f2a19a;
+    --accent: #e8b49a; --accent-soft: #5a3f33; --destaque: #e8b49a; --on-accent: #2a241f; --perigo: #f2a19a;
     --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
@@ -58,7 +58,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
-    --accent: #d5bdaf; --accent-soft: #4a3d35; --destaque: #d5bdaf; --on-accent: #2a241f; --perigo: #f2a19a;
+    --accent: #e8b49a; --accent-soft: #5a3f33; --destaque: #e8b49a; --on-accent: #2a241f; --perigo: #f2a19a;
     --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
@@ -67,9 +67,9 @@
 /* 6. Cores das cidades na agenda (o nome da classe é o código da cidade em data/agenda.json).
       Valem para os dois modos. --on-local-* é o texto escrito sobre cada cor. */
 :root {
-  --local-maringa: #d5bdaf;          /* bege rosado */
+  --local-maringa: #e8b49a;          /* pêssego */
   --on-local-maringa: #3d322b;
-  --local-siqueira_campos: #7d7266;  /* taupe escuro (#d6ccc2 escurecido) */
+  --local-siqueira_campos: #8e5a6a;  /* malva */
   --on-local-siqueira_campos: #ffffff;
 }
 
@@ -81,3 +81,8 @@
            --accent #f7b1b0; --accent-soft #4a2e2a; --destaque #f7b1b0; --on-accent #3b2312;
            --skin #3a2c20; --hair #5a4330; --lip #8a4f4e
    Cidades: Maringá #d88180 e Siqueira Campos #cad182, texto #3b2312 nas duas. */
+
+/* Primeira versão da paleta neutra (mais apagada), para comparar:
+   Claro:  --accent #7a5c4b; --accent-soft #edede9; --destaque #b8968a; --zone-sel 60%
+   Escuro: --accent #d5bdaf; --accent-soft #4a3d35; --destaque #d5bdaf
+   Cidades: Maringá #d5bdaf (texto #3d322b) e Siqueira Campos #7d7266 (texto branco). */

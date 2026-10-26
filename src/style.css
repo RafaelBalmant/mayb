@@ -37,7 +37,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .controles { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
 .seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
 .seg button { border: 0; background: transparent; padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); }
-.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
 
 /* Mapa */
 .mapa { position: relative; background: var(--surface); border-radius: 20px; border: 1px solid var(--line); overflow: hidden; }
