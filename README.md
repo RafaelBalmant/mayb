@@ -17,6 +17,9 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 - `src/data/conteudo.json`: **todo texto do site** fica aqui, para editar sem mexer no código: áreas e opções,
   rótulos das respostas, FAQ, WhatsApp e, em `textos`, os títulos, explicações, botões e avisos de cada tela,
   além do formato do resumo. `{n}`, `{area}` etc. são trocados pelo valor certo. O código lê tudo com `t("tela.chave")`.
+- `src/data/agenda.json`: **dias de atendimento** (Maringá e Siqueira Campos), por mês. É só pôr o número do dia
+  na lista da cidade; dia que não aparece = não atende. As instruções estão no próprio arquivo (`_comoEditar`).
+  As datas que estão lá agora são de exemplo.
 - `src/tema.css`: **fontes e cores do site**, num lugar só. Trocar a cor da marca (`--accent`) já muda botões e áreas
   marcadas; os desenhos do rosto também usam essas cores (`--skin`, `--hair`, `--lip`, `--ink`).
 - `src/rostos/*.svg`: as 4 ilustrações (feminino/masculino, frente/perfil). Cada área tocável é um
@@ -25,7 +28,11 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 - `src/estado.js`: o formato dos dados do paciente (comentado no arquivo).
 - `src/resumo.js`: monta a mensagem do WhatsApp (formato do doc de fluxo) e o link wa.me. Se passar de
   `profissional.limiteMensagem` caracteres (conteudo.json), os textos livres são encurtados.
-- `src/telas/`: abertura (pergunta + escolha do rosto), mapa, próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3), abertura (pergunta + escolha do rosto), mapa, próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+
+## Links diretos
+
+O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
 
 ## Situação
 

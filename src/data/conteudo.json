@@ -190,6 +190,66 @@
       "etapa": "Etapa {atual} de {total} · {titulo}",
       "voltar": "Voltar"
     },
+    "inicio": {
+      "titulo": "Olá! Como posso te ajudar?",
+      "agenda": "Verificar agenda",
+      "mapa": "Me conta o que te incomoda no rosto"
+    },
+    "agenda": {
+      "titulo": "Agenda da Dra. Mayara",
+      "explicacao": "Escolha o mês para ver os dias em que a Dra. Mayara atende em cada cidade.",
+      "escolhaMes": "Mês",
+      "mesAno": "{mes} de {ano}",
+      "meses": [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+      ],
+      "mesesCurtos": [
+        "Jan",
+        "Fev",
+        "Mar",
+        "Abr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Set",
+        "Out",
+        "Nov",
+        "Dez"
+      ],
+      "diasSemana": [
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "Sáb"
+      ],
+      "locais": {
+        "maringa": "Maringá",
+        "siqueira_campos": "Siqueira Campos"
+      },
+      "naoAtende": "Não atende",
+      "legenda": "Legenda",
+      "diaRotulo": "{dia} de {mes}: {situacao}",
+      "listaTitulo": "Dias de atendimento",
+      "listaItem": "{semana}, {dia} de {mes}",
+      "semDatas": "Ainda não há dias de atendimento neste mês.",
+      "aviso": "As datas podem mudar. Para marcar sua consulta, fale com a Dra. Mayara pelo WhatsApp.",
+      "voltar": "Voltar"
+    },
     "abertura": {
       "titulo": "Me conta o que anda te incomodando?",
       "explicacao": [

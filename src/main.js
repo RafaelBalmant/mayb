@@ -2,6 +2,8 @@ import "./tema.css";
 import "./style.css";
 import { t } from "./conteudo.js";
 import { estado, ui, salvar } from "./estado.js";
+import { telaInicio } from "./telas/inicio.js";
+import { telaAgenda } from "./telas/agenda.js";
 import { telaAbertura } from "./telas/abertura.js";
 import { telaMapa } from "./telas/mapa.js";
 import { telaProximo } from "./telas/proximo.js";
@@ -12,6 +14,9 @@ import { telaEnviado } from "./telas/enviado.js";
 /** Mostra a tela certa para o estado atual. */
 export function render() {
   salvar();
+  document.getElementById("barra").hidden = false;
+  if (ui.tela === "inicio") return telaInicio();
+  if (ui.tela === "agenda") return telaAgenda();
   if (ui.tela === "abertura" || !estado.rosto) { ui.tela = "abertura"; return telaAbertura(); }
   if (ui.tela === "proximo" && estado.areas.length) return telaProximo();
   if (ui.tela === "detalhes" && estado.areas.length) return telaDetalhes();
@@ -28,6 +33,10 @@ export function irPara(tela, indice = 0) {
   render();
   window.scrollTo(0, 0);
 }
+
+// O site institucional pode abrir direto numa parte: …/#agenda ou …/#mapa
+const atalho = { agenda: "agenda", mapa: "abertura" }[location.hash.slice(1)];
+if (atalho) ui.tela = atalho;
 
 document.title = t("geral.tituloPagina");
 render();

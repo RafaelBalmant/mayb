@@ -56,3 +56,11 @@
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }
+
+/* 6. Cores das cidades na agenda (o nome da classe é o código da cidade em data/agenda.json).
+      Valem para os dois modos. --on-local é o texto escrito sobre essas cores. */
+:root {
+  --local-maringa: #9c3d5c;
+  --local-siqueira_campos: #2f6f73;
+  --on-local: #ffffff;
+}
