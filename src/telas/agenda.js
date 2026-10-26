@@ -2,7 +2,7 @@ import agenda from "../data/agenda.json";
 import { ui } from "../estado.js";
 import { t, tn } from "../conteudo.js";
 import { linkWhatsapp } from "../resumo.js";
-import { app, barra, esc, marca } from "../util.js";
+import { app, barra, esc, topo, progresso } from "../util.js";
 import { irPara } from "../main.js";
 
 // Agenda: o paciente escolhe o mês (atual + 3 seguintes) e vê, dia a dia,
@@ -67,7 +67,7 @@ export function telaAgenda() {
     : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`;
 
   app.className = "app";
-  app.innerHTML = `${marca()}
+  app.innerHTML = `${topo("agenda", 1)}
     <h1>${esc(t("agenda.titulo"))}</h1>
     <p class="explica">${esc(t("agenda.explicacao"))}</p>
     <div class="seg meses" role="group" aria-label="${esc(t("agenda.escolhaMes"))}">${meses.map(botaoMes).join("")}</div>
@@ -129,7 +129,7 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
     const pronto = escolha.local && (escolha.qualquer || escolha.dias.length > 0);
     const cabecalho = `
         <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
-        <div class="contador">${m("passo", { atual: passo, total: 2 })}</div>
+        <div class="topo">${progresso("agenda", passo + 1)}</div>
         <h2 id="modal-titulo">${m("titulo", { mes: nomeMes })}</h2>`;
 
     let corpo;

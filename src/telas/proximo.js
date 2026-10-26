@@ -1,6 +1,6 @@
 import { estado } from "../estado.js";
 import { AREA, t, tn } from "../conteudo.js";
-import { app, barra, esc, marca, paragrafos } from "../util.js";
+import { app, barra, esc, paragrafos, topo } from "../util.js";
 import { irPara } from "../main.js";
 
 // Entre o mapa e o detalhamento: explica o próximo passo e deixa a pessoa escolher.
@@ -8,7 +8,7 @@ export function telaProximo() {
   const nomes = estado.areas.map(a => `<li>${esc(AREA[a.codigo].nome)}</li>`).join("");
 
   app.className = "app";
-  app.innerHTML = `${marca()}
+  app.innerHTML = `${topo("rosto", 3)}
     <h1 class="pergunta-grande">${esc(t("proximo.titulo"))}</h1>
     <div class="bloco">
       <h3>${esc(tn("proximo.marcou", estado.areas.length))}</h3>

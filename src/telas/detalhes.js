@@ -41,7 +41,7 @@ export function telaDetalhes() {
     ? `<input type="text" id="proc-txt" data-texto="procedimentoDetalhe" placeholder="${esc(t("detalhes.procedimentoPlaceholder"))}" value="${esc(a.procedimentoDetalhe)}">` : "";
 
   app.className = "app";
-  app.innerHTML = `${topo(4, t("detalhes.etapa"))}
+  app.innerHTML = `${topo("rosto", 3)}
     <article class="cartao">
       <div class="cab"><div class="contador">${esc(t("detalhes.contador", { atual: ui.indice + 1, total }))}</div><h2>${esc(def.nome)}</h2>
         <p class="sub">${esc(t("detalhes.opcionais"))}</p></div>

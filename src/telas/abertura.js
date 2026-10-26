@@ -1,7 +1,7 @@
 import { estado, salvar } from "../estado.js";
 import { t } from "../conteudo.js";
 import { svgRosto } from "../rostos/index.js";
-import { app, barra, esc, marca, paragrafos } from "../util.js";
+import { app, barra, esc, paragrafos, topo } from "../util.js";
 import { irPara } from "../main.js";
 
 // Abertura do mapa: a pergunta, o que vem a seguir e a escolha do rosto.
@@ -12,7 +12,7 @@ export function telaAbertura() {
     `<button data-rosto="${rosto}" aria-pressed="${estado.rosto === rosto}">${miniatura(rosto)}${esc(t(`abertura.${rosto}`))}</button>`;
 
   app.className = "app";
-  app.innerHTML = `${marca()}
+  app.innerHTML = `${topo("rosto", 1)}
     <h1 class="pergunta-grande">${esc(t("abertura.titulo"))}</h1>
     ${paragrafos(t("abertura.explicacao"), "explica")}
     <section class="bloco">

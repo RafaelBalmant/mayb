@@ -1,7 +1,7 @@
 import { estado, ui, salvar, estaMarcada, alternarArea } from "../estado.js";
 import { AREA, t } from "../conteudo.js";
 import { svgRosto } from "../rostos/index.js";
-import { app, barra, esc } from "../util.js";
+import { app, barra, esc, progresso } from "../util.js";
 import { irPara } from "../main.js";
 
 let avisoTimer;
@@ -21,6 +21,7 @@ export function telaMapa(aviso = "") {
 
   app.className = "app app-mapa";
   app.innerHTML = `
+    <header class="topo topo-compacto">${progresso("rosto", 2)}</header>
     <div class="controles">
       <div class="seg" role="group" aria-label="${esc(t("mapa.vista"))}">${seg("vista", "frente", ui.vista)}${seg("vista", "perfil", ui.vista)}</div>
       <div class="seg" role="group" aria-label="${esc(t("mapa.rosto"))}">${seg("rosto", "feminino", estado.rosto)}${seg("rosto", "masculino", estado.rosto)}</div>
