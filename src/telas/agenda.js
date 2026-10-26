@@ -109,6 +109,9 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
 
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo";
+  // a caixa do modal é criada uma vez só; cada toque troca apenas o conteúdo (senão a animação de abrir repete)
+  fundo.innerHTML = `<div class="modal modal-agendar" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"></div>`;
+  const modal = fundo.querySelector(".modal");
   document.body.append(fundo);
   document.body.classList.add("com-modal");
 
@@ -157,8 +160,7 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
         </div>`;
     }
 
-    fundo.innerHTML = `
-      <div class="modal modal-agendar" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">${cabecalho}${corpo}</div>`;
+    modal.innerHTML = cabecalho + corpo;
 
     fundo.querySelector("#modal-fechar").onclick = fechar;
     fundo.querySelectorAll("[data-local]").forEach(b => b.onclick = () => {
@@ -196,10 +198,9 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
 
   // redesenha; dentro do mesmo passo mantém a rolagem e o foco no botão tocado
   const redesenhar = foco => {
-    const y = fundo.querySelector(".modal").scrollTop;
+    const y = modal.scrollTop;
     desenhar();
-    const modal = fundo.querySelector(".modal");
-    if (foco) modal.scrollTop = y;
+    modal.scrollTop = foco ? y : 0;
     ((foco && fundo.querySelector(foco)) || modal).focus({ preventScroll: true });
   };
 
@@ -214,5 +215,5 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
   fundo.onclick = e => { if (e.target === fundo) fechar(); };
 
   desenhar();
-  fundo.querySelector(".modal").focus({ preventScroll: true });
+  modal.focus({ preventScroll: true });
 }
