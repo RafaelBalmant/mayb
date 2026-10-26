@@ -218,8 +218,8 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 /* Agenda */
 .local-maringa { --local: var(--local-maringa); }
 .local-siqueira_campos { --local: var(--local-siqueira_campos); }
-.meses { align-self: flex-start; }
-.meses button { padding: 8px 16px; font-size: 15px; }
+.meses { display: flex; }
+.meses button { flex: 1; padding: 8px 0; font-size: 15px; }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
 .calendario h2 { padding-inline: 4px; }
 .grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
@@ -238,3 +238,4 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal-agendar { max-height: 100%; overflow-y: auto; }
 .modal-agendar .modal-acoes { margin-top: auto; position: sticky; bottom: 0; background: var(--surface); padding-top: 8px; }
 .chip:disabled { opacity: .45; cursor: not-allowed; }
+.caminho:disabled { opacity: .45; cursor: not-allowed; }
