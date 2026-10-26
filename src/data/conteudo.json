@@ -261,16 +261,22 @@
       "agendar": "Agendar horário",
       "modal": {
         "titulo": "Agendar horário em {mes}",
-        "explicacao": "Escolha a cidade e o dia. O WhatsApp vai abrir com a mensagem pronta para a Dra. Mayara.",
+        "passo": "Passo {atual} de {total}",
+        "explicacaoCidade": "Primeiro, escolha a cidade.",
+        "explicacaoDia": "Agora escolha o dia em {cidade}. O WhatsApp vai abrir com a mensagem pronta para a Dra. Mayara.",
         "cidade": "Em qual cidade?",
-        "semDiasCidade": "sem datas",
+        "semDiasCidade": "Sem datas neste mês",
+        "diasNaCidade": {
+          "um": "1 dia de atendimento",
+          "varios": "{n} dias de atendimento"
+        },
         "dia": "Qual dia?",
-        "escolhaCidadeAntes": "Escolha a cidade para ver os dias.",
         "qualquerDia": "Qualquer dia do mês",
         "diaChip": "{semana}, {dia}",
         "enviar": "Enviar pelo WhatsApp",
-        "faltaEscolha": "Escolha a cidade e o dia",
+        "faltaEscolha": "Escolha o dia",
         "cancelar": "Cancelar",
+        "voltar": "Voltar",
         "fechar": "Fechar"
       },
       "mensagem": {

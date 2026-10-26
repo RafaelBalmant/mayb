@@ -238,3 +238,4 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal-agendar { max-height: 100%; overflow-y: auto; }
 .modal-agendar .modal-acoes { margin-top: auto; position: sticky; bottom: 0; background: var(--surface); padding-top: 8px; }
 .chip:disabled { opacity: .45; cursor: not-allowed; }
+.caminho:disabled { opacity: .45; cursor: not-allowed; }
