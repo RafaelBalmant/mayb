@@ -36,5 +36,5 @@ O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `�
 
 ## Situação
 
-Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aceite LGPD).
+Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aviso de privacidade).
 Faltam: boas-vindas, sobre você (por enquanto só o nome, pedido na revisão), objetivo, saúde e FAQ.

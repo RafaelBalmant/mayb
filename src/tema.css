@@ -5,33 +5,40 @@
    ========================================================== */
 
 /* 1. Fontes (Google Fonts). Ao trocar, mude o link e os nomes em --fonte-titulo / --fonte-texto. */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Jost:wght@400;500;600;700&display=swap");
+/* Fontes anteriores: Young Serif (títulos) + Figtree (texto)
 @import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap");
+--fonte-titulo: "Young Serif", Georgia, "Times New Roman", serif;
+--fonte-texto: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif; */
 
 :root {
-  --fonte-titulo: "Young Serif", Georgia, "Times New Roman", serif;
-  --fonte-texto: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fonte-titulo: "Playfair Display", Georgia, "Times New Roman", serif;
+  --fonte-texto: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* 2. Paleta (modo claro) */
-  --bg: #f4f3f1;          /* fundo da página */
+  /* 2. Paleta (modo claro). Base: #edede9 (cinza claro), #d6ccc2 (taupe), #f5ebe0 (creme),
+        #e3d5ca (bege), #d5bdaf (bege rosado). Como são todas claras, texto e botões usam tons
+        mais escuros tirados delas, para ler bem. */
+  --bg: #f5ebe0;          /* fundo da página (creme) */
   --surface: #ffffff;     /* cartões, campos, área do desenho */
-  --ink: #2a2228;         /* texto principal e traço do desenho */
-  --muted: #6f6670;       /* texto secundário */
-  --line: #ddd7da;        /* bordas */
-  --accent: #9c3d5c;      /* cor da marca: botões, áreas marcadas */
-  --accent-soft: #f3e1e7; /* fundo de itens marcados */
+  --ink: #3d322b;         /* texto principal e traço do desenho (marrom-acinzentado escuro) */
+  --muted: #6f6158;       /* texto secundário */
+  --line: #e3d5ca;        /* bordas (bege) */
+  --accent: #7a5c4b;      /* cor da marca: botões (#d5bdaf escurecido) */
+  --accent-soft: #edede9; /* fundo de itens marcados (cinza claro) */
   --on-accent: #ffffff;   /* texto sobre a cor da marca */
+  --destaque: #b8968a;    /* áreas do rosto e itens marcados (#d5bdaf um pouco mais forte) */
   --perigo: #b3261e;      /* botão de excluir */
 
   /* desenho do rosto */
-  --skin: #fbf6f3;
-  --hair: #d9cfd2;
-  --lip: #e9c9cf;
+  --skin: #fbf5ee;
+  --hair: #d6ccc2;
+  --lip: #d5bdaf;
 
-  /* 3. Tons derivados (seguem a cor da marca sozinhos; normalmente não precisa mexer) */
-  --zone: color-mix(in srgb, var(--accent) 5%, transparent);
-  --zone-line: color-mix(in srgb, var(--accent) 40%, transparent);
-  --zone-hover: color-mix(in srgb, var(--accent) 16%, transparent);
-  --zone-sel: color-mix(in srgb, var(--accent) 44%, transparent);
+  /* 3. Tons derivados (seguem --destaque sozinhos; normalmente não precisa mexer) */
+  --zone: color-mix(in srgb, var(--destaque) 5%, transparent);
+  --zone-line: color-mix(in srgb, var(--destaque) 40%, transparent);
+  --zone-hover: color-mix(in srgb, var(--destaque) 16%, transparent);
+  --zone-sel: color-mix(in srgb, var(--destaque) 60%, transparent);
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
 
   /* 4. Forma */
@@ -42,25 +49,35 @@
       O bloco aparece duas vezes, com os mesmos valores: mantenha os dois iguais. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1b171a; --surface: #262025; --ink: #f1eaee; --muted: #b3a8b0; --line: #3d343b;
-    --accent: #e48aa8; --accent-soft: #3d2530; --on-accent: #22161b; --perigo: #f2a19a;
-    --skin: #2d262b; --hair: #4a3f46; --lip: #5a3a45;
+    --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
+    --accent: #d5bdaf; --accent-soft: #4a3d35; --destaque: #d5bdaf; --on-accent: #2a241f; --perigo: #f2a19a;
+    --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #1b171a; --surface: #262025; --ink: #f1eaee; --muted: #b3a8b0; --line: #3d343b;
-  --accent: #e48aa8; --accent-soft: #3d2530; --on-accent: #22161b; --perigo: #f2a19a;
-  --skin: #2d262b; --hair: #4a3f46; --lip: #5a3a45;
+  --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
+    --accent: #d5bdaf; --accent-soft: #4a3d35; --destaque: #d5bdaf; --on-accent: #2a241f; --perigo: #f2a19a;
+    --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }
 
 /* 6. Cores das cidades na agenda (o nome da classe é o código da cidade em data/agenda.json).
-      Valem para os dois modos. --on-local é o texto escrito sobre essas cores. */
+      Valem para os dois modos. --on-local-* é o texto escrito sobre cada cor. */
 :root {
-  --local-maringa: #9c3d5c;
-  --local-siqueira_campos: #2f6f73;
-  --on-local: #ffffff;
+  --local-maringa: #d5bdaf;          /* bege rosado */
+  --on-local-maringa: #3d322b;
+  --local-siqueira_campos: #7d7266;  /* taupe escuro (#d6ccc2 escurecido) */
+  --on-local-siqueira_campos: #ffffff;
 }
+
+/* Paleta anterior (para comparar): copie os valores de volta nos blocos acima.
+   Claro:  --bg #fff8ee; --surface #fff; --ink #3b2312; --muted #7a6250; --line #ecdcc4;
+           --accent #724319; --accent-soft #fde4e3; --on-accent #fff; --destaque #d88180;
+           --skin #fff3e0; --hair #e6cfb6; --lip #f7b1b0
+   Escuro: --bg #241a12; --surface #2f2318; --ink #feeac7; --muted #c9b49a; --line #4a3826;
+           --accent #f7b1b0; --accent-soft #4a2e2a; --destaque #f7b1b0; --on-accent #3b2312;
+           --skin #3a2c20; --hair #5a4330; --lip #8a4f4e
+   Cidades: Maringá #d88180 e Siqueira Campos #cad182, texto #3b2312 nas duas. */

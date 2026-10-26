@@ -1,10 +1,10 @@
-import { estado, ui, salvar } from "../estado.js";
+import { estado, salvar } from "../estado.js";
 import { t } from "../conteudo.js";
 import { montarMensagem, linkWhatsapp } from "../resumo.js";
 import { app, barra, esc, topo } from "../util.js";
 import { irPara } from "../main.js";
 
-// Revisar e enviar: a mensagem exatamente como vai chegar, o aceite de privacidade e o botão do WhatsApp.
+// Revisar e enviar: a mensagem exatamente como vai chegar, o aviso de privacidade e o botão do WhatsApp.
 // Os dois caminhos depois do mapa ("falar com a Dra." e "passar mais informações") terminam aqui.
 export function telaRevisar() {
   const respondeu = estado.areas.some(a =>
@@ -24,34 +24,23 @@ export function telaRevisar() {
         <button type="button" class="pular" id="editar-detalhes">${esc(t(respondeu ? "revisar.editarDetalhes" : "revisar.adicionarDetalhes"))}</button>
       </div>
     </section>
-    <label class="aceite"><input type="checkbox" id="aceite" ${ui.aceite ? "checked" : ""}><span>${esc(t("revisar.consentimento"))}</span></label>
-    <p class="sub nota">${esc(t("revisar.aviso"))}</p>
-    <p class="falta" id="falta" role="status" aria-live="polite"></p>`;
+    <p class="privacidade">${esc(t("revisar.privacidade"))}</p>
+    <p class="sub nota">${esc(t("revisar.aviso"))}</p>`;
 
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("geral.voltar"))}</button>
     <a class="btn pri" id="enviar" target="_blank" rel="noopener">${esc(t("revisar.enviar"))}</a>`;
 
   const previa = document.getElementById("previa");
   const enviar = document.getElementById("enviar");
-  const falta = document.getElementById("falta");
   const atualizar = () => {
     const texto = montarMensagem(estado);
     previa.textContent = texto;
     enviar.href = linkWhatsapp(texto);
-    enviar.setAttribute("aria-disabled", String(!ui.aceite));
-    if (ui.aceite) falta.textContent = "";
   };
   atualizar();
 
   document.getElementById("nome").oninput = e => { estado.sobre.nome = e.target.value; salvar(); atualizar(); };
-  document.getElementById("aceite").onchange = e => { ui.aceite = e.target.checked; salvar(); atualizar(); };
-  enviar.onclick = e => {
-    if (!ui.aceite) {
-      e.preventDefault();
-      falta.textContent = t("revisar.consentimentoFalta");
-      document.getElementById("aceite").focus();
-      return;
-    }
+  enviar.onclick = () => {
     // o link abre o WhatsApp; aqui só mostramos o que acontece depois
     setTimeout(() => irPara("enviado"), 300);
   };

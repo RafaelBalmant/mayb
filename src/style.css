@@ -52,9 +52,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .zona { cursor: pointer; outline: none; fill: var(--zone); stroke: var(--zone-line); stroke-width: 1.2; stroke-dasharray: 3 3; transition: fill .15s, stroke .15s; }
 .zona-linha { fill: none; stroke-width: 16; stroke-linecap: round; stroke-dasharray: none; stroke-opacity: .35; }
 .zona:hover { fill: var(--zone-hover); }
-.zona.sel { fill: var(--zone-sel); stroke: var(--accent); stroke-dasharray: none; stroke-width: 1.8; }
+.zona.sel { fill: var(--zone-sel); stroke: var(--destaque); stroke-dasharray: none; stroke-width: 1.8; }
 .zona-linha:hover { fill: none; stroke-opacity: .55; }
-.zona-linha.sel { fill: none; stroke: var(--accent); stroke-width: 16; stroke-opacity: .6; }
+.zona-linha.sel { fill: none; stroke: var(--destaque); stroke-width: 16; stroke-opacity: .6; }
 .zona:focus-visible { stroke: var(--accent); stroke-width: 3; stroke-dasharray: none; }
 .aviso {
   position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
@@ -200,15 +200,11 @@ a.btn { display: block; text-align: center; text-decoration: none; color: inheri
 a.btn.pri { color: var(--on-accent); }
 a.btn[aria-disabled="true"] { opacity: .4; }
 .editar-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
-.aceite {
-  display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
-  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; font-size: 15px;
+.privacidade {
+  background: var(--surface); border: 1.5px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: var(--r); padding: 14px 16px; font-size: 15px;
 }
-.aceite:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
-.aceite input { width: 22px; height: 22px; flex: none; margin: 1px 0 0; accent-color: var(--accent); }
 .nota { font-size: 14px; }
-.falta { color: var(--perigo); font-weight: 600; font-size: 15px; }
-.falta:empty { display: none; }
 .modal:focus { outline: none; }
 
 /* Página inicial */
@@ -216,8 +212,8 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
 
 /* Agenda */
-.local-maringa { --local: var(--local-maringa); }
-.local-siqueira_campos { --local: var(--local-siqueira_campos); }
+.local-maringa { --local: var(--local-maringa); --on-local: var(--on-local-maringa); }
+.local-siqueira_campos { --local: var(--local-siqueira_campos); --on-local: var(--on-local-siqueira_campos); }
 .meses { display: flex; }
 .meses button { flex: 1; padding: 8px 0; font-size: 15px; }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
