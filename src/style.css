@@ -212,8 +212,8 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
 
 /* Agenda */
-.local-maringa { --local: var(--local-maringa); }
-.local-siqueira_campos { --local: var(--local-siqueira_campos); }
+.local-maringa { --local: var(--local-maringa); --on-local: var(--on-local-maringa); }
+.local-siqueira_campos { --local: var(--local-siqueira_campos); --on-local: var(--on-local-siqueira_campos); }
 .meses { display: flex; }
 .meses button { flex: 1; padding: 8px 0; font-size: 15px; }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
