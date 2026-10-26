@@ -1,0 +1,19 @@
+services:
+  mayb:
+    image: balmantrafael/mayb:latest-amd64
+    container_name: clinic
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=our-finance_app-network"
+      - "traefik.http.routers.clinic.rule=Host(`mayb.balmantrafael.com`)"
+      - "traefik.http.routers.clinic.entrypoints=websecure"
+      - "traefik.http.routers.clinic.tls.certresolver=letsencrypt"
+      - "traefik.http.services.clinic.loadbalancer.server.port=80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+    name: our-finance_app-network
