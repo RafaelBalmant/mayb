@@ -190,6 +190,19 @@
       "etapa": "Etapa {atual} de {total} · {titulo}",
       "voltar": "Voltar"
     },
+    "etapas": {
+      "rosto": [
+        "Escolher o rosto",
+        "Marcar no rosto",
+        "Contar mais",
+        "Revisar e enviar"
+      ],
+      "agenda": [
+        "Escolher o mês",
+        "Escolher a cidade",
+        "Escolher os dias"
+      ]
+    },
     "inicio": {
       "titulo": "Olá! Como posso te ajudar?",
       "agenda": "Verificar agenda",
@@ -261,7 +274,6 @@
       "agendar": "Agendar horário",
       "modal": {
         "titulo": "Agendar horário em {mes}",
-        "passo": "Passo {atual} de {total}",
         "explicacaoCidade": "Primeiro, escolha a cidade.",
         "explicacaoDia": "Agora escolha os dias em {cidade} que ficam bons para você. A Dra. Mayara confere a disponibilidade e te responde pelo WhatsApp.",
         "cidade": "Em qual cidade?",
@@ -344,7 +356,6 @@
       "voltar": "Voltar ao rosto"
     },
     "detalhes": {
-      "etapa": "Detalhes de cada área",
       "contador": "Área {atual} de {total}",
       "opcionais": "Todas as perguntas são opcionais.",
       "perguntas": {
@@ -370,7 +381,6 @@
       "concluir": "Concluir"
     },
     "revisar": {
-      "etapa": "Revisar e enviar",
       "titulo": "Confira antes de enviar",
       "explicacao": "É assim que a mensagem vai chegar no WhatsApp da Dra. Mayara.",
       "nome": "Como você se chama?",

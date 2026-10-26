@@ -17,9 +17,16 @@ export const paragrafos = (lista, classe) => lista.map(p => `<p class="${classe}
 
 export const marca = () => `<div class="marca">${esc(t("geral.marca"))}</div>`;
 
-export function topo(etapa, titulo) {
-  const barras = Array.from({ length: 8 }, (_, i) => `<span class="${i < etapa ? "ok" : ""}"></span>`).join("");
-  return `<header class="topo">${marca()}
-    <div class="progresso" aria-hidden="true">${barras}</div>
-    <div class="etapa">${esc(t("geral.etapa", { atual: etapa, total: 8, titulo }))}</div></header>`;
+/**
+ * Barra de progresso de um fluxo: progresso("rosto", 2) → "Etapa 2 de 4 · Marcar no rosto".
+ * Cada fluxo tem as próprias etapas, em conteudo.json (textos.etapas). A página inicial não conta.
+ */
+export function progresso(fluxo, etapa) {
+  const nomes = t(`etapas.${fluxo}`);
+  const barras = nomes.map((_, i) => `<span class="${i < etapa ? "ok" : ""}"></span>`).join("");
+  return `<div class="progresso" aria-hidden="true">${barras}</div>
+    <div class="etapa">${esc(t("geral.etapa", { atual: etapa, total: nomes.length, titulo: nomes[etapa - 1] }))}</div>`;
 }
+
+/** Topo das telas de um fluxo: marca + progresso. */
+export const topo = (fluxo, etapa) => `<header class="topo">${marca()}${progresso(fluxo, etapa)}</header>`;
