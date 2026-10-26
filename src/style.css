@@ -52,9 +52,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .zona { cursor: pointer; outline: none; fill: var(--zone); stroke: var(--zone-line); stroke-width: 1.2; stroke-dasharray: 3 3; transition: fill .15s, stroke .15s; }
 .zona-linha { fill: none; stroke-width: 16; stroke-linecap: round; stroke-dasharray: none; stroke-opacity: .35; }
 .zona:hover { fill: var(--zone-hover); }
-.zona.sel { fill: var(--zone-sel); stroke: var(--accent); stroke-dasharray: none; stroke-width: 1.8; }
+.zona.sel { fill: var(--zone-sel); stroke: var(--destaque); stroke-dasharray: none; stroke-width: 1.8; }
 .zona-linha:hover { fill: none; stroke-opacity: .55; }
-.zona-linha.sel { fill: none; stroke: var(--accent); stroke-width: 16; stroke-opacity: .6; }
+.zona-linha.sel { fill: none; stroke: var(--destaque); stroke-width: 16; stroke-opacity: .6; }
 .zona:focus-visible { stroke: var(--accent); stroke-width: 3; stroke-dasharray: none; }
 .aviso {
   position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
