@@ -1,6 +1,7 @@
 import agenda from "../data/agenda.json";
 import { ui } from "../estado.js";
 import { t } from "../conteudo.js";
+import { linkWhatsapp } from "../resumo.js";
 import { app, barra, esc, marca } from "../util.js";
 import { irPara } from "../main.js";
 
@@ -84,10 +85,103 @@ export function telaAgenda() {
     </section>
     <p class="sub nota">${esc(t("agenda.aviso"))}</p>`;
 
-  barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>`;
+  barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
+    <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar"))}</button>`;
 
   app.querySelectorAll("[data-mes]").forEach(b => {
     b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); irPara("agenda"); };
   });
   document.getElementById("voltar").onclick = () => irPara("inicio");
+  document.getElementById("agendar").onclick = () =>
+    abrirModalAgendar({ mes, nomeMes, dias: atendidos.map(dia => ({ dia, locais: dias[dia] })) });
+}
+
+// "Agendar horário": cidade → qualquer dia do mês ou um dia em que ela atende naquela cidade → WhatsApp.
+function abrirModalAgendar({ mes, nomeMes, dias }) {
+  const m = (chave, vars) => esc(t(`agenda.modal.${chave}`, vars));
+  const locais = t("agenda.locais");
+  const semana = t("agenda.diasSemana");
+  const escolha = { local: null, dia: null }; // dia: "qualquer" ou o número do dia
+  const diasDo = local => dias.filter(d => d.locais.includes(local)).map(d => d.dia);
+  const nomeSemana = dia => semana[new Date(mes.getFullYear(), mes.getMonth(), dia).getDay()];
+
+  const fundo = document.createElement("div");
+  fundo.className = "modal-fundo";
+  document.body.append(fundo);
+  document.body.classList.add("com-modal");
+
+  const mensagem = () => {
+    const vars = { cidade: locais[escolha.local], mes: nomeMes };
+    return escolha.dia === "qualquer"
+      ? t("agenda.mensagem.qualquerDia", vars)
+      : t("agenda.mensagem.diaEspecifico", { ...vars, dia: escolha.dia, semana: t("agenda.diasSemanaLongos")[new Date(mes.getFullYear(), mes.getMonth(), escolha.dia).getDay()] });
+  };
+
+  const desenhar = () => {
+    const pronto = escolha.local && escolha.dia;
+    const chipLocal = ([codigo, nome]) => {
+      const tem = diasDo(codigo).length > 0;
+      return `<button type="button" class="chip" data-local="${codigo}" aria-pressed="${escolha.local === codigo}" ${tem ? "" : "disabled"}>${
+        esc(nome)}${tem ? "" : ` <span class="obs">(${m("semDiasCidade")})</span>`}</button>`;
+    };
+    const chipDia = (valor, rotulo) =>
+      `<button type="button" class="chip" data-dia="${valor}" aria-pressed="${escolha.dia === valor}">${esc(rotulo)}</button>`;
+    const blocoDias = escolha.local
+      ? `<div class="chips">${chipDia("qualquer", t("agenda.modal.qualquerDia"))}${
+          diasDo(escolha.local).map(dia => chipDia(dia, t("agenda.modal.diaChip", { semana: nomeSemana(dia), dia }))).join("")}</div>`
+      : `<p class="vazio">${m("escolhaCidadeAntes")}</p>`;
+
+    fundo.innerHTML = `
+      <div class="modal modal-agendar" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
+        <h2 id="modal-titulo">${m("titulo", { mes: nomeMes })}</h2>
+        <p class="sub">${m("explicacao")}</p>
+        <fieldset class="pergunta"><legend>${m("cidade")}</legend>
+          <div class="chips">${Object.entries(locais).map(chipLocal).join("")}</div></fieldset>
+        <fieldset class="pergunta"><legend>${m("dia")}</legend>${blocoDias}</fieldset>
+        <div class="modal-acoes">
+          <button class="btn sec" id="modal-cancelar">${m("cancelar")}</button>
+          <a class="btn pri" id="modal-enviar" target="_blank" rel="noopener" ${
+            pronto ? `href="${esc(linkWhatsapp(mensagem()))}"` : `aria-disabled="true"`}>${m(pronto ? "enviar" : "faltaEscolha")}</a>
+        </div>
+      </div>`;
+
+    fundo.querySelectorAll("[data-local]").forEach(b => b.onclick = () => {
+      if (escolha.local !== b.dataset.local) escolha.dia = null; // os dias mudam com a cidade
+      escolha.local = b.dataset.local;
+      redesenhar(`[data-local="${b.dataset.local}"]`);
+    });
+    fundo.querySelectorAll("[data-dia]").forEach(b => b.onclick = () => {
+      escolha.dia = b.dataset.dia === "qualquer" ? "qualquer" : Number(b.dataset.dia);
+      redesenhar(`[data-dia="${b.dataset.dia}"]`);
+    });
+    fundo.querySelector("#modal-fechar").onclick = fechar;
+    fundo.querySelector("#modal-cancelar").onclick = fechar;
+    fundo.querySelector("#modal-enviar").onclick = e => {
+      if (!pronto) return e.preventDefault();
+      setTimeout(fechar, 300);
+    };
+  };
+
+  // redesenha mantendo a rolagem do modal e o foco no botão tocado
+  const redesenhar = foco => {
+    const y = fundo.querySelector(".modal").scrollTop;
+    desenhar();
+    const modal = fundo.querySelector(".modal");
+    modal.scrollTop = y;
+    (fundo.querySelector(foco) ?? modal).focus({ preventScroll: true });
+  };
+
+  const fechar = () => {
+    fundo.remove();
+    document.body.classList.remove("com-modal");
+    document.removeEventListener("keydown", teclas);
+    document.getElementById("agendar")?.focus({ preventScroll: true });
+  };
+  const teclas = e => { if (e.key === "Escape") fechar(); };
+  document.addEventListener("keydown", teclas);
+  fundo.onclick = e => { if (e.target === fundo) fechar(); };
+
+  desenhar();
+  fundo.querySelector(".modal").focus({ preventScroll: true });
 }

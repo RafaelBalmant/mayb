@@ -237,6 +237,15 @@
         "Sex",
         "Sáb"
       ],
+      "diasSemanaLongos": [
+        "domingo",
+        "segunda-feira",
+        "terça-feira",
+        "quarta-feira",
+        "quinta-feira",
+        "sexta-feira",
+        "sábado"
+      ],
       "locais": {
         "maringa": "Maringá",
         "siqueira_campos": "Siqueira Campos"
@@ -248,7 +257,26 @@
       "listaItem": "{semana}, {dia} de {mes}",
       "semDatas": "Ainda não há dias de atendimento neste mês.",
       "aviso": "As datas podem mudar. Para marcar sua consulta, fale com a Dra. Mayara pelo WhatsApp.",
-      "voltar": "Voltar"
+      "voltar": "Voltar",
+      "agendar": "Agendar horário",
+      "modal": {
+        "titulo": "Agendar horário em {mes}",
+        "explicacao": "Escolha a cidade e o dia. O WhatsApp vai abrir com a mensagem pronta para a Dra. Mayara.",
+        "cidade": "Em qual cidade?",
+        "semDiasCidade": "sem datas",
+        "dia": "Qual dia?",
+        "escolhaCidadeAntes": "Escolha a cidade para ver os dias.",
+        "qualquerDia": "Qualquer dia do mês",
+        "diaChip": "{semana}, {dia}",
+        "enviar": "Enviar pelo WhatsApp",
+        "faltaEscolha": "Escolha a cidade e o dia",
+        "cancelar": "Cancelar",
+        "fechar": "Fechar"
+      },
+      "mensagem": {
+        "qualquerDia": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, em qualquer dia de {mes}.",
+        "diaEspecifico": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, no dia {dia} de {mes} ({semana})."
+      }
     },
     "abertura": {
       "titulo": "Me conta o que anda te incomodando?",
