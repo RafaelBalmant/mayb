@@ -20,12 +20,13 @@ export function telaAbertura() {
       <div class="escolha">${opcao("feminino")}${opcao("masculino")}</div>
     </section>`;
 
-  barra.innerHTML = `<button class="btn pri" id="comecar" ${estado.rosto ? "" : "disabled"}>${
+  barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("geral.voltar"))}</button><button class="btn pri" id="comecar" ${estado.rosto ? "" : "disabled"}>${
     esc(t(estado.rosto ? "abertura.comecar" : "abertura.comecarSemRosto"))}</button>`;
 
   app.querySelectorAll("[data-rosto]").forEach(b => {
     b.querySelector("svg").setAttribute("aria-hidden", "true");
     b.onclick = () => { estado.rosto = b.dataset.rosto; salvar(); telaAbertura(); };
   });
+  document.getElementById("voltar").onclick = () => irPara("inicio");
   document.getElementById("comecar").onclick = () => irPara("mapa");
 }

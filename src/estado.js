@@ -20,7 +20,7 @@
 const CHAVE = "site-mayara:v2";
 
 export const estado = { rosto: null, sobre: { nome: "" }, areas: [] };
-export const ui = { tela: "abertura", vista: "frente", indice: 0 };
+export const ui = { tela: "inicio", vista: "frente", indice: 0, mesAgenda: 0 };
 
 try {
   const salvo = JSON.parse(sessionStorage.getItem(CHAVE));

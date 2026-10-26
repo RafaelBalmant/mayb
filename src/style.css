@@ -210,3 +210,28 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .falta { color: var(--perigo); font-weight: 600; font-size: 15px; }
 .falta:empty { display: none; }
 .modal:focus { outline: none; }
+
+/* Página inicial */
+.inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
+
+/* Agenda */
+.local-maringa { --local: var(--local-maringa); }
+.local-siqueira_campos { --local: var(--local-siqueira_campos); }
+.meses { align-self: flex-start; }
+.meses button { padding: 8px 16px; font-size: 15px; }
+.calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
+.calendario h2 { padding-inline: 4px; }
+.grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
+.grade .semana { font-size: 12px; font-weight: 600; color: var(--muted); padding-bottom: 4px; }
+.grade .dia { aspect-ratio: 1; display: grid; place-items: center; border-radius: 10px; font-size: 15px; color: var(--muted); }
+.grade .dia[class*="local-"] { background: var(--local); color: var(--on-local); font-weight: 700; }
+.grade .dia.varios { background: linear-gradient(135deg, var(--local-maringa) 50%, var(--local-siqueira_campos) 50%); }
+.grade .dia.passou { opacity: .35; }
+.legenda { list-style: none; margin: 0; padding: 0 4px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
+.legenda li { display: flex; align-items: center; gap: 6px; }
+.legenda i { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); background: var(--local, transparent); }
+.agenda-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.agenda-lista li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; font-size: 15px; }
+.agenda-lista strong { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.agenda-lista em { font-style: normal; font-size: 14px; color: var(--on-local); background: var(--local); border-radius: 999px; padding: 3px 10px; }
