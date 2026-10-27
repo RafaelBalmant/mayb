@@ -12,12 +12,16 @@ import { telaDetalhes } from "./telas/detalhes.js";
 import { telaRevisar } from "./telas/revisar.js";
 import { telaEnviado } from "./telas/enviado.js";
 
+// Mapa do rosto desligado por enquanto (pedido do Rafael, 27/10): o início mostra só a agenda e
+// nenhuma tela do mapa abre. As telas continuam no código; para religar, troque para true.
+export const MOSTRAR_MAPA = false;
+
 /** Mostra a tela certa para o estado atual. */
 export function render() {
   salvar();
   document.getElementById("barra").hidden = false;
-  if (ui.tela === "inicio") return telaInicio();
   if (ui.tela === "agenda") return telaAgenda();
+  if (ui.tela === "inicio" || !MOSTRAR_MAPA) { ui.tela = "inicio"; return telaInicio(); }
   if (ui.tela === "abertura" || !estado.rosto) { ui.tela = "abertura"; return telaAbertura(); }
   if (ui.tela === "resultados" && estado.areas.length) return telaResultados();
   if (ui.tela === "proximo" && estado.areas.length) return telaProximo();
@@ -37,7 +41,7 @@ export function irPara(tela, indice = 0) {
 }
 
 // O site institucional pode abrir direto numa parte: …/#agenda ou …/#mapa
-const atalho = { agenda: "agenda", mapa: "abertura" }[location.hash.slice(1)];
+const atalho = { agenda: "agenda", mapa: MOSTRAR_MAPA ? "abertura" : "inicio" }[location.hash.slice(1)];
 if (atalho) ui.tela = atalho;
 
 document.title = t("geral.tituloPagina");

@@ -16,21 +16,21 @@
   --fonte-texto: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* 2. Paleta (modo claro). Base: #edede9 (cinza claro), #d6ccc2 (taupe), #f5ebe0 (creme),
-        #e3d5ca (bege), #d5bdaf (bege rosado). Como são todas claras, texto e botões usam tons
-        mais escuros tirados delas, para ler bem. */
+        #e3d5ca (bege), #d5bdaf (bege rosado). Os botões e o texto usam versões mais escuras desses
+        mesmos tons (sem caramelo), para ler bem. */
   --bg: #f5ebe0;          /* fundo da página (creme) */
   --surface: #ffffff;     /* cartões, campos, área do desenho */
-  --ink: #3d322b;         /* texto principal e traço do desenho (marrom-acinzentado escuro) */
-  --muted: #6f6158;       /* texto secundário */
+  --ink: #3d3632;         /* texto principal e traço do desenho (grafite quente) */
+  --muted: #6f655f;       /* texto secundário */
   --line: #e3d5ca;        /* bordas (bege) */
-  --accent: #9a5f42;      /* cor da marca: botões (caramelo, mais vivo que #7a5c4b) */
-  --accent-soft: #f6e1d3; /* fundo de itens marcados (pêssego claro) */
+  --accent: #776c66;      /* cor da marca: botões (#d6ccc2 escurecido, cinza-taupe) */
+  --accent-soft: #edede9; /* fundo de itens marcados (cinza claro) */
   --on-accent: #ffffff;   /* texto sobre a cor da marca */
-  --destaque: #c9805f;    /* áreas do rosto e itens marcados (terracota rosado) */
+  --destaque: #d5bdaf;    /* áreas do rosto marcadas (bege rosado) */
   --perigo: #b3261e;      /* botão de excluir */
 
   /* desenho do rosto */
-  --skin: #fbf5ee;
+  --skin: #fbf6f0;
   --hair: #d6ccc2;
   --lip: #d5bdaf;
 
@@ -38,7 +38,7 @@
   --zone: color-mix(in srgb, var(--destaque) 5%, transparent);
   --zone-line: color-mix(in srgb, var(--destaque) 40%, transparent);
   --zone-hover: color-mix(in srgb, var(--destaque) 16%, transparent);
-  --zone-sel: color-mix(in srgb, var(--destaque) 70%, transparent);
+  --zone-sel: color-mix(in srgb, var(--destaque) 90%, transparent);
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
 
   /* 4. Forma */
@@ -49,17 +49,17 @@
       O bloco aparece duas vezes, com os mesmos valores: mantenha os dois iguais. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
-    --accent: #e8b49a; --accent-soft: #5a3f33; --destaque: #e8b49a; --on-accent: #2a241f; --perigo: #f2a19a;
-    --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
+    --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
+    --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
+    --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #2a241f; --surface: #352e28; --ink: #f5ebe0; --muted: #c8b9ac; --line: #4a4038;
-    --accent: #e8b49a; --accent-soft: #5a3f33; --destaque: #e8b49a; --on-accent: #2a241f; --perigo: #f2a19a;
-    --skin: #3d342d; --hair: #5a4e45; --lip: #8a6f63;
+  --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
+    --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
+    --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }
@@ -67,10 +67,10 @@
 /* 6. Cores das cidades na agenda (o nome da classe é o código da cidade em data/agenda.json).
       Valem para os dois modos. --on-local-* é o texto escrito sobre cada cor. */
 :root {
-  --local-maringa: #e8b49a;          /* pêssego */
-  --on-local-maringa: #3d322b;
-  --local-siqueira_campos: #8e5a6a;  /* malva */
-  --on-local-siqueira_campos: #ffffff;
+  --local-maringa: #d5bdaf;          /* bege rosado */
+  --on-local-maringa: #3d3632;
+  --local-siqueira_campos: #cddcc3;  /* verde-sálvia claro */
+  --on-local-siqueira_campos: #3d3632;
 }
 
 /* Paleta anterior (para comparar): copie os valores de volta nos blocos acima.
@@ -86,3 +86,11 @@
    Claro:  --accent #7a5c4b; --accent-soft #edede9; --destaque #b8968a; --zone-sel 60%
    Escuro: --accent #d5bdaf; --accent-soft #4a3d35; --destaque #d5bdaf
    Cidades: Maringá #d5bdaf (texto #3d322b) e Siqueira Campos #7d7266 (texto branco). */
+
+/* Versões anteriores, para comparar:
+   Rosa e sálvia (27/10): --bg #faf7f5; --ink #3a3336; --muted #756a6e; --line #ede4e4; --accent #a85a6e;
+           --accent-soft #f7e6e9; --destaque #e3a3b1 (zone-sel 75%); --skin #fffaf7; --hair #e6dcd6; --lip #efbcc6;
+           cidades Maringá #f3c6cf e Siqueira Campos #bfd3bd (texto #3a3336).
+   Neutra com caramelo (26/10): --accent #9a5f42; --accent-soft #f6e1d3; --destaque #c9805f;
+           cidades Maringá #e8b49a e Siqueira Campos #8e5a6a (texto branco).
+   Cinza-sálvia (27/10, antes do verde mais claro): Siqueira Campos #c2c3b6. */

@@ -19,7 +19,6 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   além do formato do resumo. `{n}`, `{area}` etc. são trocados pelo valor certo. O código lê tudo com `t("tela.chave")`.
 - `src/data/agenda.json`: **dias de atendimento** (Maringá e Siqueira Campos), por mês. É só pôr o número do dia
   na lista da cidade; dia que não aparece = não atende. As instruções estão no próprio arquivo (`_comoEditar`).
-  As datas que estão lá agora são de exemplo.
 - `src/tema.css`: **fontes e cores do site**, num lugar só. Trocar a cor da marca (`--accent`) já muda botões e áreas
   marcadas; os desenhos do rosto também usam essas cores (`--skin`, `--hair`, `--lip`, `--ink`).
 - `src/rostos/*.svg`: as 4 ilustrações (feminino/masculino, frente/perfil). Cada área tocável é um
@@ -33,11 +32,12 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   na lista dessa parte em `casos.json`, crie um bloco `{ "procedimento": "Toxina botulínica", "fotos": [...] }` com as fotos
   sempre intercalando antes e depois (o site põe as etiquetas ANTES/DEPOIS sozinho; `legenda` é opcional).
   Lista vazia mostra "Fotos em breve". As instruções e um exemplo estão no próprio arquivo (`_comoEditar`, `_exemplo`).
-- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (os meses cadastrados em agenda.json, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 
 ## Links diretos
 
 O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
+Por enquanto o mapa do rosto está desligado (`MOSTRAR_MAPA = false` em `src/main.js`): o início mostra só a agenda.
 
 ## Situação
 
