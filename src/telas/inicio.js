@@ -1,6 +1,7 @@
 import { t, profissional } from "../conteudo.js";
 import { app, barra, esc } from "../util.js";
 import { irPara, MOSTRAR_MAPA } from "../main.js";
+import { linkWhatsapp } from "../resumo.js";
 
 // A foto fica em public/ (nome em conteudo.json → profissional.foto).
 const imagem = arquivo => import.meta.env.BASE_URL + arquivo;
@@ -25,7 +26,7 @@ export function telaInicio() {
     </header>
     <div class="inicio-botoes">
       <button class="btn pri" id="ir-agenda">${esc(t("inicio.agenda"))}</button>
-      <a class="btn" href="${esc(`https://wa.me/${profissional.whatsapp}`)}" target="_blank" rel="noopener">${esc(t("inicio.contato"))}</a>
+      <a class="btn" href="${esc(linkWhatsapp(t("inicio.mensagemContato")))}" target="_blank" rel="noopener">${esc(t("inicio.contato"))}</a>
       ${MOSTRAR_MAPA ? `<button class="btn" id="ir-mapa">${esc(t("inicio.mapa"))}</button>` : ""}
     </div>
     <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>
