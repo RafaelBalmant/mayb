@@ -37,7 +37,8 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 ## Links diretos
 
 O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
-Por enquanto o mapa do rosto está desligado (`MOSTRAR_MAPA = false` em `src/main.js`): o início mostra só a agenda.
+Por enquanto o mapa do rosto está desligado (`MAPA_LIGADO = false` em `src/main.js`): o início mostra só a agenda.
+Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`). Vale até fechar a aba; `?mapa=0` desliga.
 
 ## Situação
 
