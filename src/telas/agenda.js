@@ -5,17 +5,20 @@ import { linkWhatsapp } from "../resumo.js";
 import { app, barra, esc, topo, progresso } from "../util.js";
 import { irPara } from "../main.js";
 
-// Agenda: o paciente escolhe o mês (atual + 3 seguintes) e vê, dia a dia,
-// se a Dra. atende em Maringá, em Siqueira Campos ou não atende.
-// As datas ficam em data/agenda.json; os nomes das cidades em conteudo.json.
+// Agenda: o paciente escolhe o mês e vê, dia a dia, se a Dra. atende em Maringá,
+// em Siqueira Campos ou não atende. Os meses do seletor são os que estão em data/agenda.json
+// (do mês atual em diante, no máximo 4); os nomes das cidades ficam em conteudo.json.
 const QTD_MESES = 4;
 
-/** Os meses que dá para escolher, a partir do mês atual. */
-function mesesVisiveis(hoje) {
-  return Array.from({ length: QTD_MESES }, (_, i) => new Date(hoje.getFullYear(), hoje.getMonth() + i, 1));
-}
-
 const chaveMes = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+
+/** Os meses que dá para escolher: os cadastrados no agenda.json, a partir do mês atual. */
+function mesesVisiveis(hoje) {
+  const atual = chaveMes(hoje);
+  const meses = Object.keys(agenda.atendimentos).filter(chave => chave >= atual).sort().slice(0, QTD_MESES)
+    .map(chave => { const [ano, mes] = chave.split("-").map(Number); return new Date(ano, mes - 1, 1); });
+  return meses.length ? meses : [new Date(hoje.getFullYear(), hoje.getMonth(), 1)];
+}
 
 /** { dia: [códigos das cidades] } do mês, a partir do agenda.json. */
 function locaisPorDia(mes) {
@@ -29,14 +32,14 @@ function locaisPorDia(mes) {
 export function telaAgenda() {
   const hoje = new Date();
   const meses = mesesVisiveis(hoje);
-  const indice = Math.min(Math.max(ui.mesAgenda || 0, 0), QTD_MESES - 1);
+  const indice = Math.min(Math.max(ui.mesAgenda || 0, 0), meses.length - 1);
   const mes = meses[indice];
   const nomesMes = t("agenda.meses");
   const semana = t("agenda.diasSemana");
   const locais = t("agenda.locais");
   const dias = locaisPorDia(mes);
   const total = new Date(mes.getFullYear(), mes.getMonth() + 1, 0).getDate();
-  const ehMesAtual = indice === 0;
+  const ehMesAtual = chaveMes(mes) === chaveMes(hoje);
   const nomeMes = nomesMes[mes.getMonth()].toLowerCase();
 
   const botaoMes = (m, i) => `<button data-mes="${i}" aria-pressed="${i === indice}">${esc(t("agenda.mesesCurtos")[m.getMonth()])}</button>`;

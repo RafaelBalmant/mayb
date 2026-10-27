@@ -3,7 +3,7 @@
     "Dias em que a Dra. Mayara atende, separados por mês (\"ano-mês\") e por cidade.",
     "Para incluir um dia, coloque o número do dia na lista da cidade. Dia que não aparece em nenhuma lista = não atende.",
     "Cidades: \"maringa\" (Maringá) e \"siqueira_campos\" (Siqueira Campos). Os nomes que aparecem no site ficam em conteudo.json, em textos.agenda.locais.",
-    "O site mostra o mês atual e os 3 seguintes. Meses que não estão aqui aparecem sem atendimento. Pode apagar meses que já passaram."
+    "O seletor de meses do site mostra só os meses que estão aqui (do mês atual em diante, até 4). Para mostrar um mês novo, acrescente-o aqui; mês que já passou some sozinho e pode ser apagado."
   ],
   "atendimentos": {
     "2026-11": { "maringa": [23, 24, 25, 26, 27, 28, 29, 30], "siqueira_campos": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] },

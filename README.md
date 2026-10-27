@@ -32,7 +32,7 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   na lista dessa parte em `casos.json`, crie um bloco `{ "procedimento": "Toxina botulínica", "fotos": [...] }` com as fotos
   sempre intercalando antes e depois (o site põe as etiquetas ANTES/DEPOIS sozinho; `legenda` é opcional).
   Lista vazia mostra "Fotos em breve". As instruções e um exemplo estão no próprio arquivo (`_comoEditar`, `_exemplo`).
-- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (os meses cadastrados em agenda.json, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 
 ## Links diretos
 
