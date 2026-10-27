@@ -28,7 +28,12 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 - `src/estado.js`: o formato dos dados do paciente (comentado no arquivo).
 - `src/resumo.js`: monta a mensagem do WhatsApp (formato do doc de fluxo) e o link wa.me. Se passar de
   `profissional.limiteMensagem` caracteres (conteudo.json), os textos livres são encurtados.
-- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- `src/data/casos.json` + `public/casos/<parte>/`: **fotos de casos reais** mostradas logo depois do mapa,
+  separadas por parte do rosto e, dentro dela, por procedimento. Para acrescentar: ponha as fotos na pasta da parte e,
+  na lista dessa parte em `casos.json`, crie um bloco `{ "procedimento": "Toxina botulínica", "fotos": [...] }` com as fotos
+  sempre intercalando antes e depois (o site põe as etiquetas ANTES/DEPOIS sozinho; `legenda` é opcional).
+  Lista vazia mostra "Fotos em breve". As instruções e um exemplo estão no próprio arquivo (`_comoEditar`, `_exemplo`).
+- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 
 ## Links diretos
 

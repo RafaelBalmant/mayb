@@ -20,7 +20,7 @@
 const CHAVE = "site-mayara:v2";
 
 export const estado = { rosto: null, sobre: { nome: "" }, areas: [] };
-export const ui = { tela: "inicio", vista: "frente", indice: 0, mesAgenda: 0 };
+export const ui = { tela: "inicio", vista: "frente", indice: 0, mesAgenda: 0, aberta: null, viuCasos: false };
 
 try {
   const salvo = JSON.parse(sessionStorage.getItem(CHAVE));
@@ -54,6 +54,6 @@ export function recomecar() {
   estado.rosto = null;
   estado.sobre = { nome: "" };
   estado.areas = [];
-  Object.assign(ui, { tela: "abertura", vista: "frente", indice: 0 });
+  Object.assign(ui, { tela: "abertura", vista: "frente", indice: 0, aberta: null, viuCasos: false });
   salvar();
 }
