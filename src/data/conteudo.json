@@ -299,7 +299,7 @@
       "diaRotulo": "{dia} de {mes}: {situacao}",
       "semDatas": "Ainda não há dias de atendimento neste mês.",
       "voltar": "Voltar",
-      "agendar": "Agendar horário",
+      "agendar": "Agendar horário em {mes}",
       "modal": {
         "titulo": "Agendar horário em {mes}",
         "explicacao": "Escolha a cidade. Os dias abaixo são os que a Dra. Mayara atende em {mes}, só para você ter uma noção: a equipe dela confere a agenda e combina a data com você pelo WhatsApp.",

@@ -77,7 +77,7 @@ export function telaAgenda() {
     ${atendidos.length ? "" : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`}`;
 
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
-    <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar"))}</button>`;
+    <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar", { mes: nomeMes }))}</button>`;
 
   app.querySelectorAll("[data-mes]").forEach(b => {
     b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); irPara("agenda"); };
