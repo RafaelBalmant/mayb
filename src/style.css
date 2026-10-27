@@ -41,20 +41,19 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 
 /* Mapa */
 .mapa { position: relative; background: var(--surface); border-radius: 20px; border: 1px solid var(--line); overflow: hidden; }
-.mapa svg { display: block; width: 100%; height: 100%; touch-action: manipulation; }
+.mapa svg { display: block; width: 100%; height: 100%; overflow: hidden; touch-action: manipulation; }
 .arte .pele { fill: var(--skin); stroke: var(--ink); stroke-width: 1.6; }
 .arte .cabelo { fill: var(--hair); }
 .arte .traco { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .arte .leve { opacity: .45; }
+.detalhes { pointer-events: none; }
 .arte .olho { fill: var(--surface); stroke: var(--ink); stroke-width: 1.6; }
 .arte .iris { fill: var(--ink); }
 .arte .boca { fill: var(--lip); stroke: var(--ink); stroke-width: 1.2; }
 .zona { cursor: pointer; outline: none; fill: var(--zone); stroke: var(--zone-line); stroke-width: 1.2; stroke-dasharray: 3 3; transition: fill .15s, stroke .15s; }
-.zona-linha { fill: none; stroke-width: 16; stroke-linecap: round; stroke-dasharray: none; stroke-opacity: .35; }
-.zona:hover { fill: var(--zone-hover); }
+.zona:hover, .zona.realce { fill: var(--zone-hover); }
+.zona.realce { stroke: var(--destaque); stroke-dasharray: none; }
 .zona.sel { fill: var(--zone-sel); stroke: var(--destaque); stroke-dasharray: none; stroke-width: 1.8; }
-.zona-linha:hover { fill: none; stroke-opacity: .55; }
-.zona-linha.sel { fill: none; stroke: var(--destaque); stroke-width: 16; stroke-opacity: .6; }
 .zona:focus-visible { stroke: var(--accent); stroke-width: 3; stroke-dasharray: none; }
 .aviso {
   position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
@@ -112,7 +111,6 @@ pre.json { margin: 0; overflow-x: auto; font-size: 12px; background: var(--surfa
 .btn.sec { flex: 0 0 auto; }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-.zona-linha:focus-visible { stroke-width: 16; stroke-opacity: .8; }
 body { margin: 0; }
 [hidden] { display: none !important; }
 :root { padding-top: env(safe-area-inset-top, 0px); }
@@ -126,31 +124,27 @@ details.lista .dentro { padding: 0 16px 16px; }
 .pergunta-grande { font-size: clamp(34px, 10vw, 46px); line-height: 1.08; margin-top: 12px; }
 .explica { font-size: 18px; color: var(--muted); max-width: 34em; }
 
-/* Mapa: tela única, sem rolagem — rosto à esquerda, lista à direita */
+/* Mapa: tela única, sem rolagem — rosto à esquerda, nomes das partes à direita */
 .app-mapa {
   height: calc(100dvh - 78px - env(safe-area-inset-bottom, 0px) - env(safe-area-inset-top, 0px));
   min-height: 420px; padding-block: 12px; gap: 12px;
 }
 .app-mapa .controles { flex-wrap: nowrap; gap: 6px; }
 .app-mapa .seg button { padding: 7px 11px; font-size: 13px; }
-.palco { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; }
-.mapa { min-height: 0; }
-.lado { min-height: 0; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
-.lado h3 { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.vazio { color: var(--muted); font-size: 14px; }
-.marcadas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.marcadas button {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 6px;
-  background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 12px;
-  padding: 9px 10px; font-size: 14px; font-weight: 600; line-height: 1.2; text-align: left;
+.dica-mapa { margin: 0; text-align: center; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.palco { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px; }
+/* a caixa do desenho abraça o rosto (proporção ~2:3); em tela baixa, encolhe e o rosto fica centralizado */
+.mapa { min-height: 0; align-self: center; width: 100%; aspect-ratio: 2 / 3; max-height: 100%; }
+.lado { min-height: 0; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.rotulos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rotulo {
+  width: 100%; display: flex; align-items: center; gap: 8px; text-align: left;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+  padding: 8px 10px; font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--ink);
 }
-.marcadas .x { color: var(--accent); font-size: 18px; line-height: 1; flex: none; }
-.extras { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
-.extra {
-  width: 100%; background: transparent; border: 1.5px dashed var(--line); border-radius: 12px;
-  padding: 9px 10px; font-size: 14px; font-weight: 600; text-align: left; color: var(--muted);
-}
-.extra[aria-pressed="true"] { border-style: solid; border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.marca-rotulo { flex: none; width: 18px; color: var(--muted); font-size: 16px; text-align: center; }
+.rotulo[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.rotulo[aria-pressed="true"] .marca-rotulo { color: var(--accent); }
 @media (min-width: 560px) { .app-mapa .seg button { padding: 7px 14px; font-size: 14px; } }
 
 /* Próximo passo */

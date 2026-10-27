@@ -301,7 +301,7 @@
     "abertura": {
       "titulo": "Me conta o que anda te incomodando?",
       "explicacao": [
-        "Na próxima tela você vai ver um rosto. Toque nas partes que te incomodam e elas vão aparecendo numa lista ao lado. Pode marcar quantas quiser e virar o rosto de lado para ver o perfil.",
+        "Na próxima tela você vai ver um rosto. Toque nas partes que te incomodam, no desenho ou nos nomes ao lado. Pode marcar quantas quiser.",
         "Não precisa saber o nome de nada. Depois a gente pergunta um pouquinho sobre cada parte."
       ],
       "escolhaRosto": "Qual rosto prefere usar?",
@@ -318,10 +318,6 @@
       "feminino": "Feminino",
       "masculino": "Masculino",
       "descricaoDesenho": "Rosto {rosto}, vista de {vista}",
-      "marcou": "Você marcou",
-      "marcouQuantas": "Você marcou ({n})",
-      "vazio": "Toque no rosto para marcar.",
-      "remover": "Remover {area}",
       "pele": "Pele em geral",
       "outra": "Outra parte",
       "avisoMarcada": "✓ {area}",
@@ -337,7 +333,7 @@
         "fechar": "Fechar"
       },
       "outraNaLista": "Outra parte: {texto}",
-      "editar": "Editar {area}"
+      "nomes": "Toque no rosto ou no nome da parte"
     },
     "proximo": {
       "titulo": "Anotado! E agora?",
