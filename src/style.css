@@ -256,6 +256,9 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .cartao-caso.aberto .cartao-topo i svg { transform: rotate(180deg); }
 .cartao-caso.aberto .cartao-topo i { background: var(--accent); color: var(--on-accent); }
 .galeria { display: flex; flex-direction: column; gap: 10px; padding: 0 18px 18px; }
+.procedimento { display: flex; flex-direction: column; gap: 8px; }
+.procedimento + .procedimento { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.procedimento h3 { margin: 0; font-size: 16px; font-weight: 600; }
 .fotos {
   display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
   margin-inline: -18px; padding-inline: 18px; scroll-padding-inline: 18px; scrollbar-width: none;

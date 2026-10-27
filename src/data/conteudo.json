@@ -342,7 +342,7 @@
     },
     "resultados": {
       "titulo": "Quer ver resultados de quem tinha as mesmas queixas?",
-      "explicacao": "Separamos fotos de casos reais atendidos pela Dra. Mayara, organizadas pelas partes do rosto que você marcou. Toque numa parte para ver.",
+      "explicacao": "Separamos fotos de casos reais atendidos pela Dra. Mayara, organizadas pelas partes do rosto que você marcou e pelo procedimento feito. Toque numa parte para ver.",
       "fotos": {
         "um": "1 caso",
         "varios": "{n} casos"
@@ -351,8 +351,8 @@
       "antes": "Antes",
       "depois": "Depois",
       "semFotos": "Ainda não há fotos desta parte. Em breve!",
-      "foto": "{momento}: {area}",
-      "abrirFoto": "Ampliar foto de {momento}: {area}",
+      "foto": "{momento}: {procedimento}, {area}",
+      "abrirFoto": "Ampliar foto de {momento}: {procedimento}, {area}",
       "fechar": "Fechar",
       "nenhuma": "Ainda não temos fotos das partes que você marcou. Você pode seguir normalmente.",
       "aviso": "Cada rosto é único: os resultados variam de pessoa para pessoa. As fotos são publicadas com autorização dos pacientes.",

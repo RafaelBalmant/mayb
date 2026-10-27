@@ -1,12 +1,25 @@
 {
   "_comoEditar": [
-    "Fotos de casos reais, por parte do rosto. Os códigos são os mesmos de conteudo.json (areas).",
-    "1. Ponha a foto na pasta public/casos/<codigo>/ (ex.: public/casos/testa/caso-1.jpg).",
-    "2. Acrescente na lista da parte, SEMPRE intercalando antes e depois: primeiro a foto de antes, logo depois a de depois do mesmo caso, e assim por diante.",
-    "   Ex.: { \"foto\": \"testa/caso-1-antes.jpg\" }, { \"foto\": \"testa/caso-1-depois.jpg\", \"legenda\": \"Toxina botulínica, 15 dias depois\" }.",
-    "O site põe sozinho a etiqueta ANTES na 1ª, 3ª, 5ª… foto e DEPOIS na 2ª, 4ª, 6ª… A legenda é opcional. Lista vazia = aparece 'Fotos em breve'.",
+    "Fotos de casos reais, por parte do rosto e, dentro de cada parte, por procedimento.",
+    "Os códigos das partes são os mesmos de conteudo.json (areas): testa, olhos, bochechas, nariz, boca, queixo, mandibula, pescoco, pele.",
+    "1. Ponha as fotos na pasta da parte: public/casos/<parte>/ (ex.: public/casos/testa/toxina-1-antes.jpg).",
+    "2. Na lista da parte, crie um bloco por procedimento: { \"procedimento\": \"Toxina botulínica\", \"fotos\": [ ... ] } (veja _exemplo abaixo).",
+    "3. Em \"fotos\", SEMPRE intercale antes e depois: a de antes, logo depois a de depois do mesmo caso, e assim por diante.",
+    "O site põe sozinho a etiqueta ANTES na 1ª, 3ª, 5ª… foto e DEPOIS na 2ª, 4ª, 6ª… A legenda é opcional.",
+    "Parte com lista vazia = aparece 'Fotos em breve'. Procedimento com \"fotos\" vazio = aparece o nome com 'Fotos em breve'.",
     "Dica: fotos em JPG, com até ~1200 px de largura, mesmo enquadramento no antes e no depois."
   ],
+  "_exemplo": {
+    "testa": [
+      {
+        "procedimento": "Toxina botulínica",
+        "fotos": [
+          { "foto": "testa/toxina-1-antes.jpg" },
+          { "foto": "testa/toxina-1-depois.jpg", "legenda": "15 dias depois" }
+        ]
+      }
+    ]
+  },
   "testa": [],
   "olhos": [],
   "bochechas": [],

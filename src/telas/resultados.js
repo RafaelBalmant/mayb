@@ -10,35 +10,42 @@ const VAGAS = 2;
 /** As fotos vêm sempre intercaladas: antes, depois, antes, depois… */
 const momento = i => t(i % 2 ? "resultados.depois" : "resultados.antes");
 
-/** Endereço da foto: as fotos ficam em public/casos/ (a lista está em data/casos.json). */
+/** Endereço da foto: as fotos ficam em public/casos/ (a lista, por parte e procedimento, está em data/casos.json). */
 const urlFoto = foto => `${import.meta.env.BASE_URL}casos/${foto}`;
 
-// Logo depois do mapa: convida a ver fotos de casos reais, em cartões por parte marcada.
+// Logo depois do mapa: convida a ver fotos de casos reais, em cartões por parte marcada;
+// dentro de cada cartão, as fotos ficam separadas por procedimento.
 // Só entram as partes que existem em casos.json ("Outra parte" não tem fotos). Pode pular.
 export function telaResultados() {
   const partes = estado.areas.map(a => a.codigo).filter(c => Array.isArray(casos[c]));
   if (!partes.includes(ui.aberta)) ui.aberta = null;
 
   const cartao = codigo => {
-    const lista = casos[codigo];
+    const procedimentos = casos[codigo];
     const aberto = ui.aberta === codigo;
     const nome = AREA[codigo].nome;
-    const fotos = lista.length
-      ? lista.map((c, i) => `<figure><span class="momento">${esc(momento(i))}</span>
-          <button class="foto" data-foto="${i}" aria-label="${esc(t("resultados.abrirFoto", { momento: momento(i), area: nome }))}">
-          <img src="${esc(urlFoto(c.foto))}" alt="${esc(c.legenda || t("resultados.foto", { momento: momento(i), area: nome }))}" loading="lazy"></button>
-          ${c.legenda ? `<figcaption>${esc(c.legenda)}</figcaption>` : ""}</figure>`).join("")
-      : Array.from({ length: VAGAS }, (_, i) => `<figure><span class="momento">${esc(momento(i))}</span><div class="foto vaga" aria-hidden="true"><span>${esc(t("resultados.emBreve"))}</span></div></figure>`).join("");
+    const vagas = () => Array.from({ length: VAGAS }, (_, i) =>
+      `<figure><span class="momento">${esc(momento(i))}</span><div class="foto vaga" aria-hidden="true"><span>${esc(t("resultados.emBreve"))}</span></div></figure>`).join("");
+    const fotos = (p, ip) => p.fotos.length
+      ? p.fotos.map((c, i) => {
+        const vars = { momento: momento(i), procedimento: p.procedimento, area: nome };
+        return `<figure><span class="momento">${esc(momento(i))}</span>
+          <button class="foto" data-proc="${ip}" data-foto="${i}" aria-label="${esc(t("resultados.abrirFoto", vars))}">
+          <img src="${esc(urlFoto(c.foto))}" alt="${esc(c.legenda || t("resultados.foto", vars))}" loading="lazy"></button>
+          ${c.legenda ? `<figcaption>${esc(c.legenda)}</figcaption>` : ""}</figure>`;
+      }).join("")
+      : vagas();
+    const conteudo = procedimentos.length
+      ? procedimentos.map((p, ip) => `<section class="procedimento"><h3>${esc(p.procedimento)}</h3><div class="fotos">${fotos(p, ip)}</div></section>`).join("")
+      : `<p class="sub">${esc(t("resultados.semFotos"))}</p><div class="fotos">${vagas()}</div>`;
+    const nCasos = procedimentos.reduce((n, p) => n + Math.ceil(p.fotos.length / 2), 0);
     return `<section class="cartao-caso${aberto ? " aberto" : ""}" data-codigo="${codigo}">
       <button class="cartao-topo" aria-expanded="${aberto}" aria-controls="fotos-${codigo}">
         <strong>${esc(nome)}</strong>
-        <span>${esc(lista.length ? tn("resultados.fotos", Math.ceil(lista.length / 2)) : t("resultados.emBreve"))}</span>
+        <span>${esc(nCasos ? tn("resultados.fotos", nCasos) : t("resultados.emBreve"))}</span>
         <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></i>
       </button>
-      <div class="galeria" id="fotos-${codigo}" ${aberto ? "" : "hidden"}>
-        ${lista.length ? "" : `<p class="sub">${esc(t("resultados.semFotos"))}</p>`}
-        <div class="fotos">${fotos}</div>
-      </div>
+      <div class="galeria" id="fotos-${codigo}" ${aberto ? "" : "hidden"}>${conteudo}</div>
     </section>`;
   };
 
@@ -60,8 +67,10 @@ export function telaResultados() {
     manterRolagem(telaResultados);
     app.querySelector(`[data-codigo="${codigo}"] .cartao-topo`).focus({ preventScroll: true });
   });
-  app.querySelectorAll("[data-foto]").forEach(b => b.onclick = () =>
-    ampliar(casos[b.closest(".cartao-caso").dataset.codigo][b.dataset.foto], momento(Number(b.dataset.foto)), b));
+  app.querySelectorAll("[data-foto]").forEach(b => b.onclick = () => {
+    const p = casos[b.closest(".cartao-caso").dataset.codigo][b.dataset.proc];
+    ampliar(p.fotos[b.dataset.foto], `${momento(Number(b.dataset.foto))} · ${p.procedimento}`, b);
+  });
   document.getElementById("voltar").onclick = () => irPara("mapa");
   document.getElementById("pular").onclick = () => irPara("proximo");
 }
