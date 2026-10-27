@@ -6,9 +6,13 @@ import { irPara } from "../main.js";
 
 let avisoTimer;
 
+// Vista de perfil desligada a pedido do Rafael (2026-10-27). Os desenhos continuam em src/rostos/; para religar, troque para true.
+const MOSTRAR_PERFIL = false;
+
 // Tela do mapa: o rosto e, ao lado, os nomes das partes (tocar no nome também marca), os controles e a navegação.
 export function telaMapa(aviso = "") {
   const n = estado.areas.length;
+  if (!MOSTRAR_PERFIL) ui.vista = "frente";
   const seg = (campo, valor, atual) =>
     `<button data-${campo}="${valor}" aria-pressed="${atual === valor}">${esc(t(`mapa.${valor}`))}</button>`;
   // todas as partes, na ordem de conteudo.json; "outra" abre o campo de texto
@@ -22,7 +26,7 @@ export function telaMapa(aviso = "") {
   app.innerHTML = `
     <header class="topo topo-compacto">${progresso("rosto", 2)}</header>
     <div class="controles">
-      <div class="seg" role="group" aria-label="${esc(t("mapa.vista"))}">${seg("vista", "frente", ui.vista)}${seg("vista", "perfil", ui.vista)}</div>
+      ${MOSTRAR_PERFIL ? `<div class="seg" role="group" aria-label="${esc(t("mapa.vista"))}">${seg("vista", "frente", ui.vista)}${seg("vista", "perfil", ui.vista)}</div>` : ""}
       <div class="seg" role="group" aria-label="${esc(t("mapa.rosto"))}">${seg("rosto", "feminino", estado.rosto)}${seg("rosto", "masculino", estado.rosto)}</div>
     </div>
     <p class="dica-mapa">${esc(t("mapa.nomes"))}</p>
