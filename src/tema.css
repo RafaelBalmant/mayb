@@ -5,7 +5,7 @@
    ========================================================== */
 
 /* 1. Fontes (Google Fonts). Ao trocar, mude o link e os nomes em --fonte-titulo / --fonte-texto. */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Jost:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Jost:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@800&display=swap");
 /* Fontes anteriores: Young Serif (títulos) + Figtree (texto)
 @import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap");
 --fonte-titulo: "Young Serif", Georgia, "Times New Roman", serif;
@@ -14,6 +14,8 @@
 :root {
   --fonte-titulo: "Playfair Display", Georgia, "Times New Roman", serif;
   --fonte-texto: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* nome grande do início (letras altas e estreitas, em maiúsculas) */
+  --fonte-destaque: "Fira Sans Extra Condensed", "Arial Narrow", sans-serif-condensed, sans-serif;
 
   /* 2. Paleta (modo claro). Base: #edede9 (cinza claro), #d6ccc2 (taupe), #f5ebe0 (creme),
         #e3d5ca (bege), #d5bdaf (bege rosado). Os botões e o texto usam versões mais escuras desses
@@ -40,12 +42,12 @@
   --zone-hover: color-mix(in srgb, var(--destaque) 16%, transparent);
   --zone-sel: color-mix(in srgb, var(--destaque) 90%, transparent);
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
-  /* capa do início enquanto a foto de capa não chega (degradê entre as duas cores) */
-  --capa-de: #e3d5ca;
-  --capa-ate: #d5bdaf;
+  --nome-cor: #776c66;     /* nome grande no início */
+  --foto-vazia: #e3d5ca;  /* fundo da foto do início enquanto ela não existe */
 
   /* 4. Forma */
   --r: 14px;              /* arredondamento dos cartões */
+  --r-btn: 0;             /* cantos dos botões (0 = quadrado; 999px = redondo) */
 }
 
 /* 5. Paleta do modo escuro (quando o celular está em modo escuro).
@@ -55,7 +57,7 @@
     --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
-    --capa-de: #48403b; --capa-ate: #5a524c;
+    --nome-cor: #d5bdaf; --foto-vazia: #48403b;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
@@ -64,7 +66,7 @@
   --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
-    --capa-de: #48403b; --capa-ate: #5a524c;
+    --nome-cor: #d5bdaf; --foto-vazia: #48403b;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }
