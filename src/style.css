@@ -236,6 +236,11 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .local-siqueira_campos { --local: var(--local-siqueira_campos); --on-local: var(--on-local-siqueira_campos); }
 .meses { display: flex; }
 .meses button { flex: 1; padding: 8px 0; font-size: 15px; }
+/* convite sutil: os meses não escolhidos piscam de leve algumas vezes até a pessoa tocar num mês */
+.meses.convite button[aria-pressed="false"] { animation: convite-mes 1.6s ease-in-out .8s 3; }
+.meses.convite button[aria-pressed="false"] + button[aria-pressed="false"] { animation-delay: 1s; }
+@keyframes convite-mes { 0%, 100% { background: transparent; } 50% { background: color-mix(in srgb, var(--destaque) 45%, transparent); color: var(--ink); } }
+@media (prefers-reduced-motion: reduce) { .meses.convite button { animation: none; } }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
 .calendario h2 { padding-inline: 4px; }
 .grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }

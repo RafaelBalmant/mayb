@@ -65,7 +65,7 @@ export function telaAgenda() {
   app.innerHTML = `${topo("agenda", 1)}
     <h1>${esc(t("agenda.titulo"))}</h1>
     <p class="explica">${esc(t("agenda.explicacao"))}</p>
-    <div class="seg meses" role="group" aria-label="${esc(t("agenda.escolhaMes"))}">${meses.map(botaoMes).join("")}</div>
+    <div class="seg meses${ui.mesTocado ? "" : " convite"}" role="group" aria-label="${esc(t("agenda.escolhaMes"))}">${meses.map(botaoMes).join("")}</div>
     <section class="calendario">
       <h2>${esc(t("agenda.mesAno", { mes: nomesMes[mes.getMonth()], ano: mes.getFullYear() }))}</h2>
       <div class="grade" role="grid">
@@ -80,7 +80,7 @@ export function telaAgenda() {
     <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar", { mes: nomeMes }))}</button>`;
 
   app.querySelectorAll("[data-mes]").forEach(b => {
-    b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); irPara("agenda"); };
+    b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); ui.mesTocado = true; irPara("agenda"); };
   });
   document.getElementById("voltar").onclick = () => irPara("inicio");
   document.getElementById("agendar").onclick = () =>
