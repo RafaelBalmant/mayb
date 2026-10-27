@@ -250,8 +250,10 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .cartao-topo span { grid-row: 2; font-size: 14px; color: var(--muted); }
 .cartao-topo i {
   grid-row: 1 / 3; grid-column: 2; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
-  font-style: normal; font-size: 22px; line-height: 1; background: var(--accent-soft); color: var(--ink);
+  background: var(--accent-soft); color: var(--ink);
 }
+.cartao-topo i svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.cartao-caso.aberto .cartao-topo i svg { transform: rotate(180deg); }
 .cartao-caso.aberto .cartao-topo i { background: var(--accent); color: var(--on-accent); }
 .galeria { display: flex; flex-direction: column; gap: 10px; padding: 0 18px 18px; }
 .fotos {

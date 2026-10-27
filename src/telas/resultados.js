@@ -29,7 +29,7 @@ export function telaResultados() {
       <button class="cartao-topo" aria-expanded="${aberto}" aria-controls="fotos-${codigo}">
         <strong>${esc(nome)}</strong>
         <span>${esc(lista.length ? tn("resultados.fotos", lista.length) : t("resultados.emBreve"))}</span>
-        <i aria-hidden="true">${aberto ? "−" : "+"}</i>
+        <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></i>
       </button>
       <div class="galeria" id="fotos-${codigo}" ${aberto ? "" : "hidden"}>
         ${lista.length ? "" : `<p class="sub">${esc(t("resultados.semFotos"))}</p>`}
