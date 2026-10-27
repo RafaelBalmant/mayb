@@ -13,8 +13,20 @@ import { telaRevisar } from "./telas/revisar.js";
 import { telaEnviado } from "./telas/enviado.js";
 
 // Mapa do rosto desligado por enquanto (pedido do Rafael, 27/10): o início mostra só a agenda e
-// nenhuma tela do mapa abre. As telas continuam no código; para religar, troque para true.
-export const MOSTRAR_MAPA = false;
+// nenhuma tela do mapa abre. As telas continuam no código; para religar para todos, troque para true.
+const MAPA_LIGADO = false;
+
+// Para testar o mapa sem ligar para todos: abra o site com ?mapa=1 no endereço. Vale até fechar
+// a aba (fica no sessionStorage); ?mapa=0 desliga de novo.
+const CHAVE_MAPA = "site-mayara:mapa";
+const pedidoMapa = new URLSearchParams(location.search).get("mapa");
+try {
+  if (pedidoMapa === "1") sessionStorage.setItem(CHAVE_MAPA, "1");
+  if (pedidoMapa === "0") sessionStorage.removeItem(CHAVE_MAPA);
+} catch {}
+const mapaNoEndereco = (() => { try { return sessionStorage.getItem(CHAVE_MAPA) === "1"; } catch { return pedidoMapa === "1"; } })();
+
+export const MOSTRAR_MAPA = MAPA_LIGADO || mapaNoEndereco;
 
 /** Mostra a tela certa para o estado atual. */
 export function render() {
