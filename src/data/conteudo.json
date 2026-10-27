@@ -6,6 +6,38 @@
     "whatsappExibicao": "+55 43 99915-9066",
     "limiteMensagem": 1500
   },
+  "seo": {
+    "_comoEditar": [
+      "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
+      "url: endereço final do site, com https e barra no fim (ex.: \"https://www.mayarabacellar.com.br/\"). Enquanto estiver vazio, o build não gera sitemap nem link canônico.",
+      "imagem: nome de uma imagem dentro de public/ (ex.: \"compartilhar.jpg\", 1200×630 px) que aparece quando alguém compartilha o link. Vazio = sem imagem.",
+      "descricao: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
+      "conteudo: texto que já vem pronto no HTML (o Google lê sem precisar rodar o JavaScript). Some assim que o site carrega."
+    ],
+    "url": "",
+    "imagem": "",
+    "descricao": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Veja a agenda de atendimento e agende pelo WhatsApp.",
+    "palavrasChave": [
+      "harmonização facial",
+      "Maringá",
+      "Siqueira Campos",
+      "Paraná",
+      "Dra. Mayara Bacellar"
+    ],
+    "estado": "PR",
+    "cidades": [
+      "Maringá",
+      "Siqueira Campos"
+    ],
+    "conteudo": {
+      "titulo": "Dra. Mayara Bacellar · Harmonização facial em Maringá e Siqueira Campos",
+      "paragrafos": [
+        "A Dra. Mayara Bacellar atende harmonização facial em duas cidades do Paraná: Maringá e Siqueira Campos.",
+        "Veja os meses e os dias de atendimento em cada cidade e agende sua consulta pelo WhatsApp com a equipe da Dra. Mayara."
+      ],
+      "whatsapp": "Agendar pelo WhatsApp: {telefone}"
+    }
+  },
   "areas": [
     {
       "codigo": "testa",
