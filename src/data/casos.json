@@ -1,0 +1,18 @@
+{
+  "_comoEditar": [
+    "Fotos de casos reais, por parte do rosto. Os códigos são os mesmos de conteudo.json (areas).",
+    "1. Ponha a foto na pasta public/casos/<codigo>/ (ex.: public/casos/testa/caso-1.jpg).",
+    "2. Acrescente na lista da parte: { \"foto\": \"testa/caso-1.jpg\", \"legenda\": \"Toxina botulínica, 15 dias depois\" }.",
+    "A legenda é opcional. As fotos aparecem na ordem da lista. Lista vazia = aparece 'Fotos em breve'.",
+    "Dica: use fotos de antes e depois já lado a lado numa imagem só, em JPG, com até ~1200 px de largura."
+  ],
+  "testa": [],
+  "olhos": [],
+  "bochechas": [],
+  "nariz": [],
+  "boca": [],
+  "queixo": [],
+  "mandibula": [],
+  "pescoco": [],
+  "pele": []
+}

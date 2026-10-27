@@ -194,6 +194,7 @@
       "rosto": [
         "Escolher o rosto",
         "Marcar no rosto",
+        "Ver resultados",
         "Contar mais",
         "Revisar e enviar"
       ],
@@ -339,6 +340,23 @@
       "outraNaLista": "Outra parte: {texto}",
       "editar": "Editar {area}"
     },
+    "resultados": {
+      "titulo": "Quer ver resultados de quem tinha as mesmas queixas?",
+      "explicacao": "Separamos fotos de casos reais atendidos pela Dra. Mayara, organizadas pelas partes do rosto que você marcou. Toque numa parte para ver.",
+      "fotos": {
+        "um": "1 caso",
+        "varios": "{n} casos"
+      },
+      "emBreve": "Fotos em breve",
+      "semFotos": "Ainda não há fotos desta parte. Em breve!",
+      "foto": "Caso real: {area}",
+      "abrirFoto": "Ampliar foto {i} de {area}",
+      "fechar": "Fechar",
+      "nenhuma": "Ainda não temos fotos das partes que você marcou. Você pode seguir normalmente.",
+      "aviso": "Cada rosto é único: os resultados variam de pessoa para pessoa. As fotos são publicadas com autorização dos pacientes.",
+      "pular": "Pular",
+      "continuar": "Continuar"
+    },
     "proximo": {
       "titulo": "Anotado! E agora?",
       "marcou": {
@@ -352,8 +370,7 @@
       "maisInfo": "Desejo passar mais informações",
       "maisInfoDetalhe": "Responder algumas perguntas rápidas sobre cada parte",
       "falar": "Desejo falar com a Dra. Mayara",
-      "falarDetalhe": "Seguir agora com o que já marquei",
-      "voltar": "Voltar ao rosto"
+      "falarDetalhe": "Seguir agora com o que já marquei"
     },
     "detalhes": {
       "contador": "Área {atual} de {total}",

@@ -60,7 +60,7 @@ export function telaMapa(aviso = "") {
   app.querySelectorAll("[data-vista]").forEach(b => b.onclick = () => { ui.vista = b.dataset.vista; salvar(); telaMapa(); });
   app.querySelectorAll("[data-rosto]").forEach(b => b.onclick = () => { estado.rosto = b.dataset.rosto; salvar(); telaMapa(); });
   document.getElementById("voltar").onclick = () => irPara("abertura");
-  document.getElementById("seguir").onclick = () => irPara("proximo");
+  document.getElementById("seguir").onclick = () => irPara("resultados");
 
   if (aviso) {
     const el = document.getElementById("aviso");
