@@ -17,19 +17,22 @@
 //     comentario: string
 //   }]
 // }
-const CHAVE = "site-mayara:v2";
+import { STORAGE_KEY } from "./config.js";
 
 export const estado = { rosto: null, sobre: { nome: "" }, areas: [] };
-export const ui = { tela: "abertura", vista: "frente", indice: 0 };
+export const ui = { tela: "abertura", vista: "frente", indice: 0, aceite: false };
+
+/** Áreas cujo campo "Outro" está aberto mas ainda vazio (não vai para o estado nem é salvo). */
+export const outroAberto = new Set();
 
 try {
-  const salvo = JSON.parse(sessionStorage.getItem(CHAVE));
+  const salvo = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
   if (salvo) { Object.assign(estado, salvo.estado); Object.assign(ui, salvo.ui); }
   estado.sobre = { nome: "", ...estado.sobre };
 } catch {}
 
 export function salvar() {
-  try { sessionStorage.setItem(CHAVE, JSON.stringify({ estado, ui })); } catch {}
+  try { sessionStorage.setItem(STORAGE_KEY,JSON.stringify({ estado, ui })); } catch {}
 }
 
 export function novaArea(codigo) {

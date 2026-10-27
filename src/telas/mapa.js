@@ -2,6 +2,7 @@ import { estado, ui, salvar, estaMarcada, alternarArea } from "../estado.js";
 import { AREA, t } from "../conteudo.js";
 import { svgRosto } from "../rostos/index.js";
 import { app, barra, esc } from "../util.js";
+import { NOTICE_DURATION_MS } from "../config.js";
 import { irPara } from "../main.js";
 
 let avisoTimer;
@@ -66,7 +67,7 @@ export function telaMapa(aviso = "") {
     el.textContent = aviso;
     el.classList.add("on");
     clearTimeout(avisoTimer);
-    avisoTimer = setTimeout(() => el.classList.remove("on"), 1400);
+    avisoTimer = setTimeout(() => el.classList.remove("on"), NOTICE_DURATION_MS);
   }
 }
 

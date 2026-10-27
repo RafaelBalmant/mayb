@@ -1,10 +1,8 @@
-import { estado, ui, salvar } from "../estado.js";
+import { estado, ui, salvar, outroAberto } from "../estado.js";
 import { AREA, rotulos, t } from "../conteudo.js";
+import { INTENSITY_SCALE } from "../config.js";
 import { app, barra, esc, topo, manterRolagem } from "../util.js";
 import { irPara } from "../main.js";
-
-// "Outro" aberto mas ainda vazio (não vai para o estado)
-const outroAberto = new Set();
 
 function grupo(campo, legenda, opcoes, valor, extra = "") {
   return `<fieldset class="pergunta"><legend>${legenda}</legend><div class="chips">${
@@ -34,7 +32,7 @@ export function telaDetalhes() {
   }
 
   const intensidade = `<fieldset class="pergunta"><legend>${P.intensidade}</legend><div class="escala">${
-    [1, 2, 3, 4, 5].map(n => `<button type="button" class="chip" data-campo="intensidade" data-valor="${n}" aria-pressed="${a.intensidade === n}">${n}</button>`).join("")
+    INTENSITY_SCALE.map(n => `<button type="button" class="chip" data-campo="intensidade" data-valor="${n}" aria-pressed="${a.intensidade === n}">${n}</button>`).join("")
   }</div><div class="escala-leg"><span>${esc(t("detalhes.intensidadePouco"))}</span><span>${esc(t("detalhes.intensidadeMuito"))}</span></div></fieldset>`;
 
   const detalheProc = a.procedimento === "sim"

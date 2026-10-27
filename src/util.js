@@ -1,4 +1,5 @@
 import { t } from "./conteudo.js";
+import { TOTAL_STEPS } from "./config.js";
 
 export const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
@@ -18,8 +19,8 @@ export const paragrafos = (lista, classe) => lista.map(p => `<p class="${classe}
 export const marca = () => `<div class="marca">${esc(t("geral.marca"))}</div>`;
 
 export function topo(etapa, titulo) {
-  const barras = Array.from({ length: 8 }, (_, i) => `<span class="${i < etapa ? "ok" : ""}"></span>`).join("");
+  const barras = Array.from({ length: TOTAL_STEPS }, (_, i) => `<span class="${i < etapa ? "ok" : ""}"></span>`).join("");
   return `<header class="topo">${marca()}
     <div class="progresso" aria-hidden="true">${barras}</div>
-    <div class="etapa">${esc(t("geral.etapa", { atual: etapa, total: 8, titulo }))}</div></header>`;
+    <div class="etapa">${esc(t("geral.etapa", { atual: etapa, total: TOTAL_STEPS, titulo }))}</div></header>`;
 }

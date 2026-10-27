@@ -42,7 +42,7 @@ describe("formatarAreas", () => {
 
   it("encurta textos livres quando max é pequeno", () => {
     const longa = area("testa", { comentario: "x".repeat(300) });
-    const texto = formatarAreas([longa], null, 20);
+    const texto = formatarAreas([longa], 20);
     expect(texto).toContain("x".repeat(19) + "…");
     expect(texto).not.toContain("x".repeat(20));
   });

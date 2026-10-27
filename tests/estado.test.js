@@ -58,13 +58,13 @@ describe("persistência", () => {
     const { mod } = await carregar({ [CHAVE]: JSON.stringify(salvo) });
     expect(mod.estado.rosto).toBe("masculino");
     expect(mod.estado.sobre.nome).toBe("Ana");
-    expect(mod.ui).toEqual(salvo.ui);
+    expect(mod.ui).toMatchObject(salvo.ui);
   });
 
   it("ignora JSON inválido e usa o padrão", async () => {
     const { mod } = await carregar({ [CHAVE]: "{quebrado" });
     expect(mod.estado).toEqual({ rosto: null, sobre: { nome: "" }, areas: [] });
-    expect(mod.ui).toEqual({ tela: "abertura", vista: "frente", indice: 0 });
+    expect(mod.ui).toEqual({ tela: "abertura", vista: "frente", indice: 0, aceite: false });
   });
 
   it("funciona sem sessionStorage disponível", async () => {
@@ -86,6 +86,6 @@ describe("recomecar", () => {
     mod.recomecar();
 
     expect(mod.estado).toEqual({ rosto: null, sobre: { nome: "" }, areas: [] });
-    expect(mod.ui).toMatchObject({ tela: "abertura", vista: "frente", indice: 0 });
+    expect(mod.ui).toMatchObject({ tela: "abertura", vista: "frente", indice: 0, aceite: false });
   });
 });

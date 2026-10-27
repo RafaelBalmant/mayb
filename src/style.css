@@ -72,7 +72,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
   padding: 8px 14px; font-size: 15px; line-height: 1.25; text-align: left;
 }
 .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); font-weight: 600; }
-.vazio { color: var(--muted); font-size: 15px; }
 input[type="text"], textarea {
   width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--surface);
   border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 13px;
@@ -95,7 +94,6 @@ pre.zap {
   margin: 0; white-space: pre-wrap; word-break: break-word; font-family: var(--fonte-texto); font-size: 15px;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px;
 }
-pre.json { margin: 0; overflow-x: auto; font-size: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; }
 
 /* Barra fixa */
 .barra {
@@ -117,10 +115,6 @@ body { margin: 0; }
 [hidden] { display: none !important; }
 :root { padding-top: env(safe-area-inset-top, 0px); }
 
-/* details.lista (dados técnicos na tela final) */
-details.lista { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
-details.lista summary { padding: 13px 16px; font-weight: 600; cursor: pointer; }
-details.lista .dentro { padding: 0 16px 16px; }
 
 /* Abertura */
 .pergunta-grande { font-size: clamp(34px, 10vw, 46px); line-height: 1.08; margin-top: 12px; }

@@ -2,6 +2,7 @@ import { estado, ui, salvar } from "../estado.js";
 import { t } from "../conteudo.js";
 import { montarMensagem, linkWhatsapp } from "../resumo.js";
 import { app, barra, esc, topo } from "../util.js";
+import { SEND_REDIRECT_DELAY_MS } from "../config.js";
 import { irPara } from "../main.js";
 
 // Revisar e enviar: a mensagem exatamente como vai chegar, o aceite de privacidade e o botão do WhatsApp.
@@ -53,7 +54,7 @@ export function telaRevisar() {
       return;
     }
     // o link abre o WhatsApp; aqui só mostramos o que acontece depois
-    setTimeout(() => irPara("enviado"), 300);
+    setTimeout(() => irPara("enviado"), SEND_REDIRECT_DELAY_MS);
   };
   document.getElementById("editar-areas").onclick = () => irPara("mapa");
   document.getElementById("editar-detalhes").onclick = () => irPara("detalhes", 0);
