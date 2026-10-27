@@ -220,6 +220,9 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 }
 .perfil-nome span { display: block; }
 .perfil-frase { margin-top: 8px; font-family: var(--fonte-titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--muted); }
+.perfil-frase.surgir { animation: surgir 1.8s ease-out .5s both; }
+@keyframes surgir { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .perfil-frase.surgir { animation: none; } }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
 
