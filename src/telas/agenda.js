@@ -66,7 +66,7 @@ export function telaAgenda() {
     <h1>${esc(t("agenda.titulo"))}</h1>
     <p class="explica">${esc(t("agenda.explicacao"))}</p>
     <div class="seg meses" role="group" aria-label="${esc(t("agenda.escolhaMes"))}">${meses.map(botaoMes).join("")}</div>
-    <section class="calendario">
+    <section class="calendario${ui.deslize ? ` entra-${ui.deslize}` : ""}">
       <h2>${esc(t("agenda.mesAno", { mes: nomesMes[mes.getMonth()], ano: mes.getFullYear() }))}</h2>
       <div class="grade" role="grid">
         ${semana.map(s => `<span class="semana" aria-hidden="true">${esc(s)}</span>`).join("")}
@@ -79,9 +79,34 @@ export function telaAgenda() {
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
     <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar", { mes: nomeMes }))}</button>`;
 
+  // troca de mês sem voltar ao topo da página; "lado" diz de onde o calendário novo entra
+  const irParaMes = i => {
+    if (i < 0 || i >= meses.length || i === indice) return;
+    const rolagem = window.scrollY;
+    ui.mesAgenda = i;
+    ui.deslize = i > indice ? "dir" : "esq";
+    irPara("agenda");
+    window.scrollTo(0, rolagem);
+    ui.deslize = null;
+  };
   app.querySelectorAll("[data-mes]").forEach(b => {
-    b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); irPara("agenda"); };
+    b.onclick = () => irParaMes(Number(b.dataset.mes));
   });
+
+  // arrastar o calendário para o lado: para a esquerda vai ao mês seguinte, para a direita volta ao anterior
+  const calendario = app.querySelector(".calendario");
+  let inicio = null;
+  calendario.addEventListener("touchstart", e => {
+    const toque = e.touches[0];
+    inicio = e.touches.length === 1 ? { x: toque.clientX, y: toque.clientY } : null;
+  }, { passive: true });
+  calendario.addEventListener("touchend", e => {
+    if (!inicio) return;
+    const toque = e.changedTouches[0];
+    const dx = toque.clientX - inicio.x, dy = toque.clientY - inicio.y;
+    inicio = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) irParaMes(indice + (dx < 0 ? 1 : -1));
+  }, { passive: true });
   document.getElementById("voltar").onclick = () => irPara("inicio");
   document.getElementById("agendar").onclick = () =>
     abrirModalAgendar({ mes, nomeMes, dias: atendidos.map(dia => ({ dia, locais: dias[dia] })) });
