@@ -77,7 +77,7 @@ export function telaAgenda() {
     ${atendidos.length ? "" : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`}`;
 
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
-    <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar"))}</button>`;
+    <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar", { mes: nomeMes }))}</button>`;
 
   app.querySelectorAll("[data-mes]").forEach(b => {
     b.onclick = () => { ui.mesAgenda = Number(b.dataset.mes); irPara("agenda"); };
@@ -94,7 +94,6 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
   const locais = t("agenda.locais");
   const escolha = { local: null };
   const diasDo = local => dias.filter(d => d.locais.includes(local)).map(d => d.dia);
-  const listaDias = nums => (nums.length > 1 ? t("agenda.modal.listaDias", { dias: nums.slice(0, -1).join(", "), ultimo: nums.at(-1) }) : String(nums[0]));
 
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo";
@@ -111,15 +110,17 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
     const opcaoLocal = ([codigo, nome]) => {
       const nums = diasDo(codigo);
       return `<button type="button" class="caminho local-${codigo}" data-local="${codigo}" aria-pressed="${escolha.local === codigo}" ${nums.length ? "" : "disabled"}>
-          <strong><i aria-hidden="true"></i>${esc(nome)}</strong><span>${nums.length ? m("diasNaCidade", { dias: listaDias(nums) }) : m("semDiasCidade")}</span></button>`;
+          <strong><i aria-hidden="true"></i>${esc(nome)}</strong>${nums.length ? "" : `<span>${m("semDiasCidade")}</span>`}</button>`;
     };
     modal.innerHTML = `
         <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
         <div class="topo">${progresso("agenda", 2)}</div>
         <h2 id="modal-titulo">${m("titulo", { mes: nomeMes })}</h2>
-        <p class="sub">${m("explicacao", { mes: nomeMes })}</p>
         <fieldset class="pergunta"><legend>${m("cidade")}</legend>
-          <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div></fieldset>
+          <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div>
+          <div class="info-card" role="note">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
+            <p>${m("info")}</p></div></fieldset>
         <div class="modal-acoes">
           <button class="btn sec" id="modal-cancelar">${m("cancelar")}</button>
           <a class="btn pri" id="modal-enviar" target="_blank" rel="noopener" ${
