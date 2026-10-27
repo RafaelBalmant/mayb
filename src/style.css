@@ -236,6 +236,12 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .local-siqueira_campos { --local: var(--local-siqueira_campos); --on-local: var(--on-local-siqueira_campos); }
 .meses { display: flex; }
 .meses button { flex: 1; padding: 8px 0; font-size: 15px; }
+.meses { position: relative; }
+.meses .indicador { position: absolute; top: 3px; bottom: 3px; left: 3px; border-radius: 999px; background: var(--accent); }
+.meses .indicador.anda { transition: transform .22s ease-out; }
+.meses button { position: relative; transition: color .22s; }
+.meses button[aria-pressed="true"] { background: transparent; }
+@media (prefers-reduced-motion: reduce) { .meses .indicador.anda { transition: none; } }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
 .calendario h2 { padding-inline: 4px; }
 .calendario { touch-action: pan-y; }

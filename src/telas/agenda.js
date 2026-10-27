@@ -65,7 +65,7 @@ export function telaAgenda() {
   app.innerHTML = `${topo("agenda", 1)}
     <h1>${esc(t("agenda.titulo"))}</h1>
     <p class="explica">${esc(t("agenda.explicacao"))}</p>
-    <div class="seg meses" role="group" aria-label="${esc(t("agenda.escolhaMes"))}">${meses.map(botaoMes).join("")}</div>
+    <div class="seg meses" role="group" aria-label="${esc(t("agenda.escolhaMes"))}"><span class="indicador" aria-hidden="true"></span>${meses.map(botaoMes).join("")}</div>
     <section class="calendario${ui.deslize ? ` entra-${ui.deslize}` : ""}">
       <h2>${esc(t("agenda.mesAno", { mes: nomesMes[mes.getMonth()], ano: mes.getFullYear() }))}</h2>
       <div class="grade" role="grid">
@@ -79,10 +79,22 @@ export function telaAgenda() {
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
     <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar", { mes: nomeMes }))}</button>`;
 
+  // o destaque do mês desliza do mês anterior até o escolhido (mesmo ritmo do calendário)
+  const indicador = app.querySelector(".meses .indicador");
+  const posicao = i => { indicador.style.width = `calc((100% - 6px) / ${meses.length})`; indicador.style.transform = `translateX(${i * 100}%)`; };
+  posicao(ui.mesAnterior ?? indice);
+  if (ui.mesAnterior != null && ui.mesAnterior !== indice) {
+    indicador.getBoundingClientRect();
+    indicador.classList.add("anda");
+    posicao(indice);
+  }
+  ui.mesAnterior = null;
+
   // troca de mês sem voltar ao topo da página; "lado" diz de onde o calendário novo entra
   const irParaMes = i => {
     if (i < 0 || i >= meses.length || i === indice) return;
     const rolagem = window.scrollY;
+    ui.mesAnterior = indice;
     ui.mesAgenda = i;
     ui.deslize = i > indice ? "dir" : "esq";
     irPara("agenda");
