@@ -74,8 +74,7 @@ export function telaAgenda() {
       </div>
       <ul class="legenda" aria-label="${esc(t("agenda.legenda"))}">${legenda}</ul>
     </section>
-    ${atendidos.length ? "" : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`}
-    <p class="sub nota">${esc(t("agenda.aviso"))}</p>`;
+    ${atendidos.length ? "" : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`}`;
 
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>
     <button class="btn pri" id="agendar" ${atendidos.length ? "" : "disabled"}>${esc(t("agenda.agendar"))}</button>`;
