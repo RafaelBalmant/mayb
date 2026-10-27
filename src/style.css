@@ -238,6 +238,12 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .meses button { flex: 1; padding: 8px 0; font-size: 15px; }
 .calendario { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 12px; }
 .calendario h2 { padding-inline: 4px; }
+.calendario { touch-action: pan-y; }
+.calendario.entra-dir { animation: entra-dir .22s ease-out; }
+.calendario.entra-esq { animation: entra-esq .22s ease-out; }
+@keyframes entra-dir { from { opacity: 0; transform: translateX(24px); } }
+@keyframes entra-esq { from { opacity: 0; transform: translateX(-24px); } }
+@media (prefers-reduced-motion: reduce) { .calendario.entra-dir, .calendario.entra-esq { animation: none; } }
 .grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
 .grade .semana { font-size: 12px; font-weight: 600; color: var(--muted); padding-bottom: 4px; }
 .grade .dia { aspect-ratio: 1; display: grid; place-items: center; border-radius: 10px; font-size: 15px; color: var(--muted); }
