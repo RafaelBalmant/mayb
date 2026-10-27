@@ -116,7 +116,6 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
         <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
         <div class="topo">${progresso("agenda", 2)}</div>
         <h2 id="modal-titulo">${m("titulo", { mes: nomeMes })}</h2>
-        <p class="sub">${m("explicacao", { mes: nomeMes })}</p>
         <fieldset class="pergunta"><legend>${m("cidade")}</legend>
           <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div></fieldset>
         <div class="modal-acoes">
