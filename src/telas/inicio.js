@@ -8,6 +8,9 @@ const imagem = arquivo => import.meta.env.BASE_URL + arquivo;
 // A frase de efeito surge devagar só na primeira vez que o início aparece (voltar da agenda não repete).
 let fraseJaApareceu = false;
 
+// Ícone do Instagram em traço (a cor vem do CSS).
+const ICONE_INSTAGRAM = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle class="ponto" cx="17.3" cy="6.7" r="1.1"/></svg>`;
+
 // Página inicial: foto no topo (mesma largura do texto), nome em letras grandes por cima da borda de baixo, e os caminhos.
 // Depois estes botões podem ir para o site institucional (que pode abrir direto em #agenda ou #mapa).
 export function telaInicio() {
@@ -24,7 +27,8 @@ export function telaInicio() {
       <button class="btn pri" id="ir-agenda">${esc(t("inicio.agenda"))}</button>
       ${MOSTRAR_MAPA ? `<button class="btn" id="ir-mapa">${esc(t("inicio.mapa"))}</button>` : ""}
     </div>
-    <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>`;
+    <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>
+    <a class="perfil-instagram" href="${esc(profissional.instagram)}" target="_blank" rel="noopener" aria-label="${esc(t("inicio.instagram"))}">${ICONE_INSTAGRAM}</a>`;
 
   fraseJaApareceu = true;
 
