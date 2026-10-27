@@ -1,0 +1,1 @@
+Coloque aqui capa.jpg e foto.jpg (nomes em src/data/conteudo.json → profissional.capa / profissional.foto).
