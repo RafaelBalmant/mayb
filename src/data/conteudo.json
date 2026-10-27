@@ -249,7 +249,7 @@
       "mapa": "Me conta o que te incomoda no rosto"
     },
     "agenda": {
-      "titulo": "Agenda da Dra. Mayara",
+      "titulo": "Agenda",
       "explicacao": "Escolha o mês para ver os dias em que a Dra. Mayara atende em cada cidade.",
       "escolhaMes": "Mês",
       "mesAno": "{mes} de {ano}",
