@@ -229,6 +229,8 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal-agendar .modal-acoes { margin-top: auto; position: sticky; bottom: 0; background: var(--surface); padding-top: 8px; }
 .chip:disabled { opacity: .45; cursor: not-allowed; }
 .caminho:disabled { opacity: .45; cursor: not-allowed; }
+.caminho[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.caminho strong i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; background: var(--local); margin-right: 8px; }
 .topo-compacto { gap: 6px; }
 .modal-agendar .topo { display: flex; flex-direction: column; gap: 8px; padding-right: 44px; }
 
