@@ -19,7 +19,6 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   além do formato do resumo. `{n}`, `{area}` etc. são trocados pelo valor certo. O código lê tudo com `t("tela.chave")`.
 - `src/data/agenda.json`: **dias de atendimento** (Maringá e Siqueira Campos), por mês. É só pôr o número do dia
   na lista da cidade; dia que não aparece = não atende. As instruções estão no próprio arquivo (`_comoEditar`).
-  As datas que estão lá agora são de exemplo.
 - `src/tema.css`: **fontes e cores do site**, num lugar só. Trocar a cor da marca (`--accent`) já muda botões e áreas
   marcadas; os desenhos do rosto também usam essas cores (`--skin`, `--hair`, `--lip`, `--ink`).
 - `src/rostos/*.svg`: as 4 ilustrações (feminino/masculino, frente/perfil). Cada área tocável é um
