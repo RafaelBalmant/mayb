@@ -56,8 +56,7 @@ export function telaAgenda() {
     return `<span class="${classes.join(" ")}" role="gridcell" aria-label="${esc(rotulo)}">${dia}</span>`;
   }).join("");
 
-  const legenda = [...Object.entries(locais).map(([codigo, nome]) => `<li><i class="local-${codigo}"></i>${esc(nome)}</li>`),
-    `<li><i></i>${esc(t("agenda.naoAtende"))}</li>`].join("");
+  const legenda = Object.entries(locais).map(([codigo, nome]) => `<li><i class="local-${codigo}"></i>${esc(nome)}</li>`).join("");
 
   const atendidos = Object.keys(dias).map(Number).sort((a, b) => a - b)
     .filter(dia => dia <= total && !(ehMesAtual && dia < hoje.getDate()));
