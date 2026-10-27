@@ -260,12 +260,12 @@
       "listaTitulo": "Dias de atendimento",
       "listaItem": "{semana}, {dia} de {mes}",
       "semDatas": "Ainda não há dias de atendimento neste mês.",
-      "aviso": "As datas podem mudar. Para marcar sua consulta, fale com a Dra. Mayara pelo WhatsApp.",
+      "aviso": "As datas podem mudar. Para marcar sua consulta, fale com a equipe da Dra. Mayara pelo WhatsApp.",
       "voltar": "Voltar",
       "agendar": "Agendar horário",
       "modal": {
         "titulo": "Agendar horário em {mes}",
-        "explicacao": "Escolha a cidade. Os dias abaixo são os que a Dra. Mayara atende em {mes}, só para você ter uma noção: ela confere a agenda e combina a data com você pelo WhatsApp.",
+        "explicacao": "Escolha a cidade. Os dias abaixo são os que a Dra. Mayara atende em {mes}, só para você ter uma noção: a equipe dela confere a agenda e combina a data com você pelo WhatsApp.",
         "cidade": "Em qual cidade?",
         "semDiasCidade": "Sem atendimento neste mês",
         "diasNaCidade": "Atende nos dias {dias}",
@@ -347,7 +347,7 @@
       ],
       "maisInfo": "Desejo passar mais informações",
       "maisInfoDetalhe": "Responder algumas perguntas rápidas sobre cada parte",
-      "falar": "Desejo falar com a Dra. Mayara",
+      "falar": "Desejo falar com a equipe da Dra. Mayara",
       "falarDetalhe": "Seguir agora com o que já marquei"
     },
     "detalhes": {
@@ -377,23 +377,23 @@
     },
     "revisar": {
       "titulo": "Confira antes de enviar",
-      "explicacao": "É assim que a mensagem vai chegar no WhatsApp da Dra. Mayara.",
+      "explicacao": "É assim que a mensagem vai chegar no WhatsApp da equipe da Dra. Mayara.",
       "nome": "Como você se chama?",
-      "nomeObs": "Opcional, mas ajuda a Dra. Mayara a te chamar pelo nome.",
+      "nomeObs": "Opcional, mas ajuda a equipe da Dra. Mayara a te chamar pelo nome.",
       "nomePlaceholder": "Seu nome",
       "previa": "Prévia da mensagem",
       "editarAreas": "Mudar as partes marcadas",
       "editarDetalhes": "Editar as respostas",
       "adicionarDetalhes": "Contar mais sobre cada parte",
-      "privacidade": "Suas informações não são registradas neste site nem armazenadas em nenhum sistema. Elas são encaminhadas diretamente pelo WhatsApp e permanecem apenas na conversa entre você e a Dra. Mayara Bacellar.",
+      "privacidade": "Suas informações não são registradas neste site nem armazenadas em nenhum sistema. Elas são encaminhadas diretamente pelo WhatsApp e permanecem apenas na conversa entre você e a equipe da Dra. Mayara Bacellar.",
       "aviso": "O WhatsApp vai abrir com a mensagem pronta. Você ainda pode mudar o texto antes de tocar em enviar.",
       "enviar": "Enviar pelo WhatsApp"
     },
     "enviado": {
-      "titulo": "Agora é com a Dra. Mayara",
+      "titulo": "Agora é com a equipe da Dra. Mayara",
       "explicacao": [
         "Se o WhatsApp abriu com a mensagem, é só tocar em enviar por lá.",
-        "A Dra. Mayara lê o seu resumo, te responde e combina com você a consulta de avaliação.",
+        "A equipe da Dra. Mayara lê o seu resumo, te responde e combina com você a consulta de avaliação.",
         "Se quiser, mande fotos do rosto na própria conversa. Elas ajudam, mas não são obrigatórias."
       ],
       "naoAbriu": "O WhatsApp não abriu?",
