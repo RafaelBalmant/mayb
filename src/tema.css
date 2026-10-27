@@ -69,7 +69,7 @@
 :root {
   --local-maringa: #d5bdaf;          /* bege rosado */
   --on-local-maringa: #3d3632;
-  --local-siqueira_campos: #c2c3b6;  /* cinza-sálvia (#edede9 escurecido) */
+  --local-siqueira_campos: #cddcc3;  /* verde-sálvia claro */
   --on-local-siqueira_campos: #3d3632;
 }
 
@@ -92,4 +92,5 @@
            --accent-soft #f7e6e9; --destaque #e3a3b1 (zone-sel 75%); --skin #fffaf7; --hair #e6dcd6; --lip #efbcc6;
            cidades Maringá #f3c6cf e Siqueira Campos #bfd3bd (texto #3a3336).
    Neutra com caramelo (26/10): --accent #9a5f42; --accent-soft #f6e1d3; --destaque #c9805f;
-           cidades Maringá #e8b49a e Siqueira Campos #8e5a6a (texto branco). */
+           cidades Maringá #e8b49a e Siqueira Campos #8e5a6a (texto branco).
+   Cinza-sálvia (27/10, antes do verde mais claro): Siqueira Campos #c2c3b6. */
