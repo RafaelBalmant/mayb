@@ -25,10 +25,10 @@ export function telaMapa(aviso = "") {
       <div class="seg" role="group" aria-label="${esc(t("mapa.vista"))}">${seg("vista", "frente", ui.vista)}${seg("vista", "perfil", ui.vista)}</div>
       <div class="seg" role="group" aria-label="${esc(t("mapa.rosto"))}">${seg("rosto", "feminino", estado.rosto)}${seg("rosto", "masculino", estado.rosto)}</div>
     </div>
+    <p class="dica-mapa">${esc(t("mapa.nomes"))}</p>
     <div class="palco">
       <div class="mapa">${svgRosto(estado.rosto, ui.vista)}<div class="aviso" id="aviso" role="status" aria-live="polite"></div></div>
-      <aside class="lado">
-        <h3>${esc(t("mapa.nomes"))}</h3>
+      <aside class="lado" aria-label="${esc(t("mapa.nomes"))}">
         <ul class="rotulos">${Object.keys(AREA).map(rotulo).join("")}</ul>
       </aside>
     </div>`;

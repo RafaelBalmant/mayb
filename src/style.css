@@ -131,11 +131,11 @@ details.lista .dentro { padding: 0 16px 16px; }
 }
 .app-mapa .controles { flex-wrap: nowrap; gap: 6px; }
 .app-mapa .seg button { padding: 7px 11px; font-size: 13px; }
+.dica-mapa { margin: 0; text-align: center; font-size: 15px; font-weight: 600; line-height: 1.3; }
 .palco { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px; }
 /* a caixa do desenho abraça o rosto (proporção ~2:3); em tela baixa, encolhe e o rosto fica centralizado */
 .mapa { min-height: 0; align-self: center; width: 100%; aspect-ratio: 2 / 3; max-height: 100%; }
 .lado { min-height: 0; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-.lado h3 { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .rotulos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .rotulo {
   width: 100%; display: flex; align-items: center; gap: 8px; text-align: left;
