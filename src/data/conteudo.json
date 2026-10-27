@@ -250,7 +250,7 @@
     },
     "agenda": {
       "titulo": "Agenda",
-      "explicacao": "Escolha o mês para ver os dias em que a Dra. Mayara atende em cada cidade.",
+      "explicacao": "Selecione o mês para consultar os dias em que a Dra. Mayara atende em cada cidade.",
       "escolhaMes": "Mês",
       "mesAno": "{mes} de {ano}",
       "meses": [
