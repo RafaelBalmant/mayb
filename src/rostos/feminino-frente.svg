@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="28 30 244 334">
-  <defs><clipPath id="pele-feminino-frente"><path d="M150 54 C201 54 231 88 232 140 C233 180 227 212 213 238 C199 264 176 288 150 291 C124 288 101 264 87 238 C73 212 67 180 68 140 C69 88 99 54 150 54 Z M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"/></clipPath></defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 220 330">
+  <defs><clipPath id="recorte-feminino-frente-0"><path d="M150 54 C201 54 231 88 232 140 C233 180 227 212 213 238 C199 264 176 288 150 291 C124 288 101 264 87 238 C73 212 67 180 68 140 C69 88 99 54 150 54 Z"/></clipPath><clipPath id="recorte-feminino-frente-1"><path d="M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"/></clipPath></defs>
   <g class="arte">
     <path class="cabelo" d="M150 36 C86 36 52 88 54 160 C56 228 48 286 34 338 C60 352 92 352 116 340 C110 300 104 270 92 240 L208 240 C196 270 190 300 184 340 C208 352 240 352 266 338 C252 286 244 228 246 160 C248 88 214 36 150 36 Z"/>
     <path class="pele" d="M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"/>
@@ -10,15 +10,17 @@
     <path class="traco leve" d="M234 172 C238 166 240 160 237 156"/>
     <path class="cabelo" d="M150 50 C100 48 70 82 66 138 C64 160 66 178 70 192 C72 150 86 112 118 92 C140 80 176 78 204 92 C220 102 230 118 234 140 C236 86 204 50 150 50 Z"/>
   </g>
-  <g class="zonas" clip-path="url(#pele-feminino-frente)">
+  <g class="zonas" clip-path="url(#recorte-feminino-frente-0)">
     <path class="zona" data-area="testa" d="M82 136 C88 114 104 100 122 95 C148 88 180 88 204 97 C218 104 226 118 229 136 C200 125 176 125 150 129 C124 125 100 125 82 136 Z"/>
     <path class="zona" data-area="olhos" d="M88 163A27 18 0 1 0 142 163A27 18 0 1 0 88 163ZM158 163A27 18 0 1 0 212 163A27 18 0 1 0 158 163Z"/>
     <path class="zona" data-area="nariz" d="M150 150 C157 150 159 170 162 188 C164 198 172 206 171 214 C170 226 130 226 129 214 C128 206 136 198 138 188 C141 170 143 150 150 150 Z"/>
-    <path class="zona" data-area="bochechas" d="M70 186 C82 184 116 184 127 196 C134 206 128 228 116 236 C100 244 84 236 70 222 Z M230 186 C218 184 184 184 173 196 C166 206 172 228 184 236 C200 244 216 236 230 222 Z"/>
-    <path class="zona" data-area="boca" d="M117 249A33 18 0 1 0 183 249A33 18 0 1 0 117 249Z"/>
-    <path class="zona" data-area="queixo" d="M122 284A28 15 0 1 0 178 284A28 15 0 1 0 122 284Z"/>
-    <path class="zona zona-linha" data-area="mandibula" d="M75 220 C84 244 100 264 122 280 M225 220 C216 244 200 264 178 280"/>
-    <path class="zona" data-area="pescoco" d="M122 296 L178 296 L179 340 C160 348 140 348 121 340 Z"/>
+    <path class="zona" data-area="bochechas" d="M70 186 C82 184 116 184 127 196 C134 206 128 222 116 228 C102 234 86 228 72 214 Z M230 186 C218 184 184 184 173 196 C166 206 172 222 184 228 C198 234 214 228 228 214 Z"/>
+    <path class="zona" data-area="boca" d="M118 246A32 14 0 1 0 182 246A32 14 0 1 0 118 246Z"/>
+    <path class="zona" data-area="queixo" d="M129 266 C140 262 160 262 171 266 L176 300 L124 300 Z"/>
+    <path class="zona" data-area="mandibula" d="M50 212 L71 220 C86 240 104 258 124 268 L124 300 L50 300 Z M250 212 L229 220 C214 240 196 258 176 268 L176 300 L250 300 Z"/>
+  </g>
+  <g class="zonas" clip-path="url(#recorte-feminino-frente-1)">
+    <path class="zona" data-area="pescoco" d="M110 292 L190 292 L190 342 C160 350 140 350 110 342 Z"/>
   </g>
   <g class="arte detalhes">
     <path class="traco" stroke-width="3" d="M96 139 Q114 128 136 136"/>

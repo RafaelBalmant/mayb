@@ -22,7 +22,6 @@ const par = (cx, cy, rx, ry, rot = 0) => elipse(cx, cy, rx, ry, rot) + elipse(30
 const dois = d => d + " " + espelhar(d);
 
 const zona = (codigo, d) => `<path class="zona" data-area="${codigo}" d="${d}"/>`;
-const zonaLinha = (codigo, d) => `<path class="zona zona-linha" data-area="${codigo}" d="${d}"/>`;
 
 /* ---------- Frente (eixo central em x = 150) ---------- */
 function frente(f) {
@@ -74,14 +73,18 @@ function frente(f) {
     zona("olhos", par(115, 163, 27, 18)),
     zona("nariz", "M150 150 C157 150 159 170 162 188 C164 198 172 206 171 214 C170 226 130 226 129 214 C128 206 136 198 138 188 C141 170 143 150 150 150 Z"),
     zona("bochechas", dois(f
-      ? "M70 186 C82 184 116 184 127 196 C134 206 128 228 116 236 C100 244 84 236 70 222 Z"
-      : "M64 186 C80 184 116 184 127 196 C134 206 128 228 116 236 C100 246 80 238 64 224 Z")),
-    zona("boca", elipse(150, 249, 33, f ? 18 : 15)),
-    zona("queixo", elipse(150, f ? 284 : 288, f ? 28 : 34, 15)),
-    zonaLinha("mandibula", dois(f ? "M75 220 C84 244 100 264 122 280" : "M68 226 C76 252 96 272 118 284")),
-    zona("pescoco", f ? "M122 296 L178 296 L179 340 C160 348 140 348 121 340 Z" : "M112 300 L188 300 L188 338 C164 348 136 348 112 338 Z"),
+      ? "M70 186 C82 184 116 184 127 196 C134 206 128 222 116 228 C102 234 86 228 72 214 Z"
+      : "M64 186 C80 184 116 184 127 196 C134 206 128 222 116 230 C100 236 82 232 64 218 Z")),
+    zona("boca", elipse(150, f ? 246 : 249, f ? 32 : 30, f ? 14 : 12)),
+    // queixo e contorno: a parte de baixo passa do rosto e é cortada pelo contorno, então segue a linha do queixo
+    zona("queixo", f ? "M129 266 C140 262 160 262 171 266 L176 300 L124 300 Z" : "M127 268 C140 264 160 264 173 268 L178 304 L122 304 Z"),
+    zona("mandibula", dois(f
+      ? "M50 212 L71 220 C86 240 104 258 124 268 L124 300 L50 300 Z"
+      : "M40 216 L64 224 C80 246 100 264 122 272 L122 304 L40 304 Z")),
   ];
-  return { arte, detalhes, zonas, contorno: rosto + " " + pescoco, recorte: "28 30 244 334" };
+  const zonaPescoco = zona("pescoco", f ? "M110 292 L190 292 L190 342 C160 350 140 350 110 342 Z" : "M100 296 L200 296 L200 340 C166 350 134 350 100 340 Z");
+  // o pescoço tem recorte próprio, para o queixo não vazar para ele
+  return { arte, detalhes, grupos: [[rosto, zonas], [pescoco, [zonaPescoco]]], recorte: "40 30 220 330" };
 }
 
 /* ---------- Perfil (olhando para a esquerda) ---------- */
@@ -132,25 +135,25 @@ function perfil(f) {
     zona("bochechas", elipse(148, 200, 30, 26)),
     zona("boca", elipse(98, 237, 16, 17)),
     zona("queixo", elipse(106, 280, 20, 18)),
-    zonaLinha("mandibula", "M202 232 C206 254 200 270 184 280 C166 290 146 294 130 295"),
+    zona("mandibula", "M202 232 C206 254 200 270 184 280 C166 290 142 296 124 296 L124 286 C140 286 160 282 174 272 C188 262 192 248 189 232 Z"),
     zona("pescoco", elipse(202, 340, 38, 32)),
   ];
-  return { arte, detalhes, zonas, contorno: cabeca, recorte: "44 30 252 334" };
+  return { arte, detalhes, grupos: [[cabeca, zonas]], recorte: "50 30 240 330" };
 }
 
 for (const sexo of ["feminino", "masculino"]) {
   for (const vista of ["frente", "perfil"]) {
     const f = sexo === "feminino";
-    const { arte, detalhes, zonas, contorno, recorte } = vista === "frente" ? frente(f) : perfil(f);
-    const id = `pele-${sexo}-${vista}`;
+    const { arte, detalhes, grupos, recorte } = vista === "frente" ? frente(f) : perfil(f);
+    const id = i => `recorte-${sexo}-${vista}-${i}`;
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${recorte}">
-  <defs><clipPath id="${id}"><path d="${contorno}"/></clipPath></defs>
+  <defs>${grupos.map(([contorno], i) => `<clipPath id="${id(i)}"><path d="${contorno}"/></clipPath>`).join("")}</defs>
   <g class="arte">
     ${arte.filter(Boolean).join("\n    ")}
   </g>
-  <g class="zonas" clip-path="url(#${id})">
+  ${grupos.map(([, zonas], i) => `<g class="zonas" clip-path="url(#${id(i)})">
     ${zonas.join("\n    ")}
-  </g>
+  </g>`).join("\n  ")}
   <g class="arte detalhes">
     ${detalhes.filter(Boolean).join("\n    ")}
   </g>

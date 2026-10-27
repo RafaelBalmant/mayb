@@ -9,7 +9,7 @@ export const AREA = Object.fromEntries(areas.map(a => [a.codigo, a]));
 export const nomeCurto = codigo => AREA[codigo].nome.replace(/ \(.+\)$/, "");
 
 /**
- * Texto do site: t("mapa.vazio"), t("geral.etapa", { atual: 3, total: 8, titulo: "…" }).
+ * Texto do site: t("mapa.nomes"), t("geral.etapa", { atual: 3, total: 8, titulo: "…" }).
  * Todo texto que aparece para o paciente vem de data/conteudo.json (seção "textos").
  */
 export function t(chave, vars = {}) {

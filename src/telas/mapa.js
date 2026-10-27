@@ -6,18 +6,17 @@ import { irPara } from "../main.js";
 
 let avisoTimer;
 
-// Tela do mapa: só o rosto, a lista do que foi marcado embaixo, os controles e a navegação.
+// Tela do mapa: o rosto e, ao lado, os nomes das partes (tocar no nome também marca), os controles e a navegação.
 export function telaMapa(aviso = "") {
   const n = estado.areas.length;
   const seg = (campo, valor, atual) =>
     `<button data-${campo}="${valor}" aria-pressed="${atual === valor}">${esc(t(`mapa.${valor}`))}</button>`;
-  const lista = n
-    ? `<ol class="marcadas">${estado.areas.map(a => (a.codigo === "outra"
-      ? `<li><button data-editar-outra aria-label="${esc(t("mapa.editar", { area: nomeNaLista(a) }))}"><span>${esc(nomeNaLista(a))}</span><span class="x" aria-hidden="true">✎</span></button></li>`
-      : `<li><button data-remover="${a.codigo}" aria-label="${esc(t("mapa.remover", { area: AREA[a.codigo].nome }))}"><span>${esc(nomeNaLista(a))}</span><span class="x" aria-hidden="true">×</span></button></li>`)).join("")}</ol>`
-    : `<p class="vazio">${esc(t("mapa.vazio"))}</p>`;
-  const extra = codigo =>
-    `<button class="extra" data-area="${codigo}" aria-pressed="${estaMarcada(codigo)}">${estaMarcada(codigo) ? "✓" : "+"} ${esc(t(`mapa.${codigo}`))}</button>`;
+  // todas as partes, na ordem de conteudo.json; "outra" abre o campo de texto
+  const rotulo = codigo => {
+    const marcada = estaMarcada(codigo);
+    const nome = codigo === "outra" && marcada ? nomeNaLista(estado.areas.find(a => a.codigo === "outra")) : AREA[codigo].nome;
+    return `<li><button class="rotulo" data-area="${codigo}" aria-pressed="${marcada}"><span class="marca-rotulo" aria-hidden="true">${marcada ? "✓" : "+"}</span><span>${esc(nome)}</span></button></li>`;
+  };
 
   app.className = "app app-mapa";
   app.innerHTML = `
@@ -29,9 +28,8 @@ export function telaMapa(aviso = "") {
     <div class="palco">
       <div class="mapa">${svgRosto(estado.rosto, ui.vista)}<div class="aviso" id="aviso" role="status" aria-live="polite"></div></div>
       <aside class="lado">
-        <h3>${esc(n ? t("mapa.marcouQuantas", { n }) : t("mapa.marcou"))}</h3>
-        ${lista}
-        <div class="extras">${extra("pele")}${extra("outra")}</div>
+        <h3>${esc(t("mapa.nomes"))}</h3>
+        <ul class="rotulos">${Object.keys(AREA).map(rotulo).join("")}</ul>
       </aside>
     </div>`;
 
@@ -55,8 +53,12 @@ export function telaMapa(aviso = "") {
 
   app.querySelectorAll("button[data-area]").forEach(b => b.onclick = () =>
     b.dataset.area === "outra" ? abrirModalOutra() : tocar(b.dataset.area, `button[data-area="${b.dataset.area}"]`));
-  app.querySelectorAll("[data-remover]").forEach(b => b.onclick = () => tocar(b.dataset.remover));
-  app.querySelector("[data-editar-outra]")?.addEventListener("click", abrirModalOutra);
+  // passar o dedo/mouse ou o foco num nome acende a parte no desenho
+  app.querySelectorAll(".rotulo").forEach(b => {
+    const realce = liga => svg.querySelectorAll(`.zona[data-area="${b.dataset.area}"]`).forEach(z => z.classList.toggle("realce", liga));
+    b.onmouseenter = b.onfocus = () => realce(true);
+    b.onmouseleave = b.onblur = () => realce(false);
+  });
   app.querySelectorAll("[data-vista]").forEach(b => b.onclick = () => { ui.vista = b.dataset.vista; salvar(); telaMapa(); });
   app.querySelectorAll("[data-rosto]").forEach(b => b.onclick = () => { estado.rosto = b.dataset.rosto; salvar(); telaMapa(); });
   document.getElementById("voltar").onclick = () => irPara("abertura");

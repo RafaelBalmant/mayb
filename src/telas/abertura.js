@@ -7,7 +7,7 @@ import { irPara } from "../main.js";
 // Abertura do mapa: a pergunta, o que vem a seguir e a escolha do rosto.
 export function telaAbertura() {
   // só a arte, sem as zonas tocáveis
-  const miniatura = rosto => svgRosto(rosto, "frente").replace(/<g class="zonas"[^>]*>[\s\S]*?<\/g>/, "");
+  const miniatura = rosto => svgRosto(rosto, "frente").replace(/<g class="zonas"[^>]*>[\s\S]*?<\/g>/g, "");
   const opcao = rosto =>
     `<button data-rosto="${rosto}" aria-pressed="${estado.rosto === rosto}">${miniatura(rosto)}${esc(t(`abertura.${rosto}`))}</button>`;
 
