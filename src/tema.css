@@ -40,6 +40,9 @@
   --zone-hover: color-mix(in srgb, var(--destaque) 16%, transparent);
   --zone-sel: color-mix(in srgb, var(--destaque) 90%, transparent);
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
+  /* capa do início enquanto a foto de capa não chega (degradê entre as duas cores) */
+  --capa-de: #e3d5ca;
+  --capa-ate: #d5bdaf;
 
   /* 4. Forma */
   --r: 14px;              /* arredondamento dos cartões */
@@ -52,6 +55,7 @@
     --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
+    --capa-de: #48403b; --capa-ate: #5a524c;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
@@ -60,6 +64,7 @@
   --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
+    --capa-de: #48403b; --capa-ate: #5a524c;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }

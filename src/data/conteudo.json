@@ -4,7 +4,10 @@
     "especialidade": "Harmonização facial",
     "whatsapp": "5543999159066",
     "whatsappExibicao": "+55 43 99915-9066",
-    "limiteMensagem": 1500
+    "limiteMensagem": 1500,
+    "_fotos": "capa e foto: imagens dentro de public/ (ex.: \"perfil/capa.jpg\"). Capa larga, uns 1200×600 px; foto quadrada, uns 600×600 px. Enquanto o arquivo não existir, aparece um espaço reservado.",
+    "capa": "perfil/capa.jpg",
+    "foto": "perfil/foto.jpg"
   },
   "seo": {
     "_comoEditar": [
@@ -236,7 +239,11 @@
       ]
     },
     "inicio": {
-      "titulo": "Olá! Como posso te ajudar?",
+      "nome": "Dra. Mayara Bacellar",
+      "descricao": "Harmonização facial · Maringá e Siqueira Campos",
+      "iniciais": "MB",
+      "altCapa": "Capa da Dra. Mayara Bacellar",
+      "altFoto": "Foto da Dra. Mayara Bacellar",
       "agenda": "Verificar agenda",
       "mapa": "Me conta o que te incomoda no rosto"
     },

@@ -202,8 +202,30 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal:focus { outline: none; }
 
 /* Página inicial */
+/* Início: capa no topo (de ponta a ponta da coluna), foto redonda sobre a borda da capa, nome e botões */
+.app-inicio { padding-top: 0; }
+.perfil { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.perfil-capa {
+  align-self: stretch; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  height: clamp(170px, 48vw, 230px); border-radius: 0 0 var(--r) var(--r); overflow: hidden;
+  background: linear-gradient(135deg, var(--capa-de), var(--capa-ate));
+}
+.perfil-foto {
+  position: relative; width: 132px; height: 132px; margin-top: -66px; border-radius: 50%; overflow: hidden;
+  border: 4px solid var(--bg); background: var(--accent-soft);
+  display: grid; place-items: center;
+}
+/* sem foto: as iniciais aparecem no lugar */
+.perfil-foto::before {
+  content: attr(data-iniciais); font-family: var(--fonte-titulo); font-size: 40px; color: var(--muted);
+}
+.perfil-capa img, .perfil-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.perfil-foto img { position: absolute; inset: 0; }
+.perfil-nome { margin-top: 14px; font-size: clamp(28px, 8vw, 34px); }
+.perfil-descricao { margin: 6px 0 0; color: var(--muted); font-size: 16px; }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
+@media (min-width: 512px) { .perfil-capa { margin-inline: 0; border-radius: 0 0 24px 24px; } }
 
 /* Agenda */
 .local-maringa { --local: var(--local-maringa); --on-local: var(--on-local-maringa); }
