@@ -117,10 +117,10 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
         <div class="topo">${progresso("agenda", 2)}</div>
         <h2 id="modal-titulo">${m("titulo", { mes: nomeMes })}</h2>
         <fieldset class="pergunta"><legend>${m("cidade")}</legend>
-          <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div></fieldset>
-        <div class="info-card" role="note">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
-          <p>${m("info")}</p></div>
+          <div class="caminhos">${Object.entries(locais).map(opcaoLocal).join("")}</div>
+          <div class="info-card" role="note">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
+            <p>${m("info")}</p></div></fieldset>
         <div class="modal-acoes">
           <button class="btn sec" id="modal-cancelar">${m("cancelar")}</button>
           <a class="btn pri" id="modal-enviar" target="_blank" rel="noopener" ${

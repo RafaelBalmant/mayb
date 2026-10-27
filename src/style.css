@@ -298,6 +298,6 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .foto-grande .momento { color: var(--bg); text-align: center; font-size: 14px; }
 
 /* aviso com ícone de informação (modal da agenda) */
-.info-card { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
+.info-card { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
 .info-card svg { flex: none; width: 20px; height: 20px; margin-top: 1px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
 .info-card p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink); }

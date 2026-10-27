@@ -303,7 +303,7 @@
       "modal": {
         "titulo": "Agendar horário em {mes}",
         "cidade": "Em qual cidade?",
-        "info": "Depois que você enviar a mensagem, a equipe da Dra. Mayara confere os dias disponíveis e entra em contato pelo WhatsApp para marcar o seu horário.",
+        "info": "Nossa equipe consultará a disponibilidade na agenda da Dra. Mayara para encontrar a melhor data e horário para você.",
         "semDiasCidade": "Sem atendimento neste mês",
         "enviar": "Enviar pelo WhatsApp",
         "faltaEscolha": "Escolha a cidade",
