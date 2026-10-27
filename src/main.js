@@ -6,6 +6,7 @@ import { telaInicio } from "./telas/inicio.js";
 import { telaAgenda } from "./telas/agenda.js";
 import { telaAbertura } from "./telas/abertura.js";
 import { telaMapa } from "./telas/mapa.js";
+import { telaResultados } from "./telas/resultados.js";
 import { telaProximo } from "./telas/proximo.js";
 import { telaDetalhes } from "./telas/detalhes.js";
 import { telaRevisar } from "./telas/revisar.js";
@@ -18,6 +19,7 @@ export function render() {
   if (ui.tela === "inicio") return telaInicio();
   if (ui.tela === "agenda") return telaAgenda();
   if (ui.tela === "abertura" || !estado.rosto) { ui.tela = "abertura"; return telaAbertura(); }
+  if (ui.tela === "resultados" && estado.areas.length) return telaResultados();
   if (ui.tela === "proximo" && estado.areas.length) return telaProximo();
   if (ui.tela === "detalhes" && estado.areas.length) return telaDetalhes();
   if (ui.tela === "revisar" && estado.areas.length) return telaRevisar();

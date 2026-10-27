@@ -11,7 +11,7 @@ export function telaRevisar() {
     a.incomoda.length || a.incomodaOutro || a.lado || a.desde || a.intensidade || a.quandoAparece || a.procedimento || a.comentario.trim());
 
   app.className = "app";
-  app.innerHTML = `${topo("rosto", 4)}
+  app.innerHTML = `${topo("rosto", 5)}
     <div class="bloco" style="gap:6px"><h1>${esc(t("revisar.titulo"))}</h1>
       <p class="sub">${esc(t("revisar.explicacao"))}</p></div>
     <div class="pergunta"><label for="nome">${esc(t("revisar.nome"))} <span class="obs">${esc(t("revisar.nomeObs"))}</span></label>

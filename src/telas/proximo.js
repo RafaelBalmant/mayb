@@ -8,7 +8,7 @@ export function telaProximo() {
   const nomes = estado.areas.map(a => `<li>${esc(AREA[a.codigo].nome)}</li>`).join("");
 
   app.className = "app";
-  app.innerHTML = `${topo("rosto", 3)}
+  app.innerHTML = `${topo("rosto", 4)}
     <h1 class="pergunta-grande">${esc(t("proximo.titulo"))}</h1>
     <div class="bloco">
       <h3>${esc(tn("proximo.marcou", estado.areas.length))}</h3>
@@ -26,9 +26,9 @@ export function telaProximo() {
       </button>
     </div>`;
 
-  barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("proximo.voltar"))}</button>`;
+  barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("geral.voltar"))}</button>`;
 
   document.getElementById("mais-info").onclick = () => irPara("detalhes");
   document.getElementById("falar").onclick = () => irPara("revisar");
-  document.getElementById("voltar").onclick = () => irPara("mapa");
+  document.getElementById("voltar").onclick = () => irPara("resultados");
 }

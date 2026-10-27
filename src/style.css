@@ -231,3 +231,44 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .caminho:disabled { opacity: .45; cursor: not-allowed; }
 .topo-compacto { gap: 6px; }
 .modal-agendar .topo { display: flex; flex-direction: column; gap: 8px; padding-right: 44px; }
+
+/* Resultados de casos reais: um cartão por parte marcada, abre com as fotos */
+.cartoes-casos { display: flex; flex-direction: column; gap: 10px; }
+.cartao-caso { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.cartao-caso.aberto { border-color: var(--destaque); }
+.cartao-topo {
+  width: 100%; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px;
+  align-items: center; text-align: left; background: transparent; border: 0; padding: 16px 18px;
+}
+.cartao-topo strong { font-size: 17px; }
+.cartao-topo span { grid-row: 2; font-size: 14px; color: var(--muted); }
+.cartao-topo i {
+  grid-row: 1 / 3; grid-column: 2; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--ink);
+}
+.cartao-topo i svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.cartao-caso.aberto .cartao-topo i svg { transform: rotate(180deg); }
+.cartao-caso.aberto .cartao-topo i { background: var(--accent); color: var(--on-accent); }
+.galeria { display: flex; flex-direction: column; gap: 10px; padding: 0 18px 18px; }
+.procedimento { display: flex; flex-direction: column; gap: 8px; }
+.procedimento + .procedimento { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.procedimento h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.fotos {
+  display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
+  margin-inline: -18px; padding-inline: 18px; scroll-padding-inline: 18px; scrollbar-width: none;
+}
+.fotos::-webkit-scrollbar { display: none; }
+/* antes e depois lado a lado: cada par ocupa a largura do cartão */
+.fotos figure { margin: 0; flex: 0 0 calc(50% - 5px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 6px; }
+.fotos figure:nth-child(even) { scroll-snap-align: none; }
+.fotos figcaption { font-size: 14px; color: var(--muted); }
+.foto { display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--accent-soft); }
+.foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto.vaga { display: grid; place-items: center; border-style: dashed; background: var(--bg); color: var(--muted); font-size: 14px; font-weight: 600; }
+.foto-fundo { align-items: center; padding: 16px; }
+.foto-grande { position: relative; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.foto-grande:focus { outline: none; }
+.foto-grande img { width: 100%; max-height: 80vh; object-fit: contain; border-radius: 14px; background: var(--surface); }
+.foto-grande p { color: var(--bg); font-size: 15px; text-align: center; }
+.momento { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.foto-grande .momento { color: var(--bg); text-align: center; font-size: 14px; }
