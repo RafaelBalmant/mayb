@@ -5,7 +5,7 @@
    ========================================================== */
 
 /* 1. Fontes (Google Fonts). Ao trocar, mude o link e os nomes em --fonte-titulo / --fonte-texto. */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Jost:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600;700&display=swap");
 /* Fontes anteriores: Young Serif (títulos) + Figtree (texto)
 @import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap");
 --fonte-titulo: "Young Serif", Georgia, "Times New Roman", serif;
@@ -14,8 +14,8 @@
 :root {
   --fonte-titulo: "Playfair Display", Georgia, "Times New Roman", serif;
   --fonte-texto: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* nome grande do início (letras altas e estreitas, em maiúsculas) */
-  --fonte-destaque: "Fira Sans Extra Condensed", "Arial Narrow", sans-serif-condensed, sans-serif;
+  /* nome grande do início (em maiúsculas; por enquanto a mesma fonte dos títulos) */
+  --fonte-destaque: var(--fonte-titulo);
 
   /* 2. Paleta (modo claro). Base: #edede9 (cinza claro), #d6ccc2 (taupe), #f5ebe0 (creme),
         #e3d5ca (bege), #d5bdaf (bege rosado). Os botões e o texto usam versões mais escuras desses

@@ -217,10 +217,11 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .perfil-texto { position: relative; margin-top: -92px; display: flex; flex-direction: column; gap: 6px; }
 .perfil-chamada { font-size: 14px; font-weight: 500; color: var(--ink); }
 .perfil-nome {
-  font-family: var(--fonte-destaque); font-weight: 800; text-transform: uppercase;
-  font-size: clamp(52px, 17vw, 84px); line-height: .9; letter-spacing: .005em; color: var(--nome-cor);
+  font-family: var(--fonte-destaque); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(40px, 12.5vw, 62px); line-height: 1; letter-spacing: .02em; color: var(--nome-cor);
 }
 .perfil-nome span { display: block; }
+.perfil-frase { margin-top: 8px; font-family: var(--fonte-titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--muted); }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
 @media (min-width: 512px) { .perfil-foto { margin-inline: 0; } }

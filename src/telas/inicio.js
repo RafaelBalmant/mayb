@@ -15,6 +15,7 @@ export function telaInicio() {
       <div class="perfil-texto">
         <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>
         <h1 class="perfil-nome">${t("inicio.nome").map(linha => `<span>${esc(linha)}</span>`).join("")}</h1>
+        <p class="perfil-frase">${esc(t("inicio.frase"))}</p>
       </div>
     </header>
     <div class="inicio-botoes">
