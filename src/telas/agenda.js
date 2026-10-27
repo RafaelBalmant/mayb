@@ -117,8 +117,14 @@ export function telaAgenda() {
     const toque = e.changedTouches[0];
     const dx = toque.clientX - inicio.x, dy = toque.clientY - inicio.y;
     inicio = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) irParaMes(indice + (dx < 0 ? 1 : -1));
-  }, { passive: true });
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      // o gesto não vira toque, e a tela só é refeita depois que o toque termina:
+      // trocar o calendário no meio do toque fazia o celular (Safari) engolir o toque seguinte
+      if (e.cancelable) e.preventDefault();
+      setTimeout(() => irParaMes(indice + (dx < 0 ? 1 : -1)));
+    }
+  }, { passive: false });
+  calendario.addEventListener("touchcancel", () => { inicio = null; }, { passive: true });
   document.getElementById("voltar").onclick = () => irPara("inicio");
   document.getElementById("agendar").onclick = () =>
     abrirModalAgendar({ mes, nomeMes, dias: atendidos.map(dia => ({ dia, locais: dias[dia] })) });
