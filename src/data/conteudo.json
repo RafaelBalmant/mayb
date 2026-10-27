@@ -276,7 +276,7 @@
         "fechar": "Fechar"
       },
       "mensagem": {
-        "pedido": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, no mês de {mes}. Pode me dizer quais dias e horários estão disponíveis?"
+        "pedido": "Olá! Vim pelo site e gostaria de agendar uma consulta com a Dra. Mayara em {cidade}, no mês de {mes}. Quais dias e horários estão disponíveis?"
       }
     },
     "abertura": {
