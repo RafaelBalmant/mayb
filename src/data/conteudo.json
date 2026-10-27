@@ -348,9 +348,11 @@
         "varios": "{n} casos"
       },
       "emBreve": "Fotos em breve",
+      "antes": "Antes",
+      "depois": "Depois",
       "semFotos": "Ainda não há fotos desta parte. Em breve!",
-      "foto": "Caso real: {area}",
-      "abrirFoto": "Ampliar foto {i} de {area}",
+      "foto": "{momento}: {area}",
+      "abrirFoto": "Ampliar foto de {momento}: {area}",
       "fechar": "Fechar",
       "nenhuma": "Ainda não temos fotos das partes que você marcou. Você pode seguir normalmente.",
       "aviso": "Cada rosto é único: os resultados variam de pessoa para pessoa. As fotos são publicadas com autorização dos pacientes.",

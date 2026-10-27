@@ -2,9 +2,10 @@
   "_comoEditar": [
     "Fotos de casos reais, por parte do rosto. Os códigos são os mesmos de conteudo.json (areas).",
     "1. Ponha a foto na pasta public/casos/<codigo>/ (ex.: public/casos/testa/caso-1.jpg).",
-    "2. Acrescente na lista da parte: { \"foto\": \"testa/caso-1.jpg\", \"legenda\": \"Toxina botulínica, 15 dias depois\" }.",
-    "A legenda é opcional. As fotos aparecem na ordem da lista. Lista vazia = aparece 'Fotos em breve'.",
-    "Dica: use fotos de antes e depois já lado a lado numa imagem só, em JPG, com até ~1200 px de largura."
+    "2. Acrescente na lista da parte, SEMPRE intercalando antes e depois: primeiro a foto de antes, logo depois a de depois do mesmo caso, e assim por diante.",
+    "   Ex.: { \"foto\": \"testa/caso-1-antes.jpg\" }, { \"foto\": \"testa/caso-1-depois.jpg\", \"legenda\": \"Toxina botulínica, 15 dias depois\" }.",
+    "O site põe sozinho a etiqueta ANTES na 1ª, 3ª, 5ª… foto e DEPOIS na 2ª, 4ª, 6ª… A legenda é opcional. Lista vazia = aparece 'Fotos em breve'.",
+    "Dica: fotos em JPG, com até ~1200 px de largura, mesmo enquadramento no antes e no depois."
   ],
   "testa": [],
   "olhos": [],

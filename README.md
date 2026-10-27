@@ -30,7 +30,8 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   `profissional.limiteMensagem` caracteres (conteudo.json), os textos livres são encurtados.
 - `src/data/casos.json` + `public/casos/<parte>/`: **fotos de casos reais** mostradas logo depois do mapa,
   numa pasta por parte do rosto (testa, olhos, bochechas…). Para acrescentar: ponha a foto na pasta da parte e
-  inclua `{ "foto": "testa/caso-1.jpg", "legenda": "…" }` na lista dessa parte em `casos.json`. Lista vazia mostra
+  inclua `{ "foto": "testa/caso-1-antes.jpg" }` na lista dessa parte em `casos.json`, sempre intercalando antes e depois
+  (o site põe as etiquetas ANTES/DEPOIS sozinho; `legenda` é opcional). Lista vazia mostra
   "Fotos em breve". As instruções também estão no próprio arquivo (`_comoEditar`).
 - `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com cidade e dia), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 

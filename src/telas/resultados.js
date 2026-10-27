@@ -4,8 +4,11 @@ import casos from "../data/casos.json";
 import { app, barra, esc, manterRolagem, topo } from "../util.js";
 import { irPara } from "../main.js";
 
-// Quantos quadros "Fotos em breve" mostrar numa parte que ainda não tem fotos.
-const VAGAS = 3;
+// Quantos quadros "Fotos em breve" mostrar numa parte que ainda não tem fotos (um par antes/depois).
+const VAGAS = 2;
+
+/** As fotos vêm sempre intercaladas: antes, depois, antes, depois… */
+const momento = i => t(i % 2 ? "resultados.depois" : "resultados.antes");
 
 /** Endereço da foto: as fotos ficam em public/casos/ (a lista está em data/casos.json). */
 const urlFoto = foto => `${import.meta.env.BASE_URL}casos/${foto}`;
@@ -21,14 +24,15 @@ export function telaResultados() {
     const aberto = ui.aberta === codigo;
     const nome = AREA[codigo].nome;
     const fotos = lista.length
-      ? lista.map((c, i) => `<figure><button class="foto" data-foto="${i}" aria-label="${esc(t("resultados.abrirFoto", { i: i + 1, area: nome }))}">
-          <img src="${esc(urlFoto(c.foto))}" alt="${esc(c.legenda || t("resultados.foto", { area: nome }))}" loading="lazy"></button>
+      ? lista.map((c, i) => `<figure><span class="momento">${esc(momento(i))}</span>
+          <button class="foto" data-foto="${i}" aria-label="${esc(t("resultados.abrirFoto", { momento: momento(i), area: nome }))}">
+          <img src="${esc(urlFoto(c.foto))}" alt="${esc(c.legenda || t("resultados.foto", { momento: momento(i), area: nome }))}" loading="lazy"></button>
           ${c.legenda ? `<figcaption>${esc(c.legenda)}</figcaption>` : ""}</figure>`).join("")
-      : Array.from({ length: VAGAS }, () => `<figure><div class="foto vaga" aria-hidden="true"><span>${esc(t("resultados.emBreve"))}</span></div></figure>`).join("");
+      : Array.from({ length: VAGAS }, (_, i) => `<figure><span class="momento">${esc(momento(i))}</span><div class="foto vaga" aria-hidden="true"><span>${esc(t("resultados.emBreve"))}</span></div></figure>`).join("");
     return `<section class="cartao-caso${aberto ? " aberto" : ""}" data-codigo="${codigo}">
       <button class="cartao-topo" aria-expanded="${aberto}" aria-controls="fotos-${codigo}">
         <strong>${esc(nome)}</strong>
-        <span>${esc(lista.length ? tn("resultados.fotos", lista.length) : t("resultados.emBreve"))}</span>
+        <span>${esc(lista.length ? tn("resultados.fotos", Math.ceil(lista.length / 2)) : t("resultados.emBreve"))}</span>
         <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></i>
       </button>
       <div class="galeria" id="fotos-${codigo}" ${aberto ? "" : "hidden"}>
@@ -57,18 +61,19 @@ export function telaResultados() {
     app.querySelector(`[data-codigo="${codigo}"] .cartao-topo`).focus({ preventScroll: true });
   });
   app.querySelectorAll("[data-foto]").forEach(b => b.onclick = () =>
-    ampliar(casos[b.closest(".cartao-caso").dataset.codigo][b.dataset.foto], b));
+    ampliar(casos[b.closest(".cartao-caso").dataset.codigo][b.dataset.foto], momento(Number(b.dataset.foto)), b));
   document.getElementById("voltar").onclick = () => irPara("mapa");
   document.getElementById("pular").onclick = () => irPara("proximo");
 }
 
-// Foto em tela cheia, com a legenda. Fecha no ×, no fundo ou com Esc.
-function ampliar(caso, origem) {
+// Foto em tela cheia, com a etiqueta (antes/depois) e a legenda. Fecha no ×, no fundo ou com Esc.
+function ampliar(caso, rotulo, origem) {
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo foto-fundo";
   fundo.innerHTML = `
-    <div class="foto-grande" tabindex="-1" role="dialog" aria-modal="true" aria-label="${esc(caso.legenda || t("resultados.titulo"))}">
+    <div class="foto-grande" tabindex="-1" role="dialog" aria-modal="true" aria-label="${esc(rotulo)}">
       <button class="modal-fechar" aria-label="${esc(t("resultados.fechar"))}">×</button>
+      <span class="momento">${esc(rotulo)}</span>
       <img src="${esc(urlFoto(caso.foto))}" alt="${esc(caso.legenda || "")}">
       ${caso.legenda ? `<p>${esc(caso.legenda)}</p>` : ""}
     </div>`;
