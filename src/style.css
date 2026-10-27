@@ -218,6 +218,10 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 }
 .perfil-texto { position: relative; margin-top: -64px; display: flex; flex-direction: column; gap: 6px; }
 .perfil-chamada { margin-top: -8px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); }
+.perfil-instagram { align-self: center; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -12px; color: var(--muted); }
+.perfil-instagram:hover { color: var(--ink); }
+.perfil-instagram svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.perfil-instagram .ponto { fill: currentColor; stroke: none; }
 .perfil-nome {
   font-family: var(--fonte-destaque); font-weight: 400; text-transform: uppercase;
   font-size: clamp(40px, 12.5vw, 62px); line-height: 1; letter-spacing: .02em; color: var(--nome-cor);
