@@ -199,8 +199,7 @@
       ],
       "agenda": [
         "Escolher o mês",
-        "Escolher a cidade",
-        "Escolher os dias"
+        "Escolher a cidade"
       ]
     },
     "inicio": {
@@ -250,15 +249,6 @@
         "Sex",
         "Sáb"
       ],
-      "diasSemanaLongos": [
-        "domingo",
-        "segunda-feira",
-        "terça-feira",
-        "quarta-feira",
-        "quinta-feira",
-        "sexta-feira",
-        "sábado"
-      ],
       "locais": {
         "maringa": "Maringá",
         "siqueira_campos": "Siqueira Campos"
@@ -274,28 +264,18 @@
       "agendar": "Agendar horário",
       "modal": {
         "titulo": "Agendar horário em {mes}",
-        "explicacaoCidade": "Primeiro, escolha a cidade.",
-        "explicacaoDia": "Agora escolha os dias em {cidade} que ficam bons para você. A Dra. Mayara confere a disponibilidade e te responde pelo WhatsApp.",
+        "explicacao": "Escolha a cidade. Os dias abaixo são os que a Dra. Mayara atende em {mes}, só para você ter uma noção: ela confere a agenda e combina a data com você pelo WhatsApp.",
         "cidade": "Em qual cidade?",
-        "semDiasCidade": "Sem datas neste mês",
-        "diasNaCidade": {
-          "um": "1 dia de atendimento",
-          "varios": "{n} dias de atendimento"
-        },
-        "dia": "Quais dias você prefere?",
-        "variosDias": "Pode escolher mais de um.",
-        "qualquerDia": "Qualquer dia do mês",
-        "diaChip": "{semana}, {dia}",
+        "semDiasCidade": "Sem atendimento neste mês",
+        "diasNaCidade": "Atende nos dias {dias}",
+        "listaDias": "{dias} e {ultimo}",
         "enviar": "Enviar pelo WhatsApp",
-        "faltaEscolha": "Escolha pelo menos um dia",
+        "faltaEscolha": "Escolha a cidade",
         "cancelar": "Cancelar",
-        "voltar": "Voltar",
         "fechar": "Fechar"
       },
       "mensagem": {
-        "qualquerDia": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}. Posso em qualquer dia de {mes}. Pode me dizer quais horários estão disponíveis?",
-        "diasPreferidos": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}. Os dias que ficam melhores para mim são:\n{dias}\nPode me dizer se há horário disponível em algum deles?",
-        "diaItem": "- {dia} de {mes} ({semana})"
+        "pedido": "Olá! Vim pelo site e gostaria de agendar um horário com a Dra. Mayara em {cidade}, no mês de {mes}. Pode me dizer quais dias e horários estão disponíveis?"
       }
     },
     "abertura": {

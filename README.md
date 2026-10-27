@@ -28,7 +28,7 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 - `src/estado.js`: o formato dos dados do paciente (comentado no arquivo).
 - `src/resumo.js`: monta a mensagem do WhatsApp (formato do doc de fluxo) e o link wa.me. Se passar de
   `profissional.limiteMensagem` caracteres (conteudo.json), os textos livres são encurtados.
-- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com cidade e dia), abertura (pergunta + escolha do rosto), mapa, próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (mês atual + 3, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 
 ## Links diretos
 
