@@ -203,4 +203,3 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .nota { font-size: 14px; }
 .falta { color: var(--perigo); font-weight: 600; font-size: 15px; }
 .falta:empty { display: none; }
-.modal:focus { outline: none; }

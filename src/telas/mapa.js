@@ -81,7 +81,7 @@ function abrirModalOutra() {
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo";
   fundo.innerHTML = `
-    <div class="modal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
       <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
       <h2 id="modal-titulo">${m("titulo")}</h2>
       <p class="sub">${m("explicacao")}</p>
@@ -99,8 +99,8 @@ function abrirModalOutra() {
   const salvarBtn = fundo.querySelector("#modal-salvar");
   const atualizar = () => { salvarBtn.disabled = !campo.value.trim(); };
   atualizar();
-  // foco no diálogo, não no campo: no celular o teclado subiria e cobriria o texto do modal
-  fundo.querySelector(".modal").focus({ preventScroll: true });
+  campo.focus();
+  campo.setSelectionRange(campo.value.length, campo.value.length);
 
   const fechar = aviso => {
     fundo.remove();
