@@ -16,7 +16,6 @@ export function telaInicio() {
     <header class="perfil">
       <div class="perfil-foto"><img src="${esc(imagem(profissional.foto))}" alt="${esc(t("inicio.altFoto"))}" /></div>
       <div class="perfil-texto">
-        <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>
         <h1 class="perfil-nome">${t("inicio.nome").map(linha => `<span>${esc(linha)}</span>`).join("")}</h1>
         <p class="perfil-frase${fraseJaApareceu ? "" : " surgir"}">${esc(t("inicio.frase"))}</p>
       </div>
@@ -24,7 +23,8 @@ export function telaInicio() {
     <div class="inicio-botoes">
       <button class="btn pri" id="ir-agenda">${esc(t("inicio.agenda"))}</button>
       ${MOSTRAR_MAPA ? `<button class="btn" id="ir-mapa">${esc(t("inicio.mapa"))}</button>` : ""}
-    </div>`;
+    </div>
+    <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>`;
 
   fraseJaApareceu = true;
 

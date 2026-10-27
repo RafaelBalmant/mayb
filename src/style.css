@@ -216,8 +216,8 @@ a.btn[aria-disabled="true"] { opacity: .4; }
   content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
   background: linear-gradient(to bottom, transparent, var(--bg));
 }
-.perfil-texto { position: relative; margin-top: -92px; display: flex; flex-direction: column; gap: 6px; }
-.perfil-chamada { font-size: 14px; font-weight: 500; color: var(--ink); }
+.perfil-texto { position: relative; margin-top: -64px; display: flex; flex-direction: column; gap: 6px; }
+.perfil-chamada { margin-top: -8px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); }
 .perfil-nome {
   font-family: var(--fonte-destaque); font-weight: 400; text-transform: uppercase;
   font-size: clamp(40px, 12.5vw, 62px); line-height: 1; letter-spacing: .02em; color: var(--nome-cor);
