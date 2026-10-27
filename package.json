@@ -6,10 +6,21 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview --host",
-    "rostos": "node scripts/gerar-rostos.mjs"
+    "rostos": "node scripts/gerar-rostos.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "vite": "^5.4.11"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.9"
   },
   "private": true,
   "type": "module"
