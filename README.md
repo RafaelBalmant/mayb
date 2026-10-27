@@ -39,6 +39,14 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
 Por enquanto o mapa do rosto está desligado (`MOSTRAR_MAPA = false` em `src/main.js`): o início mostra só a agenda.
 
+## Google (SEO)
+
+Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
+(WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
+Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `conteudo.json`, seção `seo`.
+Quando o domínio estiver definido, preencha `seo.url` (sem ele não há sitemap nem link canônico) e, se quiser uma
+imagem na prévia do link, ponha-a em `public/` e o nome em `seo.imagem`.
+
 ## Situação
 
 Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aviso de privacidade).
