@@ -9,7 +9,7 @@ let avisoTimer;
 // Vista de perfil desligada a pedido do Rafael (2026-10-27). Os desenhos continuam em src/rostos/; para religar, troque para true.
 const MOSTRAR_PERFIL = false;
 
-// Tela do mapa: o rosto e, ao lado, os nomes das partes (tocar no nome também marca), os controles e a navegação.
+// Tela do mapa: o rosto e, embaixo, os nomes das partes (tocar no nome também marca), os controles e a navegação.
 export function telaMapa(aviso = "") {
   const n = estado.areas.length;
   if (!MOSTRAR_PERFIL) ui.vista = "frente";
