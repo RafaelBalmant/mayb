@@ -46,6 +46,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .arte .cabelo { fill: var(--hair); }
 .arte .traco { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .arte .leve { opacity: .45; }
+.detalhes { pointer-events: none; }
 .arte .olho { fill: var(--surface); stroke: var(--ink); stroke-width: 1.6; }
 .arte .iris { fill: var(--ink); }
 .arte .boca { fill: var(--lip); stroke: var(--ink); stroke-width: 1.2; }
@@ -126,29 +127,29 @@ details.lista .dentro { padding: 0 16px 16px; }
 .pergunta-grande { font-size: clamp(34px, 10vw, 46px); line-height: 1.08; margin-top: 12px; }
 .explica { font-size: 18px; color: var(--muted); max-width: 34em; }
 
-/* Mapa: tela única, sem rolagem — rosto à esquerda, lista à direita */
+/* Mapa: tela única, sem rolagem — rosto grande em cima, marcadas embaixo */
 .app-mapa {
   height: calc(100dvh - 78px - env(safe-area-inset-bottom, 0px) - env(safe-area-inset-top, 0px));
   min-height: 420px; padding-block: 12px; gap: 12px;
 }
 .app-mapa .controles { flex-wrap: nowrap; gap: 6px; }
 .app-mapa .seg button { padding: 7px 11px; font-size: 13px; }
-.palco { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; }
-.mapa { min-height: 0; }
-.lado { min-height: 0; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+.palco { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.mapa { flex: 1; min-height: 0; }
+.lado { flex: none; max-height: 36%; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
 .lado h3 { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.vazio { color: var(--muted); font-size: 14px; }
-.marcadas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.vazio { color: var(--muted); font-size: 14px; margin: 0; }
+.marcadas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .marcadas button {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 6px;
-  background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 12px;
-  padding: 9px 10px; font-size: 14px; font-weight: 600; line-height: 1.2; text-align: left;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 999px;
+  padding: 7px 12px; font-size: 14px; font-weight: 600; line-height: 1.2; text-align: left;
 }
 .marcadas .x { color: var(--accent); font-size: 18px; line-height: 1; flex: none; }
-.extras { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+.extras { display: flex; flex-wrap: wrap; gap: 6px; }
 .extra {
-  width: 100%; background: transparent; border: 1.5px dashed var(--line); border-radius: 12px;
-  padding: 9px 10px; font-size: 14px; font-weight: 600; text-align: left; color: var(--muted);
+  background: transparent; border: 1.5px dashed var(--line); border-radius: 999px;
+  padding: 7px 12px; font-size: 14px; font-weight: 600; text-align: left; color: var(--muted);
 }
 .extra[aria-pressed="true"] { border-style: solid; border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
 @media (min-width: 560px) { .app-mapa .seg button { padding: 7px 14px; font-size: 14px; } }

@@ -6,7 +6,7 @@ import { irPara } from "../main.js";
 
 let avisoTimer;
 
-// Tela do mapa: só o rosto, a lista do que foi marcado ao lado, os controles e a navegação.
+// Tela do mapa: só o rosto, a lista do que foi marcado embaixo, os controles e a navegação.
 export function telaMapa(aviso = "") {
   const n = estado.areas.length;
   const seg = (campo, valor, atual) =>
