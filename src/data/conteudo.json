@@ -302,11 +302,9 @@
       "agendar": "Agendar horário em {mes}",
       "modal": {
         "titulo": "Agendar horário em {mes}",
-        "explicacao": "Escolha a cidade. Os dias abaixo são os que a Dra. Mayara atende em {mes}, só para você ter uma noção: a equipe dela confere a agenda e combina a data com você pelo WhatsApp.",
+        "explicacao": "Escolha a cidade. A equipe da Dra. Mayara confere a agenda e combina a data com você pelo WhatsApp.",
         "cidade": "Em qual cidade?",
         "semDiasCidade": "Sem atendimento neste mês",
-        "diasNaCidade": "Atende nos dias {dias}",
-        "listaDias": "{dias} e {ultimo}",
         "enviar": "Enviar pelo WhatsApp",
         "faltaEscolha": "Escolha a cidade",
         "cancelar": "Cancelar",

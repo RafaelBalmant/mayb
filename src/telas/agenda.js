@@ -94,7 +94,6 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
   const locais = t("agenda.locais");
   const escolha = { local: null };
   const diasDo = local => dias.filter(d => d.locais.includes(local)).map(d => d.dia);
-  const listaDias = nums => (nums.length > 1 ? t("agenda.modal.listaDias", { dias: nums.slice(0, -1).join(", "), ultimo: nums.at(-1) }) : String(nums[0]));
 
   const fundo = document.createElement("div");
   fundo.className = "modal-fundo";
@@ -111,7 +110,7 @@ function abrirModalAgendar({ mes, nomeMes, dias }) {
     const opcaoLocal = ([codigo, nome]) => {
       const nums = diasDo(codigo);
       return `<button type="button" class="caminho local-${codigo}" data-local="${codigo}" aria-pressed="${escolha.local === codigo}" ${nums.length ? "" : "disabled"}>
-          <strong><i aria-hidden="true"></i>${esc(nome)}</strong><span>${nums.length ? m("diasNaCidade", { dias: listaDias(nums) }) : m("semDiasCidade")}</span></button>`;
+          <strong><i aria-hidden="true"></i>${esc(nome)}</strong>${nums.length ? "" : `<span>${m("semDiasCidade")}</span>`}</button>`;
     };
     modal.innerHTML = `
         <button class="modal-fechar" id="modal-fechar" aria-label="${m("fechar")}">×</button>
