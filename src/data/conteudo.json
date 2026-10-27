@@ -5,7 +5,7 @@
     "whatsapp": "5543999159066",
     "whatsappExibicao": "+55 43 99915-9066",
     "limiteMensagem": 1500,
-    "_fotos": "foto: imagem dentro de public/ (ex.: \"perfil/foto.jpg\") que ocupa o topo do início, de ponta a ponta. Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
+    "_fotos": "foto: imagem dentro de public/ (ex.: \"perfil/foto.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
     "foto": "perfil/foto.jpg"
   },
   "seo": {

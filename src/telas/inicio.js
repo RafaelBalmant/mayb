@@ -5,7 +5,7 @@ import { irPara, MOSTRAR_MAPA } from "../main.js";
 // A foto fica em public/ (nome em conteudo.json → profissional.foto).
 const imagem = arquivo => import.meta.env.BASE_URL + arquivo;
 
-// Página inicial: foto de ponta a ponta no topo, nome em letras grandes por cima da borda de baixo, e os caminhos.
+// Página inicial: foto no topo (mesma largura do texto), nome em letras grandes por cima da borda de baixo, e os caminhos.
 // Depois estes botões podem ir para o site institucional (que pode abrir direto em #agenda ou #mapa).
 export function telaInicio() {
   app.className = "app app-inicio";

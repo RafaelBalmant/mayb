@@ -202,14 +202,12 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal:focus { outline: none; }
 
 /* Página inicial */
-/* Início: foto de ponta a ponta no topo, que se desfaz no fundo; o nome, grande, sobe por cima da borda da foto */
-.app-inicio { padding-top: 0; }
+/* Início: foto no topo, na largura do texto, que se desfaz no fundo; o nome, grande, sobe por cima da borda da foto */
+.app-inicio { padding-top: 16px; }
 .perfil { display: flex; flex-direction: column; }
-.perfil-foto {
-  position: relative; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
-  aspect-ratio: 4 / 5; max-height: 72dvh; background: var(--foto-vazia); overflow: hidden;
-}
-.perfil-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.perfil-foto { position: relative; min-height: 200px; background: var(--foto-vazia); overflow: hidden; }
+/* mesma largura do texto e sem cortar: a altura acompanha a proporção da foto */
+.perfil-foto img { width: 100%; height: auto; display: block; }
 .perfil-foto::after {
   content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
   background: linear-gradient(to bottom, transparent, var(--bg));
@@ -224,7 +222,6 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .perfil-frase { margin-top: 8px; font-family: var(--fonte-titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--muted); }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
-@media (min-width: 512px) { .perfil-foto { margin-inline: 0; } }
 
 /* Agenda */
 .local-maringa { --local: var(--local-maringa); --on-local: var(--on-local-maringa); }
