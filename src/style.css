@@ -106,7 +106,7 @@ pre.json { margin: 0; overflow-x: auto; font-size: 12px; background: var(--surfa
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .barra .in { max-width: 448px; margin: 0 auto; display: flex; gap: 10px; }
-.btn { flex: 1; border-radius: 999px; padding: 14px 18px; font-weight: 700; font-size: 16px; border: 1.5px solid var(--ink); background: transparent; }
+.btn { flex: 1; border-radius: var(--r-btn); padding: 14px 18px; font-weight: 700; font-size: 16px; border: 1.5px solid var(--ink); background: transparent; }
 .btn.pri { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .btn.sec { flex: 0 0 auto; }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
@@ -202,6 +202,32 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 .modal:focus { outline: none; }
 
 /* Página inicial */
+/* Início: foto no topo, que se desfaz no fundo; o nome, grande, sobe por cima da borda da foto */
+.app-inicio { padding-top: 0; }
+.perfil { display: flex; flex-direction: column; }
+.perfil-foto {
+  position: relative; min-height: 200px; background: var(--foto-vazia); overflow: hidden;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+}
+/* no celular a foto vai de uma borda à outra da tela; em telas largas fica na largura do texto.
+   Nunca corta nem estica: a altura acompanha a proporção da foto */
+.perfil-foto img { width: 100%; height: auto; display: block; }
+.perfil-foto::after {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+}
+.perfil-texto { position: relative; margin-top: -64px; display: flex; flex-direction: column; gap: 6px; }
+.perfil-chamada { margin-top: -8px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); }
+.perfil-nome {
+  font-family: var(--fonte-destaque); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(40px, 12.5vw, 62px); line-height: 1; letter-spacing: .02em; color: var(--nome-cor);
+}
+.perfil-nome span { display: block; }
+@media (min-width: 512px) { .app-inicio { padding-top: 16px; } .perfil-foto { margin-inline: 0; } }
+.perfil-frase { margin-top: 8px; font-family: var(--fonte-titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--muted); }
+.perfil-frase.surgir { animation: surgir 1.8s ease-out .5s both; }
+@keyframes surgir { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .perfil-frase.surgir { animation: none; } }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
 

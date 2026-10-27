@@ -40,6 +40,14 @@ O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `�
 Por enquanto o mapa do rosto está desligado (`MAPA_LIGADO = false` em `src/main.js`): o início mostra só a agenda.
 Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`). Vale até fechar a aba; `?mapa=0` desliga.
 
+## Google (SEO)
+
+Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
+(WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
+Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `conteudo.json`, seção `seo`.
+Quando o domínio estiver definido, preencha `seo.url` (sem ele não há sitemap nem link canônico) e, se quiser uma
+imagem na prévia do link, ponha-a em `public/` e o nome em `seo.imagem`.
+
 ## Situação
 
 Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aviso de privacidade).

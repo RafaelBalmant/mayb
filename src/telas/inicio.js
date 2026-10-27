@@ -1,17 +1,35 @@
-import { t } from "../conteudo.js";
-import { app, barra, esc, marca } from "../util.js";
+import { t, profissional } from "../conteudo.js";
+import { app, barra, esc } from "../util.js";
 import { irPara, MOSTRAR_MAPA } from "../main.js";
 
-// Página inicial: só os dois caminhos. Depois estes botões vão para o site institucional
-// (que pode abrir direto em #agenda ou #mapa).
+// A foto fica em public/ (nome em conteudo.json → profissional.foto).
+const imagem = arquivo => import.meta.env.BASE_URL + arquivo;
+
+// A frase de efeito surge devagar só na primeira vez que o início aparece (voltar da agenda não repete).
+let fraseJaApareceu = false;
+
+// Página inicial: foto no topo (mesma largura do texto), nome em letras grandes por cima da borda de baixo, e os caminhos.
+// Depois estes botões podem ir para o site institucional (que pode abrir direto em #agenda ou #mapa).
 export function telaInicio() {
-  app.className = "app";
-  app.innerHTML = `${marca()}
-    <h1 class="pergunta-grande">${esc(t("inicio.titulo"))}</h1>
+  app.className = "app app-inicio";
+  app.innerHTML = `
+    <header class="perfil">
+      <div class="perfil-foto"><img src="${esc(imagem(profissional.foto))}" alt="${esc(t("inicio.altFoto"))}" /></div>
+      <div class="perfil-texto">
+        <h1 class="perfil-nome">${t("inicio.nome").map(linha => `<span>${esc(linha)}</span>`).join("")}</h1>
+        <p class="perfil-frase${fraseJaApareceu ? "" : " surgir"}">${esc(t("inicio.frase"))}</p>
+      </div>
+    </header>
     <div class="inicio-botoes">
       <button class="btn pri" id="ir-agenda">${esc(t("inicio.agenda"))}</button>
       ${MOSTRAR_MAPA ? `<button class="btn" id="ir-mapa">${esc(t("inicio.mapa"))}</button>` : ""}
-    </div>`;
+    </div>
+    <p class="perfil-chamada">${esc(t("inicio.chamada"))}</p>`;
+
+  fraseJaApareceu = true;
+
+  // Enquanto a imagem não existir, fica só o fundo da área da foto.
+  app.querySelectorAll(".perfil img").forEach(img => { img.onerror = () => img.remove(); });
 
   barra.innerHTML = "";
   barra.closest(".barra").hidden = true;
