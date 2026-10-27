@@ -61,13 +61,6 @@ export function telaAgenda() {
 
   const atendidos = Object.keys(dias).map(Number).sort((a, b) => a - b)
     .filter(dia => dia <= total && !(ehMesAtual && dia < hoje.getDate()));
-  const lista = atendidos.length
-    ? `<ul class="agenda-lista">${atendidos.map(dia => {
-        const data = new Date(mes.getFullYear(), mes.getMonth(), dia);
-        return `<li><span>${esc(t("agenda.listaItem", { semana: semana[data.getDay()], dia, mes: nomeMes }))}</span>
-          <strong>${dias[dia].map(l => `<em class="local-${l}">${esc(locais[l] ?? l)}</em>`).join("")}</strong></li>`;
-      }).join("")}</ul>`
-    : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`;
 
   app.className = "app";
   app.innerHTML = `${topo("agenda", 1)}
@@ -82,10 +75,7 @@ export function telaAgenda() {
       </div>
       <ul class="legenda" aria-label="${esc(t("agenda.legenda"))}">${legenda}</ul>
     </section>
-    <section class="bloco">
-      <h3>${esc(t("agenda.listaTitulo"))}</h3>
-      ${lista}
-    </section>
+    ${atendidos.length ? "" : `<p class="vazio">${esc(t("agenda.semDatas"))}</p>`}
     <p class="sub nota">${esc(t("agenda.aviso"))}</p>`;
 
   barra.innerHTML = `<button class="btn sec" id="voltar">${esc(t("agenda.voltar"))}</button>

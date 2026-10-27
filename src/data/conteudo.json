@@ -297,8 +297,6 @@
       "naoAtende": "Não atende",
       "legenda": "Legenda",
       "diaRotulo": "{dia} de {mes}: {situacao}",
-      "listaTitulo": "Dias de atendimento",
-      "listaItem": "{semana}, {dia} de {mes}",
       "semDatas": "Ainda não há dias de atendimento neste mês.",
       "aviso": "As datas podem mudar. Para marcar sua consulta, fale com a equipe da Dra. Mayara pelo WhatsApp.",
       "voltar": "Voltar",
