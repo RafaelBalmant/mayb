@@ -32,7 +32,6 @@ describe("parsePlace", () => {
       photo: "https://lh3.googleusercontent.com/a",
       stars: 5,
       text: "Atendimento maravilhoso!",
-      when: "há 2 semanas",
     });
   });
 

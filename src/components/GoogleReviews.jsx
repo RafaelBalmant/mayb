@@ -51,7 +51,6 @@ function Review({ review, index, total }) {
           ) : (
             review.author
           )}
-          {review.when && ` · ${review.when}`}
         </span>
       </figcaption>
     </figure>

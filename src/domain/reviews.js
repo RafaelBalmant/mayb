@@ -2,7 +2,7 @@ import { GOOGLE_PLACES_URL, REVIEWS_TIMEOUT_MS } from "../config.js";
 
 /**
  * The doctor's rating and reviews on Google, fetched by the browser from the Places API (New).
- * Resolves to { rating, total, link, reviews: [{ author, authorLink, photo, stars, text, when }] }, or null when
+ * Resolves to { rating, total, link, reviews: [{ author, authorLink, photo, stars, text }] }, or null when
  * there is no key or place id, Google takes longer than REVIEWS_TIMEOUT_MS, answers with an error, or has no
  * review worth showing. The start page hides the block on null.
  */
@@ -34,7 +34,6 @@ export function parsePlace(place, minStars = 1) {
       photo: r.authorAttribution?.photoUri ?? "",
       stars: r.rating ?? 0,
       text: (r.text?.text ?? r.originalText?.text ?? "").trim(),
-      when: r.relativePublishTimeDescription ?? "",
     }))
     .filter((r) => r.text && r.stars >= minStars);
   if (!place?.rating || !reviews.length) return null;
