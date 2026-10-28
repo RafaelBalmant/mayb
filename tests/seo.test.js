@@ -61,7 +61,25 @@ describe("structured data (schema.org)", () => {
   });
 });
 
-describe("service pages", () => {
+// Two made-up pages to check the HTML the build writes (the real list in content.json is filled in later).
+const fixturePage = (slug, location, service, city) => ({
+  slug,
+  location,
+  service,
+  h1: `${service} em ${city}`,
+  title: `${service} em ${city} | Teste`,
+  description: `Descrição de teste de ${service} em ${city}.`,
+  intro: ["Parágrafo de introdução."],
+  sections: [{ heading: "O que é", paragraphs: ["Texto da seção."] }],
+  faq: [{ question: 'Pergunta com "aspas"?', answer: "Resposta." }],
+});
+const fixtures = [
+  fixturePage("servico-a-maringa", "maringa", "Serviço A", "Maringá"),
+  fixturePage("servico-b-siqueira-campos", "siqueira_campos", "Serviço B", "Siqueira Campos"),
+];
+const withFixtures = { ...content, pages: { ...content.pages, list: fixtures } };
+
+describe("service pages: rules for the texts in content.json (pages.list)", () => {
   const { list } = content.pages;
 
   it("have unique slugs, titles and descriptions, and a known unit", () => {
@@ -94,9 +112,13 @@ describe("service pages", () => {
     const forbidden = /garantid|\b(o|a|os|as) melhor(es)?\b|sem dor|indolor|100 ?%|definitiv|milagr|antes e depois/i;
     for (const page of list) expect(JSON.stringify(page), page.slug).not.toMatch(forbidden);
   });
+});
+
+describe("service pages: the HTML written at build time", () => {
+  const list = fixtures;
 
   it.each(list.map((p) => [p.slug, p]))("%s: canonical, H1, credential, WhatsApp button and FAQ", (slug, page) => {
-    const html = renderServicePage(content, page, assets);
+    const html = renderServicePage(withFixtures, page, assets);
     const location = content.locationsById[page.location];
     expect(html).toContain(`<link rel="canonical" href="${content.url}${slug}/" />`);
     expect(html).toContain(`<title>${page.title}</title>`);
@@ -113,18 +135,25 @@ describe("service pages", () => {
     expect(html).not.toContain('name="keywords"');
   });
 
-  it("the 404 page is not indexed and links back to the site", () => {
-    const html = renderNotFoundPage(content, assets);
-    expect(html).toContain('<meta name="robots" content="noindex" />');
-    expect(html).toContain('href="/"');
-    expect(html).not.toContain("canonical");
+  it("a page naming an unknown unit stops the build", () => {
+    expect(() => renderServicePage(withFixtures, { ...fixtures[0], location: "curitiba" }, assets)).toThrow(/curitiba/);
+  });
+
+  it("the 404 page is not indexed and links back to the site (and to the service pages, when there are any)", () => {
+    for (const data of [content, withFixtures]) {
+      const html = renderNotFoundPage(data, assets);
+      expect(html).toContain('<meta name="robots" content="noindex" />');
+      expect(html).toContain('href="/"');
+      expect(html).not.toContain("canonical");
+      for (const page of data.pages.list) expect(html).toContain(`href="${pagePath(page)}"`);
+    }
   });
 });
 
 describe("robots.txt and sitemap.xml", () => {
   it("point Google to the sitemap, which lists the start page and every service page", () => {
     expect(robots(content.url)).toContain(`Sitemap: ${content.url}sitemap.xml`);
-    const urls = ["/", ...content.pages.list.map(pagePath)].map((p) => new URL(p, content.url).href);
+    const urls = ["/", ...fixtures.map(pagePath)].map((p) => new URL(p, content.url).href);
     const xml = sitemap(urls, "2026-10-28");
     for (const url of urls) expect(xml).toContain(`<url><loc>${url}</loc><lastmod>2026-10-28</lastmod></url>`);
   });

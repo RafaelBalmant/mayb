@@ -52,10 +52,9 @@ function document({ headHtml, main, assets }) {
 /** Links to the other service pages and back to the start page (the app). */
 function otherPages(content, current) {
   const { common, list } = content.pages;
-  const items = list
-    .filter((p) => p.slug !== current?.slug)
-    .map((p) => `<li><a href="${pagePath(p)}">${esc(p.h1)}</a></li>`)
-    .join("\n          ");
+  const others = list.filter((p) => p.slug !== current?.slug);
+  if (others.length === 0) return "";
+  const items = others.map((p) => `<li><a href="${pagePath(p)}">${esc(p.h1)}</a></li>`).join("\n          ");
   return `<nav class="page-links" aria-labelledby="other-pages">
         <h2 id="other-pages">${esc(common.other)}</h2>
         <ul>

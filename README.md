@@ -161,18 +161,18 @@ Tudo é feito no `npm run build` pelo plugin `scripts/seo.mjs` (as partes ficam 
 
 - **Página inicial**: título (`texts.general.pageTitle`), descrição, prévia do link (Open Graph, imagem
   `public/share.jpg` de 1200×630), dados estruturados e um texto pronto em `#root` para quem não roda JavaScript. Depois
-  que o app carrega, a tela inicial mostra as mesmas informações: subtítulo com a especialidade e as cidades, CRBM e o
-  bloco "Sobre a Dra. Mayara" no fim, com os links para as páginas de serviço e o endereço de cada unidade
-  (`texts.start.about`).
-- **Páginas de serviço e cidade** (`pages.list`): `/harmonizacao-facial-maringa/`, `/toxina-botulinica-maringa/` etc.
-  Cada uma vira um HTML estático (`dist/<slug>/index.html`) com título, descrição e link canônico próprios, H1 com o
-  serviço e a cidade, 400 a 700 palavras, perguntas frequentes (também como FAQPage para o Google), endereço, "Como
-  chegar", botão de WhatsApp e links para as outras páginas e para o início. Elas não carregam o app: só um script
-  pequeno (`src/pages/page.jsx`) com o mesmo aviso de cookies e o mesmo Analytics (a visita vai com o caminho da página;
-  o clique no WhatsApp manda `whatsapp_contact` e `generate_lead` com `city` e `page`). No `npm run dev` elas também
-  abrem, servidas pelo próprio plugin. Para criar uma página nova, basta acrescentar um item em `pages.list`: ela entra
-  no site, nos links e no sitemap sozinha. Os textos seguem as regras de publicidade em saúde (sem resultado
-  garantido, superlativos ou antes e depois sem termo de consentimento); um teste confere algumas dessas palavras.
+  que o app carrega, a tela inicial mantém a especialidade e as cidades no subtítulo, com o CRBM, logo abaixo do nome
+  (`texts.start.subtitle` e `texts.start.credential`).
+- **Páginas de serviço e cidade** (`pages.list`, **vazia por enquanto**: o conteúdo vai ser alimentado depois). Cada
+  item vira um HTML estático (`dist/<slug>/index.html`, ex.: `/toxina-botulinica-maringa/`) com título, descrição e link
+  canônico próprios, H1 com o serviço e a cidade, perguntas frequentes (também como FAQPage para o Google), endereço,
+  "Como chegar", botão de WhatsApp e links para as outras páginas e para o início. O formato de cada item está em
+  `pages._howToEdit`. Elas não carregam o app: só um script pequeno (`src/pages/page.jsx`) com o mesmo aviso de cookies
+  e o mesmo Analytics (a visita vai com o caminho da página; o clique no WhatsApp manda `whatsapp_contact` e
+  `generate_lead` com `city` e `page`). No `npm run dev` elas também abrem, servidas pelo próprio plugin. Cada página
+  nova entra no site, nos links, no sitemap e no nginx sozinha. Os testes conferem o HTML com páginas de exemplo e, nos
+  textos reais, de 400 a 700 palavras e algumas palavras proibidas pelas regras de publicidade em saúde (resultado
+  garantido, superlativos, antes e depois).
 - **Dados estruturados** (schema.org): a Dra. Mayara (`Person`, biomédica esteta, CRBM 7137) e uma
   `HealthAndBeautyBusiness` por unidade (`business.locations`), com o mesmo nome do Perfil da Empresa no Google
   (`business.name`), endereço, coordenadas, horário e o link do perfil. Campo vazio fica de fora. Não há nota nem
@@ -190,10 +190,10 @@ Tudo é feito no `npm run build` pelo plugin `scripts/seo.mjs` (as partes ficam 
 
 Lighthouse (celular, build local servido pelo `nginx.conf` do repo, 28/10/2026):
 
-| Página                        | Desempenho | Acessibilidade | Boas práticas | SEO | LCP   | CLS   | TBT    |
-| ----------------------------- | ---------- | -------------- | ------------- | --- | ----- | ----- | ------ |
-| `/`                           | 96         | 100            | 100           | 100 | 2,2 s | 0     | 180 ms |
-| `/toxina-botulinica-maringa/` | 98         | 100            | 100           | 100 | 1,7 s | 0,074 | 0 ms   |
+| Página                             | Desempenho | Acessibilidade | Boas práticas | SEO | LCP   | CLS   | TBT    |
+| ---------------------------------- | ---------- | -------------- | ------------- | --- | ----- | ----- | ------ |
+| `/`                                | 96         | 100            | 100           | 100 | 2,2 s | 0     | 180 ms |
+| página de serviço (texto de teste) | 98         | 100            | 100           | 100 | 1,7 s | 0,074 | 0 ms   |
 
 Fora do código: verificar o site no [Google Search Console](https://search.google.com/search-console), enviar
 `https://dramayarabacellar.com/sitemap.xml`, vincular o Search Console ao GA4, pedir a indexação de cada página de

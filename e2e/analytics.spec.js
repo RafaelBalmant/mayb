@@ -65,29 +65,3 @@ test("?interno=1 and ?debug=1 go to the config and leave the address", async ({ 
   const next = (await commands(page)).find((c) => c[0] === "config");
   expect(next[2]).toEqual({ send_page_view: false, traffic_type: "internal" });
 });
-
-test("a service page counts its own page view and its WhatsApp click as a lead with page and city", async ({
-  page,
-}) => {
-  await page.goto("/toxina-botulinica-maringa/");
-  await page.getByRole("button", { name: "OK", exact: true }).click();
-  await expect
-    .poll(async () => (await events(page, "page_view")).map((e) => new URL(e[2].page_location).pathname))
-    .toEqual(["/toxina-botulinica-maringa/"]);
-
-  await page.getByRole("link", { name: "Agendar avaliação pelo WhatsApp" }).first().click();
-  const params = { city: "maringa", page: "toxina-botulinica-maringa" };
-  await expect.poll(() => events(page, "whatsapp_contact")).toEqual([["event", "whatsapp_contact", params]]);
-  expect(await events(page, "generate_lead")).toEqual([
-    ["event", "generate_lead", { method: "whatsapp", lead_type: "contact", ...params }],
-  ]);
-});
-
-test("the cookie answer given on the start page holds on the service pages", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "OK", exact: true }).click();
-  await page.goto("/harmonizacao-facial-maringa/");
-  await expect(page.getByRole("heading", { level: 1, name: "Harmonização facial em Maringá" })).toBeVisible();
-  await expect(page.getByText("Usamos cookies para melhorar sua experiência.")).toBeHidden();
-  await expect.poll(() => events(page, "page_view")).toHaveLength(1);
-});
