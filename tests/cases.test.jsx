@@ -9,6 +9,7 @@ import {
   loadCases,
   pairsOf,
   partsWithCases,
+  withExamples,
 } from "../src/domain/cases.js";
 
 const files = {
@@ -94,5 +95,20 @@ describe("case card", () => {
     expect(out).not.toContain("<audio");
     expect(out).toContain("Rinomodelação");
     expect(out).toContain("Depois · 15 dias depois");
+  });
+});
+
+describe("example cases", () => {
+  it("come after the real ones, tagged, only while shown", () => {
+    const real = [{ folder: "a" }];
+    const sample = [{ folder: "b" }];
+    expect(withExamples(real, sample, true)).toEqual([{ folder: "a" }, { folder: "b", example: true }]);
+    expect(withExamples(real, sample, false)).toBe(real);
+  });
+
+  it("the card shows the 'Exemplo' tag only on examples", () => {
+    const html = (item) => renderToString(<CaseCard item={item} onOpen={() => {}} />);
+    expect(html({ ...cases[1], example: true })).toContain("Exemplo");
+    expect(html(cases[1])).not.toContain("case-example");
   });
 });

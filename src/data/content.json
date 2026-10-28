@@ -361,7 +361,10 @@
     "reviews": {
       "title": "Avaliações no Google",
       "rating": "Nota {rating} de 5",
-      "total": { "one": "1 avaliação", "many": "{n} avaliações" },
+      "total": {
+        "one": "1 avaliação",
+        "many": "{n} avaliações"
+      },
       "stars": "{n} de 5 estrelas",
       "list": "Avaliações de pacientes",
       "position": "Avaliação {current} de {total}",
@@ -490,7 +493,8 @@
       "pause": "Pausar",
       "audioText": "Ler o que ela disse",
       "back": "Voltar",
-      "agenda": "Verificar agenda"
+      "agenda": "Verificar agenda",
+      "example": "Exemplo"
     },
     "next": {
       "title": "Anotado! E agora?",

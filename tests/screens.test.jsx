@@ -164,10 +164,11 @@ describe("cases page", () => {
     expect(out).not.toContain('class="progress"');
   });
 
-  it("without any case yet it says so instead of showing the parts", () => {
+  it("while the example cases are on, it offers 'all' and the parts that have one", () => {
     const out = html(stateOn("cases"));
-    expect(out).toContain("Em breve vamos mostrar aqui casos reais");
-    expect(out).not.toContain('id="cases-all"');
+    expect(out).toContain('id="cases-all"');
+    expect(out).toContain("Boca e lábios");
+    expect(out).toContain("Toque numa parte acima para ver os casos.");
   });
 });
 

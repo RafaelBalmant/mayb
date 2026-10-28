@@ -61,3 +61,10 @@ export const REVIEWS_AUTOPLAY_MS = 10000;
 
 /** After the visitor touches the carousel, it waits this long without changes before moving on by itself again (ms). */
 export const REVIEWS_RESUME_AFTER_MS = 30000;
+
+/**
+ * Whether the cases page (and the results step) also shows the example cases of data/case-examples.json, so the
+ * design can be seen before there are real ones. They carry an "Exemplo" tag and, like the page, only show with
+ * ?mapa=1. Turn off (or delete that file and src/case-examples/) once real cases are in.
+ */
+export const SHOW_CASE_EXAMPLES = true;

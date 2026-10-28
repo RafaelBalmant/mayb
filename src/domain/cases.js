@@ -1,4 +1,6 @@
 import data from "../data/cases.json";
+import examples from "../data/case-examples.json";
+import { SHOW_CASE_EXAMPLES } from "../config.js";
 import { areas } from "../content.js";
 
 /** Area codes that can have cases, in face order (top to bottom). "Other part" has none. */
@@ -6,8 +8,10 @@ export const CASE_AREAS = areas.map((a) => a.code).filter((code) => code !== "ot
 
 // Every file inside src/cases/<folder>/, found at build time: { "../cases/labios-01/antes.jpg": url }.
 const FILES = import.meta.glob("../cases/*/*.*", { eager: true, query: "?url", import: "default" });
+// The same for the example cases (src/case-examples/), shown while SHOW_CASE_EXAMPLES is on.
+const EXAMPLE_FILES = import.meta.glob("../case-examples/*/*.*", { eager: true, query: "?url", import: "default" });
 
-const IMAGE = /\.(jpe?g|png|webp)$/i;
+const IMAGE = /\.(jpe?g|png|webp|svg)$/i;
 
 /** Files grouped by case folder, with lower-case names: { "labios-01": { "antes.jpg": url } }. */
 export function filesByFolder(files) {
@@ -58,7 +62,15 @@ export function loadCases(list, files) {
     .filter((c) => c.pairs.length > 0);
 }
 
-export const CASES = loadCases(data.cases, FILES);
+/** Real cases, followed by the example ones (marked `example`) while SHOW_CASE_EXAMPLES is on. */
+export const withExamples = (real, sample, show) =>
+  show ? [...real, ...sample.map((c) => ({ ...c, example: true }))] : real;
+
+export const CASES = withExamples(
+  loadCases(data.cases, FILES),
+  loadCases(examples.cases, EXAMPLE_FILES),
+  SHOW_CASE_EXAMPLES,
+);
 
 /** Cases that include an area. */
 export const casesOf = (code, cases = CASES) => cases.filter((c) => c.areas.includes(code));

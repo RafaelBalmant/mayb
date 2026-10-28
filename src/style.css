@@ -1342,6 +1342,15 @@ a.btn[aria-disabled="true"] {
   font-size: 17px;
   font-weight: 600;
 }
+.case-example {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px dashed var(--muted);
+  color: var(--muted);
+}
 .case-procedures,
 .case-description {
   margin: 0;

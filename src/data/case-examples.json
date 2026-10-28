@@ -1,0 +1,91 @@
+{
+  "_howToEdit": [
+    "CASOS DE EXEMPLO, só para ver o desenho da página enquanto não há casos reais. Aparecem com a etiqueta \"Exemplo\".",
+    "Para tirar do site: em src/config.js, SHOW_CASE_EXAMPLES = false. Para apagar de vez: este arquivo e a pasta src/case-examples/.",
+    "Os casos reais ficam em cases.json, no mesmo formato."
+  ],
+  "cases": [
+    {
+      "folder": "exemplo-testa-1",
+      "title": "Testa sem marcas de expressão",
+      "areas": ["forehead"],
+      "procedures": ["Toxina botulínica"],
+      "after": "15 dias depois"
+    },
+    {
+      "folder": "exemplo-testa-2",
+      "title": "Linhas entre as sobrancelhas suavizadas",
+      "areas": ["forehead", "eyes"],
+      "procedures": ["Toxina botulínica"],
+      "after": "15 dias depois"
+    },
+    {
+      "folder": "exemplo-olhos-1",
+      "title": "Olheiras mais suaves",
+      "areas": ["eyes"],
+      "procedures": ["Preenchimento de olheiras"],
+      "after": "30 dias depois"
+    },
+    {
+      "folder": "exemplo-nariz-1",
+      "title": "Ponta do nariz mais elevada",
+      "areas": ["nose"],
+      "procedures": ["Rinomodelação"],
+      "after": "Logo depois",
+      "audio": "audio.mp3",
+      "audioText": "Este é um texto de exemplo do que a Dra. Mayara diria no áudio, explicando o que foi feito e por quê."
+    },
+    {
+      "folder": "exemplo-nariz-2",
+      "title": "Calombo disfarçado",
+      "areas": ["nose"],
+      "procedures": ["Rinomodelação"],
+      "after": "Logo depois"
+    },
+    {
+      "folder": "exemplo-boca-1",
+      "title": "Lábios mais definidos",
+      "areas": ["mouth", "chin"],
+      "procedures": ["Preenchimento labial"],
+      "after": "30 dias depois",
+      "audio": "audio.mp3",
+      "audioText": "Este é um texto de exemplo do que a Dra. Mayara diria no áudio, explicando o que foi feito e por quê."
+    },
+    {
+      "folder": "exemplo-boca-2",
+      "title": "Mais volume, sem exagero",
+      "areas": ["mouth"],
+      "procedures": ["Preenchimento labial"],
+      "after": "30 dias depois"
+    },
+    {
+      "folder": "exemplo-boca-3",
+      "title": "Sorriso com menos gengiva",
+      "areas": ["mouth"],
+      "procedures": ["Toxina botulínica"],
+      "after": "15 dias depois"
+    },
+    {
+      "folder": "exemplo-queixo-1",
+      "title": "Queixo mais projetado",
+      "areas": ["chin"],
+      "procedures": ["Preenchimento de mento"],
+      "after": "30 dias depois"
+    },
+    {
+      "folder": "exemplo-contorno-1",
+      "title": "Mandíbula mais marcada",
+      "areas": ["jawline"],
+      "procedures": ["Preenchimento de mandíbula"],
+      "after": "30 dias depois"
+    },
+    {
+      "folder": "exemplo-pele-1",
+      "title": "Pele mais firme e com viço",
+      "areas": ["skin"],
+      "procedures": ["Bioestimulador de colágeno"],
+      "after": "90 dias depois",
+      "description": "Exemplo de descrição curta do caso."
+    }
+  ]
+}
