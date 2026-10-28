@@ -21,7 +21,7 @@ describe("cookie notice", () => {
   it("asks a visitor who has not answered yet", () => {
     const out = render(on, null);
     expect(out).toContain('id="cookie-notice"');
-    expect(out).toContain("Você aceita cookies?");
+    expect(out).toContain("Usamos cookies para melhorar sua experiência.");
     expect(out).toContain('id="cookies-accept"');
     expect(out).toContain('id="cookies-decline"');
   });
