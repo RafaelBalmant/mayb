@@ -234,7 +234,6 @@ a.btn[aria-disabled="true"] { opacity: .4; }
 @media (prefers-reduced-motion: reduce) { .perfil-frase.surgir { animation: none; } }
 .inicio-botoes { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .inicio-botoes .btn { flex: none; width: 100%; padding-block: 18px; font-size: 17px; }
-.btn-pergunta { display: block; margin-bottom: 2px; font-size: 14px; font-weight: 500; color: var(--muted); }
 
 /* Agenda */
 .local-maringa { --local: var(--local-maringa); --on-local: var(--on-local-maringa); }
