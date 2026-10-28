@@ -83,24 +83,25 @@ resultados do mapa do rosto. A página segue o mesmo interruptor do mapa (`?mapa
 
 ## Avaliações do Google
 
-A página inicial mostra a nota e as avaliações do perfil da Dra. Mayara no Google num carrossel
-(`src/components/GoogleReviews.jsx`). O site **não consulta o Google**: as avaliações são buscadas no build e ficam num
-JSON estático.
+A página inicial mostra a nota e avaliações do perfil da Dra. Mayara no Google num carrossel
+(`src/components/GoogleReviews.jsx`). O site **não consulta o Google**: tudo é estático.
 
-- `npm run reviews` (`scripts/fetch-reviews.mjs`) busca nota e avaliações e grava `src/data/reviews.generated.json`
-  (fora do git). A fonte fica em `scripts/reviews/google-places.mjs` (Places API (New), no máximo 5 avaliações, as
-  "mais relevantes"); outra fonte, como a API do Perfil da Empresa, só precisa exportar a mesma função `fetchPlace`.
+- **As avaliações** ficam em `content.json` → `googleReviews.reviews` (nome, estrelas e texto, copiados do perfil). O
+  Google só entrega 5 pela API, por isso a lista é mantida à mão: para incluir uma nova, acrescente na lista.
+  `minStars` e `hideIfMentions` (hoje `sobrancelha`, já que o foco é harmonização facial) escondem as que não devem
+  aparecer.
+- **A nota média e o total** vêm do Google no build: `npm run reviews` (`scripts/fetch-reviews.mjs`, fonte em
+  `scripts/reviews/google-places.mjs`) grava `src/data/google-rating.generated.json` (fora do git). Sem ele, as
+  avaliações aparecem sem a nota.
 - O `Dockerfile` roda `npm run reviews` antes do build, e o `docker.yml` gera a imagem a cada push na `main` e
   **uma vez por dia** (dá para rodar na mão em Actions → Docker CI → Run workflow).
 - **Chave de API**: `GOOGLE_MAPS_KEY`, secret do repositório no GitHub (localmente, no `.env`; veja `.env.example`).
   Ela só é usada no build e nunca vai para o site. Entra no Docker como _secret_ (`--mount=type=secret`), não como
   `ARG`, para não ficar gravada na imagem nem no registro do build que o GitHub guarda. Para gerar a imagem na sua
-  máquina com as avaliações: `docker build --secret id=google_maps_key,env=GOOGLE_MAPS_KEY .`
-- **Place ID** e nota mínima: `content.json` → `googleReviews` (não é segredo).
+  máquina com a nota: `docker build --secret id=google_maps_key,env=GOOGLE_MAPS_KEY .`
+- **Place ID**: `content.json` → `googleReviews.placeId` (não é segredo).
 - Cada visita mostra um grupo diferente (até `REVIEWS_MAX_GROUPS` grupos de `REVIEWS_GROUP_SIZE` avaliações, em
   `src/config.js`); recarregar a página na mesma visita mantém o grupo.
-
-Sem chave, ou se o Google falhar, o build continua e o bloco simplesmente não aparece.
 
 ## Google (SEO)
 
@@ -114,8 +115,7 @@ imagem na prévia do link, ponha-a em `public/` e o nome em `seo.image`.
 
 `Dockerfile` (build com Node, servido por nginx) e `nginx.conf`: gzip, cache longo para `/assets` (têm hash no nome),
 cache de um dia para as fotos, `index.html` sempre revalidado, `robots.txt`/`sitemap.xml` que dão 404 quando não existem
-e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais; de fora, só as fotos de perfil de quem
-avaliou no Google). A cada push na `main`, o workflow
+e `Content-Security-Policy` restrita ao próprio site (fontes, scripts e imagens são todos locais). A cada push na `main`, o workflow
 `.github/workflows/docker.yml` publica a imagem no Docker Hub; `ci.yml` roda lint, formatação, testes e o E2E nos PRs.
 
 ## Situação

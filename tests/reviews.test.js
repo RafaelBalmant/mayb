@@ -1,23 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { groupForVisit, parsePlace, reviewGroups } from "../src/domain/reviews.js";
+import { groupForVisit, parseRating, reviewGroups, showableReviews } from "../src/domain/reviews.js";
 import { fetchPlace } from "../scripts/reviews/google-places.mjs";
 
-const place = {
-  rating: 4.9,
-  userRatingCount: 37,
-  googleMapsUri: "https://maps.google.com/?cid=1",
-  reviews: [
-    {
-      rating: 5,
-      text: { text: " Atendimento maravilhoso! " },
-      relativePublishTimeDescription: "há 2 semanas",
-      authorAttribution: { displayName: "Ana", uri: "https://g/ana", photoUri: "https://lh3.googleusercontent.com/a" },
-    },
-    { rating: 3, text: { text: "ok" }, authorAttribution: { displayName: "Bia" } },
-    { rating: 5, authorAttribution: { displayName: "Sem texto" } },
-    { rating: 4, originalText: { text: "Muito atenciosa." }, authorAttribution: { displayName: "Carlos" } },
-  ],
-};
+const place = { rating: 4.9, userRatingCount: 37, googleMapsUri: "https://maps.google.com/?cid=1" };
 
 const memoryStorage = (initial = {}) => {
   const data = { ...initial };
@@ -25,26 +10,40 @@ const memoryStorage = (initial = {}) => {
 };
 const KEY = "reviews-group";
 
-describe("parsePlace", () => {
-  it("keeps reviews with text and enough stars, in Google's order", () => {
-    const out = parsePlace(place, 4);
-    expect(out).toMatchObject({ rating: 4.9, total: 37, link: "https://maps.google.com/?cid=1" });
-    expect(out.reviews).toEqual([
-      {
-        author: "Ana",
-        authorLink: "https://g/ana",
-        photo: "https://lh3.googleusercontent.com/a",
-        stars: 5,
-        text: "Atendimento maravilhoso!",
-      },
-      { author: "Carlos", authorLink: "", photo: "", stars: 4, text: "Muito atenciosa." },
-    ]);
+describe("parseRating", () => {
+  it("keeps the average, the total and the profile link", () => {
+    expect(parseRating(place)).toEqual({ rating: 4.9, total: 37, link: "https://maps.google.com/?cid=1" });
+    expect(parseRating({ rating: 5 })).toEqual({ rating: 5, total: 0, link: "" });
   });
 
-  it("is null without a rating or without any review left", () => {
-    expect(parsePlace({ ...place, rating: undefined })).toBeNull();
-    expect(parsePlace(place, 6)).toBeNull();
-    expect(parsePlace(null)).toBeNull();
+  it("is null without a rating", () => {
+    expect(parseRating({ ...place, rating: undefined })).toBeNull();
+    expect(parseRating(null)).toBeNull();
+  });
+});
+
+describe("showableReviews", () => {
+  const reviews = [
+    { author: "Ana", stars: 5, text: " Atendimento maravilhoso! " },
+    { author: "Bia", stars: 3, text: "ok" },
+    { author: "Sem texto", stars: 5, text: "" },
+    { author: "Carla", stars: 5, text: "Faço minhas SOBRANCELHAS com ela." },
+    { author: "Duda", stars: 4, text: "Muito atenciosa." },
+  ];
+
+  it("keeps reviews with text and enough stars, in the saved order", () => {
+    expect(showableReviews(reviews, { minStars: 4 }).map((r) => r.author)).toEqual(["Ana", "Carla", "Duda"]);
+    expect(showableReviews(reviews)[0].text).toBe("Atendimento maravilhoso!");
+  });
+
+  it("hides reviews that mention a hidden topic, ignoring case and accents", () => {
+    const out = showableReviews(reviews, { minStars: 4, hideIfMentions: ["Sobrancelha"] });
+    expect(out.map((r) => r.author)).toEqual(["Ana", "Duda"]);
+    expect(showableReviews(reviews, { hideIfMentions: ["MARAVILHÓSO"] }).map((r) => r.author)).not.toContain("Ana");
+  });
+
+  it("copes with a missing list", () => {
+    expect(showableReviews(undefined)).toEqual([]);
   });
 });
 
@@ -59,7 +58,7 @@ describe("reviewGroups", () => {
     ]);
   });
 
-  it("with only Google's 5, every group has them all but starts on a different one", () => {
+  it("with only 5 reviews, every group has them all but starts on a different one", () => {
     const groups = reviewGroups(list(5), { size: 5, max: 3 });
     expect(groups).toEqual([
       [0, 1, 2, 3, 4],
@@ -112,12 +111,23 @@ describe("fetchPlace (Google Places source)", () => {
     expect(url).toBe("https://places.googleapis.com/v1/places/ChIJ%20abc?languageCode=pt-BR&regionCode=BR");
     expect(init.headers).toEqual({
       "X-Goog-Api-Key": "k",
-      "X-Goog-FieldMask": "rating,userRatingCount,reviews,googleMapsUri",
+      "X-Goog-FieldMask": "rating,userRatingCount,googleMapsUri",
     });
   });
 
   it("throws when Google refuses, so the build keeps the previous reviews", async () => {
     const fetchFn = vi.fn().mockResolvedValue({ ok: false, status: 403, text: async () => "denied" });
     await expect(fetchPlace({ key: "k", placeId: "p", fetchFn })).rejects.toThrow("HTTP 403");
+  });
+});
+
+describe("reviews in content.json", () => {
+  it("every saved review is complete and none shown talks about eyebrows", async () => {
+    const { googleReviews } = await import("../src/content.js");
+    for (const r of googleReviews.reviews)
+      expect(r).toMatchObject({ author: expect.any(String), stars: expect.any(Number) });
+    const shown = showableReviews(googleReviews.reviews, googleReviews);
+    expect(shown.length).toBeGreaterThan(15);
+    expect(shown.some((r) => /sobrancelha/i.test(r.text))).toBe(false);
   });
 });
