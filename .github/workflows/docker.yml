@@ -32,8 +32,9 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          build-args: |
-            GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}
+          # A secret, not a build-arg: build args are kept in the build record GitHub stores with the run.
+          secrets: |
+            google_maps_key=${{ secrets.GOOGLE_MAPS_KEY }}
           tags: |
             balmantrafael/mayb:latest-amd64
             balmantrafael/mayb:${{ github.sha }}-amd64
