@@ -10,9 +10,9 @@ import { StoreProvider } from "../src/store/StoreProvider.jsx";
 const on = createTracker([{ load() {}, screen() {}, event() {} }]);
 const off = createTracker([]);
 const storageWith = (value) => ({ getItem: () => value, setItem() {} });
-const render = (tracker, saved, children = <CookieNotice />) =>
+const render = (tracker, saved, children = <CookieNotice />, consentMode = false) =>
   renderToString(
-    <AnalyticsProvider tracker={tracker} storage={storageWith(saved)}>
+    <AnalyticsProvider tracker={tracker} storage={storageWith(saved)} consentMode={consentMode}>
       {children}
     </AnalyticsProvider>,
   );
@@ -24,6 +24,10 @@ describe("cookie notice", () => {
     expect(out).toContain("Usamos cookies para melhorar sua experiência.");
     expect(out).toContain('id="cookies-accept"');
     expect(out).toContain('id="cookies-decline"');
+  });
+
+  it("says that visits are counted without cookies when Consent Mode is on", () => {
+    expect(render(on, null, <CookieNotice />, true)).toContain("Sem o seu OK, só contamos a visita, sem cookies.");
   });
 
   it("stays hidden once answered, and when the build has no analytics", () => {

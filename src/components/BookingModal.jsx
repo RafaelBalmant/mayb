@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "preact/hooks";
+import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
 import { t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
 import { Progress } from "./Progress.jsx";
@@ -13,6 +14,7 @@ const m = (key, vars) => t(`agenda.modal.${key}`, vars);
  */
 export function BookingModal({ monthName, daysByCity, onClose }) {
   const [city, setCity] = useState(null);
+  const { rememberCity } = useAnalytics();
   const dialogRef = useRef();
   const locations = t("agenda.locations");
   const ready = Boolean(city);
@@ -55,7 +57,10 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
                   class={`route location-${code}`}
                   aria-pressed={city === code}
                   disabled={!hasDays}
-                  onClick={() => setCity(code)}
+                  onClick={() => {
+                    setCity(code);
+                    rememberCity(code);
+                  }}
                 >
                   <strong>
                     <i aria-hidden="true" />
