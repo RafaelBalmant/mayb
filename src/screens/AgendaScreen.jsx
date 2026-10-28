@@ -74,7 +74,7 @@ export function AgendaScreen() {
 
   return (
     <>
-      <Layout bar={bar}>
+      <Layout className="app app-agenda" bar={bar}>
         <Topbar screen="agenda" />
         <h1>{t("agenda.title")}</h1>
         <p class="explain">{t("agenda.explanation")}</p>
