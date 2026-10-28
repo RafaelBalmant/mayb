@@ -61,7 +61,7 @@ export function AgendaScreen() {
         {t("agenda.back")}
       </button>
       <button
-        class="btn primary"
+        class="btn primary two-lines"
         id="book"
         ref={bookRef}
         disabled={upcoming.length === 0}
