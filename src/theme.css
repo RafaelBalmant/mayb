@@ -4,8 +4,8 @@
    The rest of the CSS and the face drawings use these variables.
    ========================================================== */
 
-/* 1. Fonts (Google Fonts). When changing them, update the link and the names in --font-title / --font-text. */
-@import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap");
+/* 1. Fonts. They are served by this site (npm packages @fontsource/*, imported in main.jsx), not by Google.
+      To change them: install another @fontsource package, update the imports in main.jsx and the names below. */
 
 :root {
   --font-title: "Young Serif", Georgia, "Times New Roman", serif;
