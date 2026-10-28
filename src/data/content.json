@@ -253,13 +253,14 @@
   "seo": {
     "_howToEdit": [
       "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
-      "url: endereço final do site, com https e barra no fim (ex.: \"https://www.mayarabacellar.com.br/\"). Enquanto estiver vazio, o build não gera sitemap nem link canônico.",
-      "image: nome de uma imagem dentro de public/ (ex.: \"compartilhar.jpg\", 1200×630 px) que aparece quando alguém compartilha o link. Vazio = sem imagem.",
+      "url: endereço oficial do site, com https e barra no fim. Vai no link canônico, na prévia do link e no sitemap.xml (o arquivo que se envia ao Google Search Console). Vazio = sem sitemap nem link canônico.",
+      "image: imagem dentro de public/ que aparece quando alguém compartilha o link (o ideal é uma de 1200×630 px). Vazio = sem imagem.",
+      "O título da página (em azul no resultado do Google e na aba do navegador) fica em texts.general.pageTitle. Ter a especialidade e as cidades nele ajuda a aparecer nessas buscas.",
       "description: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
       "content: texto que já vem pronto no HTML (o Google lê sem precisar rodar o JavaScript). Some assim que o site carrega."
     ],
-    "url": "",
-    "image": "",
+    "url": "https://dramayarabacellar.com/",
+    "image": "profile/photo.jpg",
     "description": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Veja a agenda de atendimento e agende pelo WhatsApp.",
     "keywords": ["harmonização facial", "Maringá", "Siqueira Campos", "Paraná", "Dra. Mayara Bacellar"],
     "state": "PR",
@@ -566,7 +567,7 @@
   ],
   "texts": {
     "general": {
-      "pageTitle": "Dra. Mayara Bacellar",
+      "pageTitle": "Dra. Mayara Bacellar · Harmonização facial em Maringá e Siqueira Campos",
       "brand": "Mayara Bacellar · Harmonização facial",
       "step": "Etapa {current} de {total} · {title}",
       "back": "Voltar"
