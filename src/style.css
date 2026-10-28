@@ -1575,17 +1575,29 @@ a.btn[aria-disabled="true"] {
   max-width: 448px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 12px;
 }
 .cookie-notice p {
-  font-size: 16px;
+  flex: 1;
+  font-size: 15px;
   font-weight: 500;
-  text-align: center;
+  line-height: 1.4;
 }
-.cookie-actions {
-  display: flex;
-  gap: 10px;
+.cookie-notice .btn {
+  flex: none;
+  padding: 12px 24px;
+}
+.cookie-close {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  margin-right: -8px;
+  background: none;
+  border: 0;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--muted);
 }
 .cookie-link {
   align-self: center;
