@@ -723,7 +723,8 @@
       "pause": "Pausar",
       "audioText": "Ler o que ela disse",
       "back": "Voltar",
-      "agenda": "Verificar agenda"
+      "agenda": "Verificar agenda",
+      "example": "Exemplo"
     },
     "next": {
       "title": "Anotado! E agora?",

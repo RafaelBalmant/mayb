@@ -31,6 +31,7 @@ export function CaseCard({ item, onOpen }) {
   return (
     <article class="case" data-folder={item.folder}>
       <header class="case-head">
+        {item.example && <span class="case-example">{t("cases.example")}</span>}
         <h3>{item.title}</h3>
         {item.procedures.length > 0 && <p class="case-procedures">{item.procedures.join(" · ")}</p>}
         {item.areas.length > 1 && <span class="case-areas">{areasLabel(item.areas)}</span>}

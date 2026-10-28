@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import content from "../src/data/content.json";
 import agenda from "../src/data/agenda.json";
 import cases from "../src/data/cases.json";
+import caseExamples from "../src/data/case-examples.json";
 import flow from "../src/data/flow.json";
 import questions from "../src/data/questions.json";
 
@@ -94,27 +95,33 @@ describe("agenda.json and cases.json", () => {
     }
   });
 
-  it("every case in cases.json has a unique folder with before/after photos, known areas and its audio file", () => {
-    const folders = new Set();
-    for (const c of cases.cases) {
-      expect(c.title, c.folder).toBeTruthy();
-      expect(folders.has(c.folder), `${c.folder} repeated`).toBe(false);
-      folders.add(c.folder);
-      const dir = `src/cases/${c.folder}`;
-      expect(existsSync(dir), dir).toBe(true);
-      const names = readdirSync(dir).map((f) => f.toLowerCase());
-      for (const m of ["antes", "depois"]) {
-        expect(
-          names.some((f) => new RegExp(`^${m}(-1)?\\.(jpe?g|png|webp)$`).test(f)),
-          `${dir}/${m}.jpg`,
-        ).toBe(true);
+  it.each([
+    ["cases.json", cases, "src/cases"],
+    ["case-examples.json", caseExamples, "src/case-examples"],
+  ])(
+    "every case in %s has a unique folder with before/after photos, known areas and its audio file",
+    (_, data, root) => {
+      const folders = new Set();
+      for (const c of data.cases) {
+        expect(c.title, c.folder).toBeTruthy();
+        expect(folders.has(c.folder), `${c.folder} repeated`).toBe(false);
+        folders.add(c.folder);
+        const dir = `${root}/${c.folder}`;
+        expect(existsSync(dir), dir).toBe(true);
+        const names = readdirSync(dir).map((f) => f.toLowerCase());
+        for (const m of ["antes", "depois"]) {
+          expect(
+            names.some((f) => new RegExp(`^${m}(-1)?\\.(jpe?g|png|webp|svg)$`).test(f)),
+            `${dir}/${m}.jpg`,
+          ).toBe(true);
+        }
+        expect(c.areas.length, c.folder).toBeGreaterThan(0);
+        for (const code of c.areas)
+          expect(code !== "other" && areas.some((a) => a.code === code), `${c.folder}: ${code}`).toBe(true);
+        if (c.audio) expect(names, `${dir}/${c.audio}`).toContain(c.audio.toLowerCase());
       }
-      expect(c.areas.length, c.folder).toBeGreaterThan(0);
-      for (const code of c.areas)
-        expect(code !== "other" && areas.some((a) => a.code === code), `${c.folder}: ${code}`).toBe(true);
-      if (c.audio) expect(names, `${dir}/${c.audio}`).toContain(c.audio.toLowerCase());
-    }
-  });
+    },
+  );
 });
 
 describe("professional and seo", () => {

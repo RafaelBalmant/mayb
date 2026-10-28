@@ -210,10 +210,10 @@ test.describe("face map", () => {
     await expect(label(page, "Outra parte")).toHaveAttribute("aria-pressed", "false");
   });
 
-  test("results: cards per marked part, 'coming soon' without photos, skip becomes continue", async ({ page }) => {
+  test("results: cards per marked part, cases or 'coming soon', skip becomes continue", async ({ page }) => {
     await openMapFlow(page);
     await label(page, "Testa").click();
-    await label(page, "Nariz").click();
+    await label(page, "Bochechas").click();
     await page.getByRole("button", { name: "Continuar" }).click();
     await expect(
       page.getByRole("heading", { name: "Quer ver resultados de quem tinha as mesmas queixas?" }),
@@ -223,10 +223,30 @@ test.describe("face map", () => {
     await expect(forehead).toHaveAttribute("aria-expanded", "false");
     await forehead.click();
     await expect(forehead).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator("#photos-forehead").getByText("Fotos em breve").first()).toBeVisible();
+    await expect(page.locator("#photos-forehead .case").first()).toBeVisible(); // example cases while they are on
     await expect(page.getByRole("button", { name: "Continuar" })).toBeVisible();
-    await page.getByRole("button", { name: /^Nariz/ }).click(); // opening another closes the first
+    const cheeks = page.getByRole("button", { name: /^Bochechas/ });
+    await cheeks.click(); // opening another closes the first
     await expect(forehead).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator("#photos-cheeks").getByText("Fotos em breve").first()).toBeVisible();
+  });
+
+  test("cases page: pick parts, see before above after, open a photo full screen and close it", async ({ page }) => {
+    await page.goto("/?mapa=1");
+    await page.getByRole("button", { name: "Ver resultados reais" }).click();
+    await page.getByRole("button", { name: /^Nariz/ }).click();
+    const section = page.locator('.case-group[data-code="nose"]');
+    await expect(section.getByRole("heading", { name: "Nariz", exact: true })).toBeVisible();
+    await expect(section.getByText("Exemplo").first()).toBeVisible();
+    await section
+      .getByRole("button", { name: /^Ampliar foto de Antes/ })
+      .first()
+      .click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Fechar" }).click();
+    await expect(page.getByRole("dialog")).toBeHidden();
+    await page.getByRole("button", { name: "Todos" }).click();
+    await expect(page.locator(".case-jump")).toBeVisible();
   });
 
   test("full flow with details through to sending, without any consent checkbox", async ({ page }) => {
