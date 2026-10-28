@@ -22,7 +22,14 @@ describe("loadState", () => {
   it("starts empty when nothing was saved", () => {
     const s = loadState(memoryStorage());
     expect(s).toMatchObject({ face: null, about: { name: "" }, areas: [] });
-    expect(s.ui).toEqual({ screen: "opening", view: "front", index: 0, consent: false });
+    expect(s.ui).toEqual({
+      screen: "start",
+      view: "front",
+      index: 0,
+      agendaMonth: 0,
+      openCase: null,
+      viewedCases: false,
+    });
   });
 
   it("restores the saved state and ui", () => {
@@ -34,7 +41,14 @@ describe("loadState", () => {
     expect(s.face).toBe("male");
     expect(s.about.name).toBe("Ana");
     expect(s.ui).toMatchObject(saved.ui);
-    expect(s.ui.consent).toBe(false); // missing keys keep their defaults
+    expect(s.ui.agendaMonth).toBe(0); // missing keys keep their defaults
+  });
+
+  it("drops ui fields that no longer exist in a save from an older version", () => {
+    const saved = { state: { face: "male", about: {}, areas: [] }, ui: { screen: "map", consent: true } };
+    const s = loadState(memoryStorage({ [KEY]: JSON.stringify(saved) }));
+    expect(s.ui).not.toHaveProperty("consent");
+    expect(s.ui.screen).toBe("map");
   });
 
   it("ignores invalid JSON and uses the defaults", () => {
@@ -66,7 +80,8 @@ describe("loadState", () => {
     expect(s.face).toBe("female");
     expect(s.about.name).toBe("Ana");
     expect(s.areas[0]).toMatchObject({ code: "forehead", side: "right", intensity: 4, concerns: ["frown_lines"] });
-    expect(s.ui).toEqual({ screen: "details", view: "profile", index: 1, consent: true });
+    expect(s.ui).toMatchObject({ screen: "details", view: "profile", index: 1 });
+    expect(s.ui).not.toHaveProperty("consent"); // the checkbox no longer exists
   });
 });
 

@@ -1,6 +1,8 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import content from "../src/data/content.json";
+import agenda from "../src/data/agenda.json";
+import cases from "../src/data/cases.json";
 import flow from "../src/data/flow.json";
 import questions from "../src/data/questions.json";
 
@@ -64,9 +66,47 @@ describe("questions.json", () => {
 });
 
 describe("flow.json", () => {
-  it("steps are within the total and ids are unique", () => {
+  it("ids are unique and every step exists in texts.steps", () => {
     const ids = flow.screens.map((s) => s.id);
     expect(new Set(ids).size).toBe(ids.length);
-    for (const s of flow.screens) if (s.step) expect(s.step).toBeLessThanOrEqual(flow.totalSteps);
+    for (const s of flow.screens) {
+      if (!s.flow) continue;
+      expect(texts.steps[s.flow], `${s.id}: texts.steps.${s.flow}`).toBeDefined();
+      expect(s.step, s.id).toBeGreaterThanOrEqual(1);
+      expect(s.step, s.id).toBeLessThanOrEqual(texts.steps[s.flow].length);
+    }
+  });
+});
+
+describe("agenda.json and cases.json", () => {
+  it("agenda months are valid, cities exist in texts and days fit the month and skip Sundays", () => {
+    for (const [key, byCity] of Object.entries(agenda.appointments)) {
+      expect(key).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
+      const [year, month] = key.split("-").map(Number);
+      for (const [city, days] of Object.entries(byCity)) {
+        expect(texts.agenda.locations[city], `${key} ${city}`).toBeDefined();
+        for (const day of days) {
+          const date = new Date(year, month - 1, day);
+          expect(date.getMonth(), `${key}-${day} is not a real day`).toBe(month - 1);
+          expect(date.getDay(), `${key}-${day} is a Sunday`).not.toBe(0);
+        }
+      }
+    }
+  });
+
+  it("cases.json has an entry per area (except 'other'), with photos in before/after pairs and folders that exist", () => {
+    for (const a of areas.filter((x) => x.code !== "other")) expect(Array.isArray(cases[a.code]), a.code).toBe(true);
+    for (const [code, procedures] of Object.entries(cases)) {
+      if (code.startsWith("_")) continue;
+      expect(existsSync(`public/cases/${code}`), `public/cases/${code}`).toBe(true);
+      for (const p of procedures) expect(p.photos.length % 2, `${code}/${p.procedure}`).toBe(0);
+    }
+  });
+});
+
+describe("professional and seo", () => {
+  it("the profile photo exists and the WhatsApp number is only digits", () => {
+    expect(existsSync(`public/${content.professional.photo}`)).toBe(true);
+    expect(content.professional.whatsapp).toMatch(/^\d{12,13}$/);
   });
 });

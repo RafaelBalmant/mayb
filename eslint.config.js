@@ -9,7 +9,7 @@ export default [
   js.configs.recommended,
   { rules: { "no-empty": ["error", { allowEmptyCatch: true }] } },
   {
-    files: ["src/**/*.{js,jsx}"],
+    files: ["src/**/*.{js,jsx}", "tests/**/*.jsx"],
     ...react.configs.flat.recommended,
     languageOptions: {
       globals: globals.browser,
@@ -26,8 +26,13 @@ export default [
     },
   },
   {
-    files: ["scripts/**/*.mjs", "tests/**/*.js", "e2e/**/*.js", "*.config.js"],
+    files: ["scripts/**/*.mjs", "tests/**/*.{js,jsx}", "*.config.js"],
     languageOptions: { globals: globals.node },
+  },
+  {
+    // e2e specs run in Node, but the callbacks given to page.evaluate run in the browser
+    files: ["e2e/**/*.js"],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   prettier,
 ];

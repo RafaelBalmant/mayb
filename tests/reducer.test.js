@@ -56,18 +56,40 @@ describe("reducer", () => {
     expect(s.otherOpen).toEqual(["eyes"]);
   });
 
-  it("RESTART clears everything, including the consent given before", () => {
-    const s = run(
+  it("RESTART clears the answers and goes back to the opening, keeping the feature flags and the agenda month", () => {
+    const s = reducer(
+      reducer(reducer(initialState({ mapEnabled: true }), { type: "SET_AGENDA_MONTH", index: 2 }), {
+        type: "TOGGLE_AREA",
+        code: "eyes",
+      }),
       { type: "SET_FACE", face: "female" },
-      { type: "SET_NAME", name: "Ana" },
-      { type: "TOGGLE_AREA", code: "eyes" },
-      { type: "SET_CONSENT", value: true },
-      { type: "SET_OTHER_OPEN", code: "eyes", open: true },
-      { type: "GO_TO", screen: "sent" },
-      { type: "RESTART" },
     );
-    expect(s).toEqual(initialState());
-    expect(s.ui.consent).toBe(false);
+    const done = reducer(
+      reducer(reducer(s, { type: "SET_NAME", name: "Ana" }), { type: "SET_OTHER_OPEN", code: "eyes", open: true }),
+      { type: "TOGGLE_CASE", code: "eyes" },
+    );
+    const restarted = reducer(done, { type: "RESTART" });
+    expect(restarted).toMatchObject({ face: null, about: { name: "" }, areas: [], otherOpen: [] });
+    expect(restarted.ui).toMatchObject({ screen: "opening", openCase: null, viewedCases: false, agendaMonth: 2 });
+    expect(restarted.features.map).toBe(true);
+  });
+
+  it("TOGGLE_CASE opens one results card at a time and remembers that the visitor looked", () => {
+    const a = run({ type: "TOGGLE_CASE", code: "eyes" });
+    expect(a.ui).toMatchObject({ openCase: "eyes", viewedCases: true });
+    const b = reducer(a, { type: "TOGGLE_CASE", code: "nose" });
+    expect(b.ui.openCase).toBe("nose");
+    const c = reducer(b, { type: "TOGGLE_CASE", code: "nose" });
+    expect(c.ui).toMatchObject({ openCase: null, viewedCases: true });
+  });
+
+  it("SET_AGENDA_MONTH stores the chosen month tab", () => {
+    expect(run({ type: "SET_AGENDA_MONTH", index: 3 }).ui.agendaMonth).toBe(3);
+  });
+
+  it("starts on the start page with the map off", () => {
+    expect(initialState().ui.screen).toBe("start");
+    expect(initialState().features.map).toBe(false);
   });
 
   it("ignores unknown actions", () => {
