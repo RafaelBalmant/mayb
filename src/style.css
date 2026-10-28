@@ -899,10 +899,9 @@ a.btn[aria-disabled="true"] {
 }
 .review-text {
   margin: 0;
-  font-family: var(--font-title);
-  font-style: italic;
-  font-size: 17px;
-  line-height: 1.45;
+  font-family: var(--font-text);
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--ink);
   display: -webkit-box;
   -webkit-box-orient: vertical;

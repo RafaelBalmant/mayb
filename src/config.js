@@ -56,4 +56,7 @@ export const GOOGLE_PLACES_URL = "https://places.googleapis.com/v1/places/";
 export const REVIEWS_TIMEOUT_MS = 10000;
 
 /** Time each review stays on screen before the carousel moves on by itself (ms). */
-export const REVIEWS_AUTOPLAY_MS = 7000;
+export const REVIEWS_AUTOPLAY_MS = 10000;
+
+/** After the visitor touches the carousel, it waits this long without changes before moving on by itself again (ms). */
+export const REVIEWS_RESUME_AFTER_MS = 30000;
