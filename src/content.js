@@ -9,7 +9,7 @@ export const AREA_BY_CODE = Object.fromEntries(areas.map((a) => [a.code, a]));
 export const optionLabel = (areaCode, id) => AREA_BY_CODE[areaCode].options.find((o) => o.id === id)?.label ?? id;
 
 /**
- * Site text: t("map.empty"), t("general.step", { current: 3, total: 8, title: "…" }).
+ * Site text: t("map.names"), t("general.step", { current: 3, total: 5, title: "…" }).
  * Every text shown to the visitor comes from data/content.json (section "texts").
  */
 export function t(key, vars = {}) {

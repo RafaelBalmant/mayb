@@ -29,7 +29,8 @@ export function loadState(storage = browserStorage()) {
       face: saved.state?.face ?? null,
       about: { ...fresh.about, ...saved.state?.about },
       areas: saved.state?.areas ?? [],
-      ui: { ...fresh.ui, ...saved.ui },
+      // only the keys we know: a save from an older version may carry fields that no longer exist
+      ui: Object.fromEntries(Object.entries({ ...fresh.ui, ...saved.ui }).filter(([key]) => key in fresh.ui)),
     };
   } catch {
     return fresh; // storage unavailable or corrupted: start empty

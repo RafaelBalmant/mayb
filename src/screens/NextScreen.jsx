@@ -1,7 +1,7 @@
 import { AREA_BY_CODE, t, tn } from "../content.js";
-import { Brand } from "../components/Brand.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { Paragraphs } from "../components/Paragraphs.jsx";
+import { Topbar } from "../components/Topbar.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
 
 // Between the map and the details: explains the next step and lets the visitor choose.
@@ -10,14 +10,14 @@ export function NextScreen() {
   const { goTo } = useNavigation();
 
   const bar = (
-    <button class="btn secondary" id="back" onClick={() => goTo("map")}>
-      {t("next.back")}
+    <button class="btn secondary" id="back" onClick={() => goTo("results")}>
+      {t("general.back")}
     </button>
   );
 
   return (
     <Layout bar={bar}>
-      <Brand />
+      <Topbar screen="next" />
       <h1 class="big-question">{t("next.title")}</h1>
       <div class="block">
         <h3>{tn("next.marked", state.areas.length)}</h3>

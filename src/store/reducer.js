@@ -1,13 +1,15 @@
 import { newArea } from "../domain/questions.js";
 import { isMarked } from "../domain/areas.js";
 
-export const initialState = () => ({
+export const initialState = ({ mapEnabled = false } = {}) => ({
   face: null,
   about: { name: "" },
   areas: [],
-  ui: { screen: "opening", view: "front", index: 0, consent: false },
-  // areas whose "Other" field is open but still empty; not persisted
+  // agendaMonth: month tab chosen in the agenda; openCase: expanded results card; viewedCases: opened any
+  ui: { screen: "start", view: "front", index: 0, agendaMonth: 0, openCase: null, viewedCases: false },
+  // not persisted: areas whose "Other" field is open but still empty, and the page-level feature flags
   otherOpen: [],
+  features: { map: mapEnabled },
 });
 
 const updateArea = (areas, code, patch) => areas.map((a) => (a.code === code ? { ...a, ...patch } : a));
@@ -21,8 +23,12 @@ export function reducer(state, action) {
       return { ...state, ui: { ...state.ui, view: action.view } };
     case "SET_NAME":
       return { ...state, about: { ...state.about, name: action.name } };
-    case "SET_CONSENT":
-      return { ...state, ui: { ...state.ui, consent: action.value } };
+    case "SET_AGENDA_MONTH":
+      return { ...state, ui: { ...state.ui, agendaMonth: action.index } };
+    case "TOGGLE_CASE": {
+      const open = state.ui.openCase === action.code ? null : action.code;
+      return { ...state, ui: { ...state.ui, openCase: open, viewedCases: state.ui.viewedCases || open !== null } };
+    }
     case "GO_TO":
       return { ...state, ui: { ...state.ui, screen: action.screen, index: action.index ?? 0 } };
     case "TOGGLE_AREA":
@@ -43,7 +49,10 @@ export function reducer(state, action) {
       return { ...state, otherOpen: action.open ? [...rest, action.code] : rest };
     }
     case "RESTART":
-      return initialState();
+      return {
+        ...initialState({ mapEnabled: state.features.map }),
+        ui: { ...initialState().ui, screen: "opening", agendaMonth: state.ui.agendaMonth },
+      };
     default:
       return state;
   }

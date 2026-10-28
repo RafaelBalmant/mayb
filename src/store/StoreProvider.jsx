@@ -1,7 +1,8 @@
 import { createContext } from "preact";
 import { useCallback, useContext, useLayoutEffect, useMemo, useReducer } from "preact/hooks";
 import { reducer } from "./reducer.js";
-import { loadState, persistState } from "./storage.js";
+import { createInitialState } from "./init.js";
+import { persistState } from "./storage.js";
 
 const StoreContext = createContext(null);
 
@@ -10,7 +11,7 @@ const StoreContext = createContext(null);
  * by default it loads from and saves to the browser's sessionStorage.
  */
 export function StoreProvider({ children, initialState, storage }) {
-  const [state, dispatch] = useReducer(reducer, undefined, () => initialState ?? loadState(storage));
+  const [state, dispatch] = useReducer(reducer, undefined, () => initialState ?? createInitialState({ storage }));
   // layout effect: saves right after each render instead of after the next paint, so a quick reload loses nothing
   useLayoutEffect(() => persistState(state, storage), [state, storage]);
   const value = useMemo(() => ({ state, dispatch }), [state]);

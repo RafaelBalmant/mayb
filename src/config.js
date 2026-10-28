@@ -26,3 +26,25 @@ export const NOTICE_DURATION_MS = 1400;
 
 /** Wait before going to the "sent" screen, so the WhatsApp link opens first (ms). */
 export const SEND_REDIRECT_DELAY_MS = 300;
+
+/**
+ * Whether the face-map flow is open to everyone. While false, the start page only offers the agenda;
+ * the map can still be tried with ?mapa=1 in the address (kept until the tab is closed; ?mapa=0 turns it off).
+ */
+export const MAP_ENABLED = false;
+
+/** sessionStorage key that remembers ?mapa=1 for this tab. */
+export const MAP_PREVIEW_KEY = "site-mayara:mapa";
+
+/** Whether the map offers the profile view (the drawings stay in src/faces/ either way). */
+export const SHOW_PROFILE_VIEW = false;
+
+/** How many months the agenda selector shows, counting from the current one. */
+export const AGENDA_MONTHS_SHOWN = 4;
+
+/** A horizontal drag on the calendar changes the month: at least this many px, and clearly more sideways than vertical. */
+export const SWIPE_MIN_DISTANCE = 50;
+export const SWIPE_DIRECTION_RATIO = 1.5;
+
+/** How many "coming soon" frames a part without photos shows (one before/after pair). */
+export const PLACEHOLDER_PHOTOS = 2;

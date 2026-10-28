@@ -1,6 +1,5 @@
 import { AREA_BY_CODE, t } from "../content.js";
 import { QUESTIONS } from "../domain/questions.js";
-import { stepOf } from "../domain/flow.js";
 import { Layout } from "../components/Layout.jsx";
 import { Topbar } from "../components/Topbar.jsx";
 import { QUESTION_COMPONENTS } from "../components/questions.jsx";
@@ -38,7 +37,7 @@ export function DetailsScreen() {
 
   return (
     <Layout bar={bar}>
-      <Topbar step={stepOf("details")} title={t("details.step")} />
+      <Topbar screen="details" />
       <article class="card">
         <div class="head">
           <div class="counter">{t("details.counter", { current: index + 1, total })}</div>

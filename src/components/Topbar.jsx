@@ -1,18 +1,14 @@
-import { t } from "../content.js";
-import { TOTAL_STEPS } from "../domain/flow.js";
+import { stepOf } from "../domain/flow.js";
 import { Brand } from "./Brand.jsx";
+import { Progress } from "./Progress.jsx";
 
-/** Brand, progress bar and "Step X of Y · title". */
-export function Topbar({ step, title }) {
+/** Top of a screen that belongs to a flow: the brand and the progress of that screen's step (data/flow.json). */
+export function Topbar({ screen }) {
+  const { flow, step } = stepOf(screen);
   return (
     <header class="topbar">
       <Brand />
-      <div class="progress" aria-hidden="true">
-        {Array.from({ length: TOTAL_STEPS }, (_, i) => (
-          <span key={i} class={i < step ? "ok" : ""} />
-        ))}
-      </div>
-      <div class="step">{t("general.step", { current: step, total: TOTAL_STEPS, title })}</div>
+      <Progress flow={flow} step={step} />
     </header>
   );
 }

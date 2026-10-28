@@ -67,7 +67,6 @@ export function migrateV2(saved) {
       screen: SCREEN[ui.tela] ?? "opening",
       view: VIEW[ui.vista] ?? "front",
       index: ui.indice ?? 0,
-      consent: Boolean(ui.aceite),
     },
   };
 }

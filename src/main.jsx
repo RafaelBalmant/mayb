@@ -1,9 +1,11 @@
 import { render } from "preact";
-import "@fontsource/figtree/400.css";
-import "@fontsource/figtree/500.css";
-import "@fontsource/figtree/600.css";
-import "@fontsource/figtree/700.css";
-import "@fontsource/young-serif/400.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
+import "@fontsource/jost/600.css";
+import "@fontsource/jost/700.css";
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/500.css";
+import "@fontsource/playfair-display/400-italic.css";
 import "./theme.css";
 import "./style.css";
 import { App } from "./App.jsx";
@@ -12,9 +14,12 @@ import { StoreProvider } from "./store/StoreProvider.jsx";
 
 document.title = t("general.pageTitle");
 
+const root = document.getElementById("root");
+root.textContent = ""; // drops the text the build puts there for search engines; the first screen replaces it
+
 render(
   <StoreProvider>
     <App />
   </StoreProvider>,
-  document.getElementById("root"),
+  root,
 );
