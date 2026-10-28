@@ -28,6 +28,8 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
+          build-args: |
+            VITE_GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}
           tags: |
             balmantrafael/mayb:latest-amd64
             balmantrafael/mayb:${{ github.sha }}-amd64

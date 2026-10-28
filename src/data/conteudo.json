@@ -13,11 +13,10 @@
   "avaliacoesGoogle": {
     "_comoEditar": [
       "Nota e avaliações do Google mostradas no início, buscadas na hora (Google Maps JavaScript API, biblioteca Places).",
-      "chave: chave de API do Google Cloud, restrita ao domínio do site (mayarabacellar.com/*). Vazio = o bloco não aparece.",
+      "A chave de API NÃO fica aqui: vai no .env (VITE_GOOGLE_MAPS_KEY) e, no deploy, no secret GOOGLE_MAPS_KEY do GitHub. Sem chave, o bloco não aparece.",
       "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\"). Vazio = o bloco não aparece.",
       "minimoEstrelas: só entram avaliações com essa nota ou mais (o Google manda no máximo 5, as mais relevantes)."
     ],
-    "chave": "",
     "placeId": "",
     "minimoEstrelas": 4
   },

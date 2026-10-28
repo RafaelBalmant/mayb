@@ -37,9 +37,15 @@ npm run build    # gera dist/ para qualquer hospedagem estática
 ## Avaliações do Google
 
 O início mostra a nota e as avaliações do perfil da Dra. Mayara no Google num carrossel (`src/avaliacoes.js`),
-buscadas na hora pela Google Maps JavaScript API (biblioteca Places). Configure em `conteudo.json`, seção
-`avaliacoesGoogle`: `chave` (chave de API restrita ao domínio do site) e `placeId`. Sem os dois, ou se o Google
-não responder, o bloco simplesmente não aparece. O Google manda no máximo 5 avaliações (as mais relevantes).
+buscadas na hora pela Google Maps JavaScript API (biblioteca Places).
+
+- **Chave de API**: fica fora do código. Localmente, copie `.env.example` para `.env` e preencha `VITE_GOOGLE_MAPS_KEY`.
+  No deploy, o GitHub Actions passa o secret `GOOGLE_MAPS_KEY` do repositório para o build do Docker.
+  Como o site roda no navegador, a chave acaba no JavaScript publicado: o que a protege é a restrição por domínio
+  no Google Cloud (só funciona em mayarabacellar.com).
+- **Place ID**: em `conteudo.json`, seção `avaliacoesGoogle` (não é segredo).
+
+Sem os dois, ou se o Google não responder, o bloco simplesmente não aparece. O Google manda no máximo 5 avaliações (as mais relevantes).
 
 ## Links diretos
 
