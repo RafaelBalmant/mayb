@@ -5,6 +5,7 @@
     "whatsapp": "5543999159066",
     "whatsappExibicao": "+55 43 99915-9066",
     "instagram": "https://www.instagram.com/dramayarabacellar/",
+    "avaliacaoGoogle": "https://g.page/r/CRVD-q6ngonxEAE/review",
     "limiteMensagem": 1500,
     "_fotos": "foto: imagem dentro de public/ (ex.: \"perfil/foto.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
     "foto": "perfil/foto.jpg"
@@ -248,6 +249,7 @@
       "altFoto": "Foto da Dra. Mayara Bacellar",
       "agenda": "Verificar agenda",
       "contato": "Entrar em contato",
+      "avaliar": "Compartilhe sua experiência",
       "mensagemContato": "Olá! Vim pelo site da Dra. Mayara e gostaria de mais informações.",
       "mapa": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar"
