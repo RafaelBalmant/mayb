@@ -6,7 +6,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=our-finance_app-network"
-      - "traefik.http.routers.clinic.rule=Host(`mayb.balmantrafael.com`)"
+      - "traefik.http.routers.clinic.rule=Host(`mayb.balmantrafael.com`) || Host(`dramayarabacellar.com`)"
       - "traefik.http.routers.clinic.entrypoints=websecure"
       - "traefik.http.routers.clinic.tls.certresolver=letsencrypt"
       - "traefik.http.services.clinic.loadbalancer.server.port=80"

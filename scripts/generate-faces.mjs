@@ -1,6 +1,8 @@
 // Generates the 4 illustrations in src/faces/*.svg.
 // Each tappable area is ONE <path class="zone" data-area="code">; areas on both sides
-// of the face (e.g. under-eye circles) use one path with two subpaths.
+// of the face (e.g. the eyes) use one path with two subpaths.
+// The zones are clipped (clipPath) by the skin outline, so they always fit the face:
+// the edge of each zone that touches the outline follows the drawing, with nothing left outside.
 // Run: npm run faces   (only needed when changing the drawings or the zones)
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -16,106 +18,190 @@ function ellipse(cx, cy, rx, ry, rot = 0) {
   const [x1, y1, x2, y2] = [cx - dx, cy - dy, cx + dx, cy + dy].map(n);
   return `M${x1} ${y1}A${rx} ${ry} ${rot} 1 0 ${x2} ${y2}A${rx} ${ry} ${rot} 1 0 ${x1} ${y1}Z`;
 }
-// Same ellipse mirrored on the central axis (x = 160).
-const pair = (cx, cy, rx, ry, rot = 0) => ellipse(cx, cy, rx, ry, rot) + ellipse(320 - cx, cy, rx, ry, -rot);
+// Mirrors a path on the face's central axis, front view (x = 150). Only accepts absolute commands M/L/C/Q/Z.
+const mirror = (d) => d.replace(/(-?\d+(?:\.\d+)?)[ ,](-?\d+(?:\.\d+)?)/g, (_, x, y) => `${n(300 - x)} ${y}`);
+const pair = (cx, cy, rx, ry, rot = 0) => ellipse(cx, cy, rx, ry, rot) + ellipse(300 - cx, cy, rx, ry, -rot);
+const bothSides = (d) => d + " " + mirror(d);
 
 const zone = (code, d) => `<path class="zone" data-area="${code}" d="${d}"/>`;
-const zoneLine = (code, d) => `<path class="zone zone-line" data-area="${code}" d="${d}"/>`;
 
-/* ---------- Front ---------- */
-function frontArt(f) {
+/* ---------- Front (central axis at x = 150) ---------- */
+function front(f) {
+  // Real proportions: width ≈ 2/3 of the head height; eyes at the midline; nose and mouth in the lower thirds.
   const face = f
-    ? "M160 58 C215 58 240 100 238 165 C236 220 225 260 205 290 C190 312 175 328 160 330 C145 328 130 312 115 290 C95 260 84 220 82 165 C80 100 105 58 160 58 Z"
-    : "M160 58 C218 58 242 100 240 165 C239 225 236 262 222 290 C205 315 182 330 160 332 C138 330 115 315 98 290 C84 262 81 225 80 165 C78 100 102 58 160 58 Z";
+    ? "M150 54 C201 54 231 88 232 140 C233 180 227 212 213 238 C199 264 176 288 150 291 C124 288 101 264 87 238 C73 212 67 180 68 140 C69 88 99 54 150 54 Z"
+    : "M150 52 C204 52 236 88 237 140 C238 184 235 220 226 246 C214 274 184 293 150 295 C116 293 86 274 74 246 C65 220 62 184 63 140 C64 88 96 52 150 52 Z";
   const neck = f
-    ? "M132 300 L130 360 C128 382 108 396 60 412 L60 520 L260 520 L260 412 C212 396 192 382 190 360 L188 300 Z"
-    : "M124 300 L122 360 C120 382 100 396 50 410 L50 520 L270 520 L270 410 C220 396 200 382 198 360 L196 300 Z";
-  const sb = f ? "M104 156 Q124 143 147 153" : "M101 157 Q124 149 148 155";
-  const sw = f ? 3 : 5;
-  return [
+    ? "M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"
+    : "M112 250 L112 316 C110 334 94 344 62 354 C42 360 30 372 24 390 L276 390 C270 372 258 360 238 354 C206 344 190 334 188 316 L188 250 Z";
+  const ear = f
+    ? "M72 150 C58 142 50 154 53 172 C56 190 63 204 77 206"
+    : "M67 150 C52 141 44 154 47 173 C50 192 58 206 72 208";
+  const eyebrow = f ? "M96 139 Q114 128 136 136" : "M94 140 Q114 132 137 138";
+  const eye = "M98 162 Q115 150 132 162 Q115 171 98 162 Z";
+  const mouth = f
+    ? `<path class="mouth" d="M125 247 Q137 238 150 243 Q163 238 175 247 Q150 251 125 247 Z"/><path class="mouth" d="M125 247 Q150 265 175 247 Q150 251 125 247 Z"/>`
+    : `<path class="mouth" d="M128 250 Q139 244 150 247 Q161 244 172 250 Q150 252 128 250 Z"/><path class="mouth" d="M128 250 Q150 260 172 250 Q150 252 128 250 Z"/>`;
+  const art = [
+    // back hair (long, on the female face)
     f &&
-      `<path class="hair" d="M160 40 C92 40 60 95 64 175 C68 250 58 320 44 384 L112 394 C110 360 112 340 118 318 L202 318 C208 340 210 360 208 394 L276 384 C262 320 252 250 256 175 C260 95 228 40 160 40 Z"/>`,
+      `<path class="hair" d="M150 36 C86 36 52 88 54 160 C56 228 48 286 34 338 C60 352 92 352 116 340 C110 300 104 270 92 240 L208 240 C196 270 190 300 184 340 C208 352 240 352 266 338 C252 286 244 228 246 160 C248 88 214 36 150 36 Z"/>`,
     `<path class="skin" d="${neck}"/>`,
-    `<ellipse class="skin" cx="${f ? 84 : 82}" cy="188" rx="10" ry="22"/>`,
-    `<ellipse class="skin" cx="${f ? 236 : 238}" cy="188" rx="10" ry="22"/>`,
+    `<path class="skin" d="${ear} Z"/>`,
+    `<path class="skin" d="${mirror(ear)} Z"/>`,
     `<path class="skin" d="${face}"/>`,
+    `<path class="stroke light" d="${f ? "M66 172 C62 166 60 160 63 156" : "M60 172 C56 166 54 160 57 156"}"/>`,
+    `<path class="stroke light" d="${mirror(f ? "M66 172 C62 166 60 160 63 156" : "M60 172 C56 166 54 160 57 156")}"/>`,
+    // front hair
     f
-      ? `<path class="hair" d="M160 56 C118 54 90 80 82 136 C100 102 132 82 176 76 C204 72 224 90 238 124 C234 80 206 56 160 56 Z"/>`
-      : `<path class="hair" d="M80 150 C74 90 105 44 160 44 C215 44 246 90 240 150 C236 120 228 100 214 92 C190 80 130 80 106 92 C92 100 84 120 80 150 Z"/>`,
-    `<path class="stroke" stroke-width="${sw}" d="${sb}"/>`,
-    `<path class="stroke" stroke-width="${sw}" transform="translate(320 0) scale(-1 1)" d="${sb}"/>`,
-    `<path class="eye" d="M105 179 Q125 166 145 179 Q125 189 105 179 Z"/><circle class="iris" cx="125" cy="178.5" r="5.5"/>`,
-    `<path class="eye" d="M175 179 Q195 166 215 179 Q195 189 175 179 Z"/><circle class="iris" cx="195" cy="178.5" r="5.5"/>`,
-    `<path class="stroke light" d="M153 196 C152 214 149 228 147 236"/>`,
-    `<path class="stroke" d="M146 236 Q141 245 150 247 Q155 251 160 249 Q165 251 170 247 Q179 245 174 236"/>`,
+      ? `<path class="hair" d="M150 50 C100 48 70 82 66 138 C64 160 66 178 70 192 C72 150 86 112 118 92 C140 80 176 78 204 92 C220 102 230 118 234 140 C236 86 204 50 150 50 Z"/>`
+      : `<path class="hair" d="M63 146 C58 84 96 38 150 38 C204 38 242 84 237 146 C232 118 226 104 214 96 C196 86 170 90 150 86 C128 90 104 86 86 96 C74 104 68 118 63 146 Z"/>`,
+  ];
+  // face strokes: they sit above the zones (without receiving touches), so they stay visible when a zone is marked
+  const details = [
+    `<path class="stroke" stroke-width="${f ? 3 : 5}" d="${eyebrow}"/>`,
+    `<path class="stroke" stroke-width="${f ? 3 : 5}" d="${mirror(eyebrow)}"/>`,
+    `<path class="eye" d="${eye}"/><circle class="iris" cx="115" cy="161" r="5"/>`,
+    `<path class="eye" d="${mirror(eye)}"/><circle class="iris" cx="185" cy="161" r="5"/>`,
+    f &&
+      `<path class="stroke" stroke-width="1.6" d="M98 162 L93 157 M132 162 L136 158 M168 162 L164 158 M202 162 L207 157"/>`,
+    `<path class="stroke light" d="M143 168 C142 186 139 198 137 206"/>`,
+    `<path class="stroke" d="M136 211 Q131 220 141 221 Q146 225 150 223 Q154 225 159 221 Q169 220 164 211"/>`,
+    mouth,
+    `<path class="stroke light" d="${f ? "M140 276 Q150 280 160 276" : "M136 280 Q150 285 164 280"}"/>`,
+  ];
+  const zones = [
+    zone(
+      "forehead",
+      f
+        ? "M82 136 C88 114 104 100 122 95 C148 88 180 88 204 97 C218 104 226 118 229 136 C200 125 176 125 150 129 C124 125 100 125 82 136 Z"
+        : "M70 136 C74 114 82 102 92 97 C120 88 180 88 208 97 C218 102 226 114 230 136 C200 125 176 125 150 129 C124 125 100 125 70 136 Z",
+    ),
+    zone("eyes", pair(115, 163, 27, 18)),
+    zone(
+      "nose",
+      "M150 150 C157 150 159 170 162 188 C164 198 172 206 171 214 C170 226 130 226 129 214 C128 206 136 198 138 188 C141 170 143 150 150 150 Z",
+    ),
+    zone(
+      "cheeks",
+      bothSides(
+        f
+          ? "M70 186 C82 184 116 184 127 196 C134 206 128 222 116 228 C102 234 86 228 72 214 Z"
+          : "M64 186 C80 184 116 184 127 196 C134 206 128 222 116 230 C100 236 82 232 64 218 Z",
+      ),
+    ),
+    zone("mouth", ellipse(150, f ? 246 : 249, f ? 32 : 30, f ? 14 : 12)),
+    // chin and outline: the lower part goes past the face and is cut by the outline, so it follows the chin line
+    zone(
+      "chin",
+      f
+        ? "M129 266 C140 262 160 262 171 266 L176 300 L124 300 Z"
+        : "M127 268 C140 264 160 264 173 268 L178 304 L122 304 Z",
+    ),
+    zone(
+      "jawline",
+      bothSides(
+        f
+          ? "M50 212 L71 220 C86 240 104 258 124 268 L124 300 L50 300 Z"
+          : "M40 216 L64 224 C80 246 100 264 122 272 L122 304 L40 304 Z",
+      ),
+    ),
+  ];
+  const neckZone = zone(
+    "neck",
     f
-      ? `<path class="mouth" d="M134 279 Q146 267 160 273 Q174 267 186 279 Q160 284 134 279 Z"/><path class="mouth" d="M134 279 Q160 301 186 279 Q160 284 134 279 Z"/>`
-      : `<path class="mouth" d="M136 280 Q148 273 160 277 Q172 273 184 280 Q160 283 136 280 Z"/><path class="mouth" d="M136 280 Q160 293 184 280 Q160 283 136 280 Z"/>`,
-  ]
-    .filter(Boolean)
-    .join("\n    ");
+      ? "M110 292 L190 292 L190 342 C160 350 140 350 110 342 Z"
+      : "M100 296 L200 296 L200 340 C166 350 134 350 100 340 Z",
+  );
+  // the neck has its own clip, so the chin does not spill onto it
+  return {
+    art,
+    details,
+    groups: [
+      [face, zones],
+      [neck, [neckZone]],
+    ],
+    crop: "40 30 220 330",
+  };
 }
-
-const frontZones = () => [
-  zone("forehead", ellipse(160, 114, 70, 34)),
-  zone("eyes", pair(122, 175, 34, 23)),
-  zone("cheeks", pair(111, 232, 24, 30, 10)),
-  zone("nose", ellipse(160, 222, 17, 33)),
-  zone("mouth", ellipse(160, 280, 34, 19)),
-  zone("chin", ellipse(160, 316, 26, 13)),
-  zoneLine("jawline", "M90 246 C98 284 122 312 140 324 M230 246 C222 284 198 312 180 324"),
-  zone("neck", ellipse(160, 364, 40, 30)),
-];
 
 /* ---------- Profile (looking left) ---------- */
-function profileArt(f) {
-  const chin = f
-    ? "C104 292 100 298 100 306 C100 316 106 324 116 326"
-    : "C102 292 96 298 96 307 C96 319 103 327 118 328";
-  const head = `M175 55 C135 55 112 78 108 118 C106 135 104 148 101 158 C100 164 104 168 106 172 C98 188 86 206 78 222 C76 228 82 232 96 232 C99 234 101 236 102 238 C100 244 97 248 98 252 C100 256 104 260 104 262 C100 266 97 270 98 274 C100 280 106 284 108 287 ${chin} C130 330 142 333 150 336 C155 340 158 350 160 362 L166 520 L232 520 C234 380 230 330 234 300 C238 270 250 240 256 200 C262 150 255 100 230 75 C215 60 195 55 175 55 Z`;
-  return [
+function profile(f) {
+  const head = [
+    "M165 46",
+    "C128 46 104 68 100 102", // forehead
+    f ? "C98 120 98 132 97 142" : "C98 118 96 132 94 142", // eyebrow
+    "C97 148 101 152 100 158", // root of the nose
+    f ? "C93 174 82 189 74 199" : "C92 174 79 190 70 201", // bridge of the nose
+    f ? "C70 205 73 211 81 212" : "C66 207 70 213 79 214", // tip
+    "C87 213 92 213 96 216", // columella
+    "C94 222 90 226 91 231", // upper lip
+    "C93 235 97 237 99 238", // corner of the mouth
+    "C96 241 92 244 93 249", // lower lip
+    "C94 254 100 256 102 260", // chin crease
+    f ? "C98 266 96 274 97 281" : "C97 266 93 276 94 284", // chin
+    f ? "C99 290 108 295 120 296" : "C95 293 106 298 122 298", // under the chin
+    "C138 297 152 300 158 308", // down to the neck
+    "C162 330 164 360 164 390", // front of the neck
+    "L244 390",
+    "C238 350 236 322 240 300", // nape
+    "C246 272 258 240 260 200",
+    "C262 120 232 48 165 46 Z",
+  ].join(" ");
+  const ear = "M196 168 C196 152 214 150 218 168 C222 186 216 210 204 214 C198 216 196 208 196 200 Z";
+  const art = [
     f &&
-      `<path class="hair" d="M112 92 C130 40 240 30 266 110 C282 170 270 240 284 312 C290 352 290 384 284 404 L222 404 C222 352 226 302 232 272 L140 200 Z"/>`,
+      `<path class="hair" d="M190 52 C252 58 278 120 276 200 C274 262 282 326 292 370 C270 382 246 382 230 372 C234 330 240 296 246 262 Z"/>`,
     `<path class="skin" d="${head}"/>`,
     f
-      ? `<path class="hair" d="M106 114 C110 70 150 48 190 50 C236 52 262 90 262 142 C250 112 226 94 190 92 C160 90 130 94 106 114 Z"/>`
-      : `<path class="hair" d="M104 118 C106 70 150 46 192 48 C238 50 266 90 262 160 C256 176 250 180 246 170 C244 130 228 100 196 94 C160 88 128 96 104 118 Z"/>`,
-    `<path class="skin" d="M196 186 C196 172 214 170 216 190 C218 208 212 222 202 222 C198 222 196 214 196 206 Z"/>`,
-    `<path class="stroke light" d="M204 236 C208 266 204 290 192 300 C168 316 140 324 118 326"/>`,
-    `<path class="stroke" stroke-width="${f ? 3 : 4.5}" d="M104 166 Q118 158 134 162"/>`,
-    `<path class="eye" d="M110 182 Q120 175 129 182 Q120 187 110 182 Z"/><circle class="iris" cx="114" cy="181.5" r="3"/>`,
-    `<path class="stroke" d="M88 228 Q94 231 99 226"/>`,
-    `<path class="mouth" d="M99 251 C103 255 105 259 104 262 L113 263 Q108 254 99 251 Z"/><path class="mouth" d="M104 262 C100 266 97 270 98 274 Q108 272 113 263 Z"/>`,
-  ]
-    .filter(Boolean)
-    .join("\n    ");
+      ? `<path class="hair" d="M106 78 C118 50 150 38 186 42 C236 48 266 100 262 172 C260 210 254 236 246 256 C236 230 228 200 224 178 C220 160 210 148 198 148 C190 148 186 140 182 126 C172 104 150 90 130 84 C120 81 112 79 106 78 Z"/>`
+      : `<path class="hair" d="M104 82 C112 54 146 40 186 42 C234 46 264 96 260 170 C258 204 254 230 248 246 C240 226 232 196 226 178 C220 160 210 148 198 148 C190 148 186 140 182 126 C170 104 140 88 104 82 Z"/>`,
+    `<path class="skin" d="${ear}"/>`,
+    `<path class="stroke light" d="M204 176 C210 172 214 182 210 194 C208 200 204 200 204 196"/>`,
+    `<path class="stroke light" d="M202 232 C206 254 200 270 184 280 C166 290 142 296 124 296"/>`,
+  ];
+  const details = [
+    `<path class="stroke" stroke-width="${f ? 3 : 4.5}" d="M101 142 Q114 136 130 139"/>`,
+    `<path class="eye" d="M104 160 Q113 153 122 159 Q114 165 104 160 Z"/><circle class="iris" cx="107" cy="159.5" r="2.8"/>`,
+    f && `<path class="stroke" stroke-width="1.6" d="M104 160 L99 156"/>`,
+    `<path class="stroke" d="M84 207 Q90 210 95 206"/>`,
+    `<path class="mouth" d="M95 224 C91 227 90 229 91 231 C93 235 97 237 99 238 C100 233 99 228 95 224 Z"/><path class="mouth" d="M99 238 C96 241 92 244 93 249 C95 252 99 252 101 249 C102 245 101 241 99 238 Z"/>`,
+  ];
+  const zones = [
+    zone("forehead", ellipse(124, 116, 28, 24)),
+    zone("eyes", ellipse(116, 161, 20, 14)),
+    zone("nose", "M104 146 L58 200 L80 224 L100 218 L106 168 Z"),
+    zone("cheeks", ellipse(148, 200, 30, 26)),
+    zone("mouth", ellipse(98, 237, 16, 17)),
+    zone("chin", ellipse(106, 280, 20, 18)),
+    zone(
+      "jawline",
+      "M202 232 C206 254 200 270 184 280 C166 290 142 296 124 296 L124 286 C140 286 160 282 174 272 C188 262 192 248 189 232 Z",
+    ),
+    zone("neck", ellipse(202, 340, 38, 32)),
+  ];
+  return { art, details, groups: [[head, zones]], crop: "50 30 240 330" };
 }
-
-const profileZones = () => [
-  zone("forehead", ellipse(134, 114, 26, 34)),
-  zone("eyes", ellipse(128, 177, 22, 18)),
-  zone("cheeks", ellipse(152, 232, 26, 24)),
-  zone("nose", "M108 168L68 224L100 244L118 204Z"),
-  zone("mouth", ellipse(106, 264, 13, 18)),
-  zone("chin", ellipse(110, 306, 16, 18)),
-  zoneLine("jawline", "M204 238 C208 266 204 290 192 300 C172 314 152 320 134 324"),
-  zone("neck", ellipse(182, 364, 42, 38)),
-];
-
-// Crop of each view: only the face, so it appears large on screen.
-const crop = { front: "70 40 180 360", profile: "60 40 230 360" };
 
 for (const gender of ["female", "male"]) {
   for (const view of ["front", "profile"]) {
     const f = gender === "female";
-    const art = view === "front" ? frontArt(f) : profileArt(f);
-    const zones = (view === "front" ? frontZones() : profileZones()).join("\n    ");
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${crop[view]}">
+    const { art, details, groups, crop } = view === "front" ? front(f) : profile(f);
+    const id = (i) => `crop-${gender}-${view}-${i}`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${crop}">
+  <defs>${groups.map(([outline], i) => `<clipPath id="${id(i)}"><path d="${outline}"/></clipPath>`).join("")}</defs>
   <g class="art">
-    ${art}
+    ${art.filter(Boolean).join("\n    ")}
   </g>
-  <g class="zones">
-    ${zones}
+  ${groups
+    .map(
+      ([, zones], i) => `<g class="zones" clip-path="url(#${id(i)})">
+    ${zones.join("\n    ")}
+  </g>`,
+    )
+    .join("\n  ")}
+  <g class="art details">
+    ${details.filter(Boolean).join("\n    ")}
   </g>
 </svg>
 `;

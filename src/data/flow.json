@@ -1,30 +1,13 @@
 {
-  "totalSteps": 8,
   "screens": [
-    {
-      "id": "opening"
-    },
-    {
-      "id": "map",
-      "step": 3
-    },
-    {
-      "id": "next",
-      "requires": "areas"
-    },
-    {
-      "id": "details",
-      "step": 4,
-      "requires": "areas"
-    },
-    {
-      "id": "review",
-      "step": 8,
-      "requires": "areas"
-    },
-    {
-      "id": "sent",
-      "requires": "areas"
-    }
+    { "id": "start" },
+    { "id": "agenda", "flow": "agenda", "step": 1 },
+    { "id": "opening", "flow": "face", "step": 1, "needsMap": true },
+    { "id": "map", "flow": "face", "step": 2, "needsMap": true },
+    { "id": "results", "flow": "face", "step": 3, "needsMap": true, "requires": "areas" },
+    { "id": "next", "flow": "face", "step": 4, "needsMap": true, "requires": "areas" },
+    { "id": "details", "flow": "face", "step": 4, "needsMap": true, "requires": "areas" },
+    { "id": "review", "flow": "face", "step": 5, "needsMap": true, "requires": "areas" },
+    { "id": "sent", "needsMap": true, "requires": "areas" }
   ]
 }
