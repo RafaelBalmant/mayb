@@ -1,5 +1,6 @@
 // Reads data saved by the old Portuguese-named code (sessionStorage key "site-mayara:v2")
 // and converts it to the current shape. This is the only place where the old names live on.
+import { AREA_BY_CODE } from "./content.js";
 
 const FACE = { feminino: "female", masculino: "male" };
 const VIEW = { frente: "front", perfil: "profile" };
@@ -17,10 +18,17 @@ const PROCEDURE = { nao: "no", sim: "yes", nao_lembro: "dont_remember" };
 
 const map = (table, value) => (value == null ? null : (table[value] ?? null));
 
+/** Old saves kept the option text; now we keep its id. Texts that no longer exist are dropped. */
+function concernIds(areaCode, texts = []) {
+  const options = AREA_BY_CODE[areaCode]?.options ?? [];
+  return texts.map(text => options.find(o => o.label === text)?.id).filter(Boolean);
+}
+
 function migrateArea(a) {
+  const code = map(AREA, a.codigo);
   return {
-    code: map(AREA, a.codigo),
-    concerns: a.incomoda ?? [],
+    code,
+    concerns: concernIds(code, a.incomoda),
     concernsOther: a.incomodaOutro ?? "",
     description: a.descricao ?? "",
     side: map(SIDE, a.lado),

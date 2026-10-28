@@ -1,4 +1,4 @@
-import { AREA_BY_CODE, shortName, professional, labels, t } from "./content.js";
+import { AREA_BY_CODE, optionLabel, professional, labels, t } from "./content.js";
 import { FREE_TEXT_SHRINK, NAME_MAX_LENGTH, WHATSAPP_BASE_URL } from "./config.js";
 
 /**
@@ -14,9 +14,9 @@ export function formatAreas(areas, max = Infinity) {
 
   const lines = [r("title", { n: ordered.length })];
   ordered.forEach((a, i) => {
-    lines.push("", r("area", { i: i + 1, area: shortName(a.code) }));
+    lines.push("", r("area", { i: i + 1, area: AREA_BY_CODE[a.code].name }));
     if (a.code === "other" && a.description.trim()) lines.push(r("otherDescription", { text: free(a.description) }));
-    const concerns = [...a.concerns.map(s => s.toLowerCase()), free(a.concernsOther)].filter(Boolean);
+    const concerns = [...a.concerns.map(id => optionLabel(a.code, id).toLowerCase()), free(a.concernsOther)].filter(Boolean);
     if (concerns.length) lines.push(r("concerns", { text: concerns.join(", ") }));
     if (a.side) lines.push(r("side", { text: labels.side[a.side].toLowerCase() }));
     if (a.since) lines.push(r("since", { text: labels.since[a.since].toLowerCase() }));

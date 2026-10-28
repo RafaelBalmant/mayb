@@ -7,7 +7,7 @@
 //   about: { name: string },        // only the name for now (age and period come with the "About you" step)
 //   areas: [{                       // in the order they were marked
 //     code,                         // see data/content.json
-//     concerns: [string],           // chosen options, in content order
+//     concerns: [string],           // ids of the chosen options (see areas[].options in content.json)
 //     concernsOther: string,        // free-text "Other"
 //     description: string,          // only for the "other" area
 //     side, since, appearsWhen,     // codes from labels.*, or null
@@ -19,6 +19,7 @@
 // }
 import { LEGACY_STORAGE_KEY, STORAGE_KEY } from "./config.js";
 import { migrateV2 } from "./legacy-storage.js";
+import { newArea } from "./domain/questions.js";
 
 export const state = { face: null, about: { name: "" }, areas: [] };
 export const ui = { screen: "opening", view: "front", index: 0, consent: false };
@@ -50,22 +51,6 @@ export function save() {
   } catch {
     // storage unavailable: the app keeps working in memory
   }
-}
-
-export function newArea(code) {
-  return {
-    code,
-    concerns: [],
-    concernsOther: "",
-    description: "",
-    side: null,
-    since: null,
-    intensity: null,
-    appearsWhen: null,
-    procedure: null,
-    procedureDetail: "",
-    comment: "",
-  };
 }
 
 export const isMarked = code => state.areas.some(a => a.code === code);

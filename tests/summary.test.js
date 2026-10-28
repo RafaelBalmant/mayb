@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { buildMessage, formatAreas, whatsappLink } from "../src/summary.js";
 import { professional } from "../src/content.js";
-import { newArea } from "../src/state.js";
+import { newArea } from "../src/domain/questions.js";
 
 const area = (code, fields = {}) => ({ ...newArea(code), ...fields });
 const stateWith = (areas, name = "") => ({ face: "female", about: { name }, areas });
 
 const full = area("forehead", {
-  concerns: ["Linhas ao franzir"],
+  concerns: ["frown_lines"],
   concernsOther: "Marca antiga",
   side: "right",
   since: "6m_2y",

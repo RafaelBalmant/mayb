@@ -24,25 +24,6 @@ async function load(initial) {
 
 beforeEach(() => vi.unstubAllGlobals());
 
-describe("newArea", () => {
-  it("creates the area with every field empty", async () => {
-    const { mod } = await load();
-    expect(mod.newArea("forehead")).toEqual({
-      code: "forehead",
-      concerns: [],
-      concernsOther: "",
-      description: "",
-      side: null,
-      since: null,
-      intensity: null,
-      appearsWhen: null,
-      procedure: null,
-      procedureDetail: "",
-      comment: "",
-    });
-  });
-});
-
 describe("toggleArea", () => {
   it("marks, unmarks and persists", async () => {
     const { mod, data } = await load();
@@ -98,14 +79,14 @@ describe("persistence", () => {
       estado: {
         rosto: "feminino",
         sobre: { nome: "Ana" },
-        areas: [{ codigo: "testa", incomoda: ["Linhas ao franzir"], lado: "direito", intensidade: 4 }],
+        areas: [{ codigo: "testa", incomoda: ["Linhas ao franzir", "Texto que não existe mais"], lado: "direito", intensidade: 4 }],
       },
       ui: { tela: "detalhes", vista: "perfil", indice: 1, aceite: true },
     };
     const { mod } = await load({ [LEGACY_KEY]: JSON.stringify(legacy) });
     expect(mod.state.face).toBe("female");
     expect(mod.state.about.name).toBe("Ana");
-    expect(mod.state.areas[0]).toMatchObject({ code: "forehead", side: "right", intensity: 4 });
+    expect(mod.state.areas[0]).toMatchObject({ code: "forehead", side: "right", intensity: 4, concerns: ["frown_lines"] });
     expect(mod.ui).toEqual({ screen: "details", view: "profile", index: 1, consent: true });
   });
 });

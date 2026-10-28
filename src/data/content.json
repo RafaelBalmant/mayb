@@ -12,10 +12,22 @@
       "name": "Testa",
       "movement": true,
       "options": [
-        "Linhas ao franzir",
-        "Linhas mesmo com o rosto parado",
-        "Linhas entre as sobrancelhas",
-        "Laterais afundadas (têmporas)"
+        {
+          "id": "frown_lines",
+          "label": "Linhas ao franzir"
+        },
+        {
+          "id": "resting_lines",
+          "label": "Linhas mesmo com o rosto parado"
+        },
+        {
+          "id": "between_brows_lines",
+          "label": "Linhas entre as sobrancelhas"
+        },
+        {
+          "id": "sunken_temples",
+          "label": "Laterais afundadas (têmporas)"
+        }
       ]
     },
     {
@@ -23,31 +35,70 @@
       "name": "Olhos e sobrancelhas",
       "movement": true,
       "options": [
-        "Olheiras",
-        "Bolsinhas",
-        "Pés de galinha",
-        "Pálpebras caídas",
-        "Sobrancelhas caídas ou desiguais"
+        {
+          "id": "dark_circles",
+          "label": "Olheiras"
+        },
+        {
+          "id": "eye_bags",
+          "label": "Bolsinhas"
+        },
+        {
+          "id": "crows_feet",
+          "label": "Pés de galinha"
+        },
+        {
+          "id": "droopy_eyelids",
+          "label": "Pálpebras caídas"
+        },
+        {
+          "id": "droopy_or_uneven_brows",
+          "label": "Sobrancelhas caídas ou desiguais"
+        }
       ]
     },
     {
       "code": "cheeks",
       "name": "Bochechas",
       "options": [
-        "Perda de volume",
-        "Flacidez",
-        "Bigode chinês (dobra do nariz até a boca)",
-        "Rosto com aspecto cansado"
+        {
+          "id": "volume_loss",
+          "label": "Perda de volume"
+        },
+        {
+          "id": "sagging",
+          "label": "Flacidez"
+        },
+        {
+          "id": "nasolabial_folds",
+          "label": "Bigode chinês (dobra do nariz até a boca)"
+        },
+        {
+          "id": "tired_look",
+          "label": "Rosto com aspecto cansado"
+        }
       ]
     },
     {
       "code": "nose",
       "name": "Nariz",
       "options": [
-        "Calombo",
-        "Ponta caída",
-        "Ponta larga",
-        "Torto"
+        {
+          "id": "bump",
+          "label": "Calombo"
+        },
+        {
+          "id": "drooping_tip",
+          "label": "Ponta caída"
+        },
+        {
+          "id": "wide_tip",
+          "label": "Ponta larga"
+        },
+        {
+          "id": "crooked",
+          "label": "Torto"
+        }
       ]
     },
     {
@@ -55,51 +106,114 @@
       "name": "Boca e lábios",
       "movement": true,
       "options": [
-        "Pouco volume",
-        "Contorno pouco definido",
-        "Linhas acima do lábio",
-        "Cantos caídos",
-        "Mostra muita gengiva ao sorrir"
+        {
+          "id": "low_volume",
+          "label": "Pouco volume"
+        },
+        {
+          "id": "undefined_contour",
+          "label": "Contorno pouco definido"
+        },
+        {
+          "id": "lip_lines",
+          "label": "Linhas acima do lábio"
+        },
+        {
+          "id": "downturned_corners",
+          "label": "Cantos caídos"
+        },
+        {
+          "id": "gummy_smile",
+          "label": "Mostra muita gengiva ao sorrir"
+        }
       ]
     },
     {
       "code": "chin",
       "name": "Queixo",
       "options": [
-        "Queixo para trás",
-        "Furinhos ao contrair",
-        "Tamanho"
+        {
+          "id": "receding_chin",
+          "label": "Queixo para trás"
+        },
+        {
+          "id": "chin_dimples",
+          "label": "Furinhos ao contrair"
+        },
+        {
+          "id": "size",
+          "label": "Tamanho"
+        }
       ]
     },
     {
       "code": "jawline",
       "name": "Contorno do rosto",
       "options": [
-        "Pouca definição",
-        "Flacidez",
-        "Rosto quadrado",
-        "Aperto ou ranger os dentes"
+        {
+          "id": "low_definition",
+          "label": "Pouca definição"
+        },
+        {
+          "id": "sagging",
+          "label": "Flacidez"
+        },
+        {
+          "id": "square_face",
+          "label": "Rosto quadrado"
+        },
+        {
+          "id": "clenching_or_grinding",
+          "label": "Aperto ou ranger os dentes"
+        }
       ]
     },
     {
       "code": "neck",
       "name": "Papada e pescoço",
       "options": [
-        "Papada",
-        "Linhas no pescoço",
-        "Flacidez"
+        {
+          "id": "double_chin",
+          "label": "Papada"
+        },
+        {
+          "id": "neck_lines",
+          "label": "Linhas no pescoço"
+        },
+        {
+          "id": "sagging",
+          "label": "Flacidez"
+        }
       ]
     },
     {
       "code": "skin",
       "name": "Pele em geral",
       "options": [
-        "Manchas",
-        "Flacidez",
-        "Textura",
-        "Cicatrizes de acne",
-        "Poros",
-        "Falta de viço"
+        {
+          "id": "spots",
+          "label": "Manchas"
+        },
+        {
+          "id": "sagging",
+          "label": "Flacidez"
+        },
+        {
+          "id": "texture",
+          "label": "Textura"
+        },
+        {
+          "id": "acne_scars",
+          "label": "Cicatrizes de acne"
+        },
+        {
+          "id": "pores",
+          "label": "Poros"
+        },
+        {
+          "id": "dull_skin",
+          "label": "Falta de viço"
+        }
       ]
     },
     {
@@ -214,8 +328,6 @@
       "markedCount": "Você marcou ({n})",
       "empty": "Toque no rosto para marcar.",
       "remove": "Remover {area}",
-      "skin": "Pele em geral",
-      "other": "Outra parte",
       "noticeMarked": "✓ {area}",
       "noticeUnmarked": "✕ {area}",
       "continue": "Continuar",

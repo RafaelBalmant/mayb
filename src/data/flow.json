@@ -1,0 +1,11 @@
+{
+  "totalSteps": 8,
+  "screens": [
+    { "id": "opening" },
+    { "id": "map", "step": 3 },
+    { "id": "next" },
+    { "id": "details", "step": 4 },
+    { "id": "review", "step": 8 },
+    { "id": "sent" }
+  ]
+}

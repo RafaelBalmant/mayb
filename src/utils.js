@@ -1,5 +1,5 @@
 import { t } from "./content.js";
-import { TOTAL_STEPS } from "./config.js";
+import { TOTAL_STEPS } from "./domain/flow.js";
 
 export const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 

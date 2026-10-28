@@ -6,9 +6,6 @@ export const STORAGE_KEY = "site-mayara:v3";
 /** Old key (code with Portuguese names); read once and converted. */
 export const LEGACY_STORAGE_KEY = "site-mayara:v2";
 
-/** Number of steps in the progress bar. */
-export const TOTAL_STEPS = 8;
-
 /** Values of the discomfort scale. */
 export const INTENSITY_SCALE = [1, 2, 3, 4, 5];
 

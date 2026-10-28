@@ -3,16 +3,17 @@ import { t } from "../content.js";
 import { buildMessage, whatsappLink } from "../summary.js";
 import { app, bar, esc, topbar } from "../utils.js";
 import { SEND_REDIRECT_DELAY_MS } from "../config.js";
+import { hasAnswers } from "../domain/questions.js";
+import { stepOf } from "../domain/flow.js";
 import { goTo } from "../main.js";
 
 // Review and send: the message exactly as it will arrive, the privacy consent and the WhatsApp button.
 // Both paths after the map ("talk to the doctor" and "give more information") end here.
 export function renderReview() {
-  const answered = state.areas.some(a =>
-    a.concerns.length || a.concernsOther || a.side || a.since || a.intensity || a.appearsWhen || a.procedure || a.comment.trim());
+  const answered = state.areas.some(hasAnswers);
 
   app.className = "app";
-  app.innerHTML = `${topbar(8, t("review.step"))}
+  app.innerHTML = `${topbar(stepOf("review"), t("review.step"))}
     <div class="block" style="gap:6px"><h1>${esc(t("review.title"))}</h1>
       <p class="sub">${esc(t("review.explanation"))}</p></div>
     <div class="question"><label for="name">${esc(t("review.name"))} <span class="hint">${esc(t("review.nameHint"))}</span></label>

@@ -18,7 +18,7 @@ export function renderMap(notice = "") {
       : `<li><button data-remove="${a.code}" aria-label="${esc(t("map.remove", { area: AREA_BY_CODE[a.code].name }))}"><span>${esc(nameInList(a))}</span><span class="x" aria-hidden="true">×</span></button></li>`)).join("")}</ol>`
     : `<p class="empty">${esc(t("map.empty"))}</p>`;
   const extra = code =>
-    `<button class="extra" data-area="${code}" aria-pressed="${isMarked(code)}">${isMarked(code) ? "✓" : "+"} ${esc(t(`map.${code}`))}</button>`;
+    `<button class="extra" data-area="${code}" aria-pressed="${isMarked(code)}">${isMarked(code) ? "✓" : "+"} ${esc(AREA_BY_CODE[code].name)}</button>`;
 
   app.className = "app app-map";
   app.innerHTML = `
