@@ -78,26 +78,48 @@ cookies (textos em `content.json` → `texts.cookies`; a escolha fica no navegad
 
 - **ID da métrica**: variável `GA_MEASUREMENT_ID` do repositório no GitHub (Settings → Secrets and variables →
   Actions → aba _Variables_), passada ao build como `VITE_GA_MEASUREMENT_ID`. Sem ela, não há aviso nem Analytics
-  (é o caso de `npm run dev` e dos testes). Para testar local, preencha em `.env` (veja `.env.example`).
-- **Páginas**: cada tela vira uma página no relatório (`/`, `/agenda`, `/cases`, `/map`…).
-- **Cliques**: qualquer botão ou link com `data-track="nome_do_evento"` manda esse evento
-  (`data-track-cidade="..."` vai junto como parâmetro). Os de hoje:
+  (é o caso de `npm run dev` e dos testes unitários; o E2E de analytics sobe um servidor próprio com um ID de teste).
+  Para testar local, preencha em `.env` (veja `.env.example`).
+- **Código**: `src/analytics/` (aviso e consentimento, tracker, GA4, cliques, leads, cidade, `?interno`/`?debug`).
+- **Modo de consentimento v2**: desligado (`CONSENT_MODE = false` em `src/config.js`). Ligado, o Google carrega em
+  toda visita com tudo negado (conta a visita sem cookies) e o "OK" libera `analytics_storage`; o aviso passa a usar
+  `texts.cookies.textConsentMode`. Só ligar depois que a clínica aprovar.
 
-| Evento                | Botão                                             |
-| --------------------- | ------------------------------------------------- |
-| `agenda_open`         | Verificar agenda (início e casos reais)           |
-| `booking_open`        | Agendar horário (na agenda)                       |
-| `whatsapp_booking`    | Enviar o pedido de horário pelo WhatsApp (cidade) |
-| `whatsapp_contact`    | Entrar em contato                                 |
-| `whatsapp_summary`    | Enviar o resumo do mapa do rosto pelo WhatsApp    |
-| `google_review_open`  | Compartilhe sua experiência                       |
-| `google_reviews_open` | Ver todas as avaliações                           |
-| `cases_open`          | Ver resultados reais                              |
-| `map_open`            | Me conta o que te incomoda no rosto               |
-| `instagram_open`      | Ícone do Instagram                                |
+### Eventos do Analytics
 
-Os três `whatsapp_*` são os leads: no Analytics, marque-os como **eventos principais** (Administrador → Exibição de
-dados → Eventos → estrela em "Marcar como evento principal").
+**Páginas**: cada tela vira um `page_view` com o caminho da tela (`/`, `/agenda`, `/cases`, `/map`…). Os `utm_*`
+do endereço são mantidos.
+
+**Cliques**: qualquer botão ou link com `data-track="nome_do_evento"` manda esse evento; cada
+`data-track-<param>="valor"` vai junto como parâmetro (ex.: `data-track-city="maringa"` → `city`).
+
+| Evento                | Botão                                          | Parâmetros |
+| --------------------- | ---------------------------------------------- | ---------- |
+| `agenda_open`         | Verificar agenda (início e casos reais)        |            |
+| `booking_open`        | Agendar horário (na agenda)                    |            |
+| `whatsapp_booking`    | Enviar o pedido de horário pelo WhatsApp       | `city`     |
+| `whatsapp_contact`    | Entrar em contato                              |            |
+| `whatsapp_summary`    | Enviar o resumo do mapa do rosto pelo WhatsApp |            |
+| `google_review_open`  | Compartilhe sua experiência                    |            |
+| `google_reviews_open` | Ver todas as avaliações                        |            |
+| `cases_open`          | Ver resultados reais                           |            |
+| `map_open`            | Me conta o que te incomoda no rosto            |            |
+| `instagram_open`      | Ícone do Instagram                             |            |
+
+**Lead**: cada `whatsapp_*` também manda `generate_lead` (evento recomendado do GA4) com `method: "whatsapp"`,
+`lead_type` (`contact`, `booking` ou `summary`) e os parâmetros do próprio clique, como `city` quando há cidade
+(`maringa` ou `siqueira_campos`). No GA,
+só `generate_lead` é evento principal, para não contar o mesmo contato duas vezes.
+
+**Propriedade de usuário**: ao escolher a cidade no pedido de horário, o site grava `preferred_city` (`maringa` ou
+`siqueira_campos`) e guarda a escolha no navegador (`site-mayara:city`) para mandar de novo nas próximas visitas.
+A cidade que o GA calcula pelo IP é imprecisa (o 4G de Siqueira Campos aparece como Londrina ou Curitiba).
+
+**Tráfego interno e testes** (os parâmetros saem do endereço logo depois de lidos):
+
+- `?interno=1` marca este navegador como da equipe (`site-mayara:internal`): o GA recebe `traffic_type: internal`
+  e o filtro de dados exclui essas visitas. `?interno=0` desmarca. Abra uma vez em cada celular/computador da equipe.
+- `?debug=1` manda a visita para o DebugView do GA (Administrador → DebugView), só naquela página.
 
 ## Casos reais (antes e depois)
 

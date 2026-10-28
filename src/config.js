@@ -80,3 +80,16 @@ export const ANALYTICS_IDS = {
 
 /** localStorage key that remembers the visitor's answer to the cookie notice. */
 export const CONSENT_KEY = "site-mayara:cookies";
+
+/** localStorage key with the city the visitor last picked in the booking modal (sent as a GA user property). */
+export const CITY_KEY = "site-mayara:city";
+
+/** localStorage key that marks this browser as the team's own (?interno=1 sets it, ?interno=0 clears it). */
+export const INTERNAL_KEY = "site-mayara:internal";
+
+/**
+ * Google Consent Mode v2. Off (default): Google Analytics loads only after "OK" on the cookie notice. On: it loads
+ * on every visit with everything denied, so visitors who never answer are counted without cookies, and "OK" grants
+ * analytics_storage. Turn on only after the clinic approves it (the notice then uses texts.cookies.textConsentMode).
+ */
+export const CONSENT_MODE = false;

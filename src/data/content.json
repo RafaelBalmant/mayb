@@ -593,6 +593,7 @@
     "cookies": {
       "label": "Aviso de cookies",
       "text": "Usamos cookies para melhorar sua experiência.",
+      "textConsentMode": "Usamos cookies para melhorar sua experiência. Sem o seu OK, só contamos a visita, sem cookies.",
       "accept": "OK",
       "decline": "Recusar cookies"
     },
