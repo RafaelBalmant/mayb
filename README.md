@@ -70,6 +70,35 @@ Por enquanto o mapa do rosto está desligado (`MAP_ENABLED = false` em `src/conf
 agenda e o contato. Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`).
 Vale até fechar a aba; `?mapa=0` desliga. Os nomes `#agenda`, `#mapa` e `?mapa=` são públicos e por isso ficam em português.
 
+## Google Analytics (visitas e cliques)
+
+O site manda as visitas e os cliques para o Google Analytics 4, **só depois que o visitante aceita** o aviso de
+cookies (textos em `content.json` → `texts.cookies`; a escolha fica no navegador e pode ser revista pelo link
+"Privacidade e cookies" no fim da página inicial). Nada que o paciente escreve ou marca no rosto vai para o Google.
+
+- **ID da métrica**: variável `GA_MEASUREMENT_ID` do repositório no GitHub (Settings → Secrets and variables →
+  Actions → aba _Variables_), passada ao build como `VITE_GA_MEASUREMENT_ID`. Sem ela, não há aviso nem Analytics
+  (é o caso de `npm run dev` e dos testes). Para testar local, preencha em `.env` (veja `.env.example`).
+- **Páginas**: cada tela vira uma página no relatório (`/`, `/agenda`, `/cases`, `/map`…).
+- **Cliques**: qualquer botão ou link com `data-track="nome_do_evento"` manda esse evento
+  (`data-track-cidade="..."` vai junto como parâmetro). Os de hoje:
+
+| Evento                | Botão                                             |
+| --------------------- | ------------------------------------------------- |
+| `agenda_open`         | Verificar agenda (início e casos reais)           |
+| `booking_open`        | Agendar horário (na agenda)                       |
+| `whatsapp_booking`    | Enviar o pedido de horário pelo WhatsApp (cidade) |
+| `whatsapp_contact`    | Entrar em contato                                 |
+| `whatsapp_summary`    | Enviar o resumo do mapa do rosto pelo WhatsApp    |
+| `google_review_open`  | Compartilhe sua experiência                       |
+| `google_reviews_open` | Ver todas as avaliações                           |
+| `cases_open`          | Ver resultados reais                              |
+| `map_open`            | Me conta o que te incomoda no rosto               |
+| `instagram_open`      | Ícone do Instagram                                |
+
+Os três `whatsapp_*` são os leads: no Analytics, marque-os como **eventos principais** (Administrador → Exibição de
+dados → Eventos → estrela em "Marcar como evento principal").
+
 ## Casos reais (antes e depois)
 
 Cada caso tem uma pasta em `src/cases/<pasta>/` com `antes.jpg` e `depois.jpg` (outros ângulos: `antes-2.jpg` e

@@ -81,6 +81,8 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
           <a
             class="btn primary"
             id="modal-send"
+            data-track="whatsapp_booking"
+            data-track-city={city ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
             href={

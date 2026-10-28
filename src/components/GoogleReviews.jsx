@@ -152,7 +152,7 @@ export function GoogleReviews() {
         </div>
       )}
       {link && (
-        <a class="reviews-link" href={link} target="_blank" rel="noopener noreferrer">
+        <a class="reviews-link" data-track="google_reviews_open" href={link} target="_blank" rel="noopener noreferrer">
           {t("reviews.seeAll")}
         </a>
       )}

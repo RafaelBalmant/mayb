@@ -33,6 +33,9 @@ jobs:
           platforms: linux/amd64
           push: true
           # A secret, not a build-arg: build args are kept in the build record GitHub stores with the run.
+          # Not secret (it shows in the page): a repository variable, Settings > Secrets and variables > Actions > Variables.
+          build-args: |
+            VITE_GA_MEASUREMENT_ID=${{ vars.GA_MEASUREMENT_ID }}
           secrets: |
             google_maps_key=${{ secrets.GOOGLE_MAPS_KEY }}
           tags: |
