@@ -315,3 +315,26 @@ test.describe("face map", () => {
     await expect(label(page, "Testa")).toHaveAttribute("aria-pressed", "true");
   });
 });
+
+test.describe("service pages", () => {
+  test("the start page shows the specialty, the cities and links to every service page", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sobre a Dra. Mayara" })).toBeVisible();
+    await page.getByRole("link", { name: "Toxina botulínica em Maringá" }).click();
+    await expect(page).toHaveURL(/\/toxina-botulinica-maringa\/$/);
+    await expect(page.getByRole("heading", { level: 1, name: "Toxina botulínica em Maringá" })).toBeVisible();
+  });
+
+  test("a service page has its own text, the address, WhatsApp and a way back to the app", async ({ page }) => {
+    await page.goto("/preenchimento-labial-maringa/");
+    await expect(page).toHaveTitle(/Preenchimento labial em Maringá/);
+    await expect(page.getByText("Biomédica · CRBM 7137")).toBeVisible();
+    await expect(page.getByText(/Travessa Japurá, 175/)).toBeVisible();
+    await expect(page.getByRole("link", { name: "Como chegar" })).toHaveAttribute("href", /maps\.google\.com/);
+    const whatsapp = page.getByRole("link", { name: "Agendar avaliação pelo WhatsApp" }).first();
+    expect(await whatsapp.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
+    await page.getByRole("link", { name: "Ver a agenda" }).click();
+    await expect(page.getByRole("heading", { name: "Agenda", exact: true })).toBeVisible();
+  });
+});

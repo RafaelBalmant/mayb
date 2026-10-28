@@ -1,6 +1,6 @@
 import content from "./data/content.json";
 
-export const { professional, googleReviews, areas, labels, faq, texts } = content;
+export const { professional, googleReviews, areas, labels, faq, texts, business, pages } = content;
 
 /** Area by code. */
 export const AREA_BY_CODE = Object.fromEntries(areas.map((a) => [a.code, a]));

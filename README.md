@@ -156,15 +156,48 @@ A página inicial mostra a nota e avaliações do perfil da Dra. Mayara no Googl
 
 ## Google (SEO)
 
-Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
-(WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
-Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `content.json`, seção `seo`.
-O endereço oficial é `seo.url` (`https://dramayarabacellar.com/`); o `nginx.conf` manda `mayarabacellar.com` e o `www`
-para ele com um redirecionamento 301, para o Google não ver a mesma página com dois nomes. O título da página
-(resultado do Google e aba do navegador) é `texts.general.pageTitle`.
+Tudo é feito no `npm run build` pelo plugin `scripts/seo.mjs` (as partes ficam em `scripts/seo/`), a partir do
+`content.json`. Nada disso roda no navegador do visitante.
 
-Fora do código, o que mais conta para aparecer: verificar o site no [Google Search Console](https://search.google.com/search-console)
-e enviar `https://dramayarabacellar.com/sitemap.xml`, e pôr o link do site no Perfil da Empresa no Google.
+- **Página inicial**: título (`texts.general.pageTitle`), descrição, prévia do link (Open Graph, imagem
+  `public/share.jpg` de 1200×630), dados estruturados e um texto pronto em `#root` para quem não roda JavaScript. Depois
+  que o app carrega, a tela inicial mostra as mesmas informações: subtítulo com a especialidade e as cidades, CRBM e o
+  bloco "Sobre a Dra. Mayara" no fim, com os links para as páginas de serviço e o endereço de cada unidade
+  (`texts.start.about`).
+- **Páginas de serviço e cidade** (`pages.list`): `/harmonizacao-facial-maringa/`, `/toxina-botulinica-maringa/` etc.
+  Cada uma vira um HTML estático (`dist/<slug>/index.html`) com título, descrição e link canônico próprios, H1 com o
+  serviço e a cidade, 400 a 700 palavras, perguntas frequentes (também como FAQPage para o Google), endereço, "Como
+  chegar", botão de WhatsApp e links para as outras páginas e para o início. Elas não carregam o app: só um script
+  pequeno (`src/pages/page.jsx`) com o mesmo aviso de cookies e o mesmo Analytics (a visita vai com o caminho da página;
+  o clique no WhatsApp manda `whatsapp_contact` e `generate_lead` com `city` e `page`). No `npm run dev` elas também
+  abrem, servidas pelo próprio plugin. Para criar uma página nova, basta acrescentar um item em `pages.list`: ela entra
+  no site, nos links e no sitemap sozinha. Os textos seguem as regras de publicidade em saúde (sem resultado
+  garantido, superlativos ou antes e depois sem termo de consentimento); um teste confere algumas dessas palavras.
+- **Dados estruturados** (schema.org): a Dra. Mayara (`Person`, biomédica esteta, CRBM 7137) e uma
+  `HealthAndBeautyBusiness` por unidade (`business.locations`), com o mesmo nome do Perfil da Empresa no Google
+  (`business.name`), endereço, coordenadas, horário e o link do perfil. Campo vazio fica de fora. Não há nota nem
+  avaliações: o Google não mostra avaliações que a empresa publica sobre si mesma. Dá para conferir no
+  [Teste de pesquisa aprimorada](https://search.google.com/test/rich-results).
+- **robots.txt e sitemap.xml**: o sitemap lista o início e todas as páginas de serviço, com a data do build.
+- **404 de verdade**: o nginx do container só responde o que o build escreveu (o início, as páginas de serviço e os
+  arquivos). Qualquer outro endereço recebe `404.html` com status 404 (antes, todo endereço devolvia o início com 200,
+  um "soft 404" para o Google). O Traefik, na frente, só repassa a resposta.
+- **Endereço oficial**: `seo.url` (`https://dramayarabacellar.com/`). O `nginx.conf` manda `mayarabacellar.com` e o
+  `www` para ele com 301 (isso só vale se o Traefik mandar esses domínios para este container).
+- **Foto do início**: `npm run images` (`scripts/generate-images.mjs`, com `sharp`) gera as cópias leves em AVIF e WebP
+  (`public/profile/photo-600.avif` …) e a `public/share.jpg`. Rode de novo depois de trocar a foto. A tela inicial usa
+  `<picture>` com `srcset`, `width`/`height` (sem pulo de layout) e `fetchpriority="high"`.
+
+Lighthouse (celular, build local servido pelo `nginx.conf` do repo, 28/10/2026):
+
+| Página                        | Desempenho | Acessibilidade | Boas práticas | SEO | LCP   | CLS   | TBT    |
+| ----------------------------- | ---------- | -------------- | ------------- | --- | ----- | ----- | ------ |
+| `/`                           | 96         | 100            | 100           | 100 | 2,2 s | 0     | 180 ms |
+| `/toxina-botulinica-maringa/` | 98         | 100            | 100           | 100 | 1,7 s | 0,074 | 0 ms   |
+
+Fora do código: verificar o site no [Google Search Console](https://search.google.com/search-console), enviar
+`https://dramayarabacellar.com/sitemap.xml`, vincular o Search Console ao GA4, pedir a indexação de cada página de
+serviço e usar essas páginas (com UTM) nos links das postagens do Perfil da Empresa no Google.
 
 ## Entrega
 

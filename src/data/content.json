@@ -7,8 +7,9 @@
     "instagram": "https://www.instagram.com/dramayarabacellar/",
     "googleReview": "https://g.page/r/CRVD-q6ngonxEAE/review",
     "messageLimit": 1500,
-    "_photos": "photo: imagem dentro de public/ (ex.: \"profile/photo.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
-    "photo": "profile/photo.jpg"
+    "_photos": "photo: imagem dentro de public/ (ex.: \"profile/photo.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso. photoSize: largura e altura da foto em px. Depois de trocar a foto, rode npm run images (gera as versões leves e a imagem de compartilhamento).",
+    "photo": "profile/photo.jpg",
+    "photoSize": { "width": 1200, "height": 1500 }
   },
   "googleReviews": {
     "_howToEdit": [
@@ -254,17 +255,19 @@
     "_howToEdit": [
       "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
       "url: endereço oficial do site, com https e barra no fim. Vai no link canônico, na prévia do link e no sitemap.xml (o arquivo que se envia ao Google Search Console). Vazio = sem sitemap nem link canônico.",
-      "image: imagem dentro de public/ que aparece quando alguém compartilha o link (o ideal é uma de 1200×630 px). Vazio = sem imagem.",
+      "image: imagem dentro de public/ que aparece quando alguém compartilha o link (1200×630 px, horizontal; imageSize é o tamanho dela). Vazio = sem imagem.",
       "O título da página (em azul no resultado do Google e na aba do navegador) fica em texts.general.pageTitle. Ter a especialidade e as cidades nele ajuda a aparecer nessas buscas.",
       "description: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
-      "content: texto que já vem pronto no HTML (o Google lê sem precisar rodar o JavaScript). Some assim que o site carrega."
+      "content: texto que já vem pronto no HTML da página inicial (o Google lê sem precisar rodar o JavaScript). Quando o site carrega, a tela inicial mostra as mesmas informações (texts.start.about)."
     ],
     "url": "https://dramayarabacellar.com/",
-    "image": "profile/photo.jpg",
+    "image": "share.jpg",
+    "imageSize": {
+      "width": 1200,
+      "height": 630
+    },
     "description": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Veja a agenda de atendimento e agende pelo WhatsApp.",
-    "keywords": ["harmonização facial", "Maringá", "Siqueira Campos", "Paraná", "Dra. Mayara Bacellar"],
     "state": "PR",
-    "cities": ["Maringá", "Siqueira Campos"],
     "content": {
       "title": "Dra. Mayara Bacellar · Harmonização facial em Maringá e Siqueira Campos",
       "paragraphs": [
@@ -272,6 +275,474 @@
         "Veja os meses e os dias de atendimento em cada cidade e agende sua consulta pelo WhatsApp com a equipe da Dra. Mayara."
       ],
       "whatsapp": "Agendar pelo WhatsApp: {phone}"
+    }
+  },
+  "business": {
+    "_howToEdit": [
+      "Dados da Dra. Mayara e das unidades, usados nos dados estruturados (schema.org) que o Google lê e nas páginas de cada serviço.",
+      "name: precisa ser igual ao nome do Perfil da Empresa no Google.",
+      "locations: uma entrada por cidade. id é o mesmo da agenda (maringa, siqueira_campos). Campo vazio fica de fora do site e dos dados para o Google.",
+      "hours: dias em inglês, como o schema.org pede (Monday ... Sunday), e horários no formato 09:00. hoursText é o mesmo horário escrito para o paciente.",
+      "sameAs: links de perfis da Dra. Mayara em outros sites (Instagram, Facebook). O link do Perfil da Empresa no Google de cada unidade fica em locations → map."
+    ],
+    "name": "Mayara Bacellar | Harmonização Facial",
+    "type": "HealthAndBeautyBusiness",
+    "jobTitle": "Biomédica esteta",
+    "registration": "CRBM 7137",
+    "credential": "Biomédica · CRBM 7137",
+    "sameAs": ["https://www.instagram.com/dramayarabacellar/", "https://www.facebook.com/MayaraBacellarBioMed/"],
+    "locations": [
+      {
+        "id": "maringa",
+        "city": "Maringá",
+        "state": "PR",
+        "streetAddress": "Travessa Japurá, 175, Sala 301 – Madison Centro Empresarial",
+        "neighborhood": "Zona 08",
+        "postalCode": "87050-630",
+        "geo": {
+          "latitude": -23.4378515,
+          "longitude": -51.9101809
+        },
+        "map": "https://maps.google.com/?cid=17404585891656778517",
+        "hours": [
+          {
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "hoursText": "Segunda a sábado, das 9h às 18h"
+      },
+      {
+        "id": "siqueira_campos",
+        "city": "Siqueira Campos",
+        "state": "PR",
+        "streetAddress": "Rua Benjamin Constant, 2058",
+        "neighborhood": "",
+        "postalCode": "",
+        "geo": null,
+        "map": "",
+        "hours": [],
+        "hoursText": ""
+      }
+    ]
+  },
+  "pages": {
+    "_howToEdit": [
+      "Páginas de cada serviço e cidade (ex.: /toxina-botulinica-maringa/). São geradas no build como HTML pronto, que o Google lê sem rodar o JavaScript, e entram no sitemap.",
+      "slug: o endereço da página (só letras minúsculas, números e hífens). Ao criar ou renomear uma página, ela já entra no site, no sitemap e no nginx sozinha.",
+      "location: id da unidade em business.locations (maringa ou siqueira_campos).",
+      "title e description: o título e o texto que aparecem no resultado do Google; um diferente por página.",
+      "Regras de publicidade em saúde: nada de resultado garantido, superlativos (\"o melhor\", \"sem dor\") ou fotos de antes e depois sem termo de consentimento.",
+      "faq: as perguntas aparecem na página e também vão para o Google (FAQPage).",
+      "common: textos que se repetem em todas as páginas. {city} e {title} são trocados pelo valor certo."
+    ],
+    "common": {
+      "home": "Página inicial: agenda e contato",
+      "whatsapp": "Agendar avaliação pelo WhatsApp",
+      "whatsappMessage": "Olá! Vi a página \"{title}\" no site da Dra. Mayara e gostaria de agendar uma avaliação.",
+      "where": "Onde atende em {city}",
+      "address": "Endereço",
+      "hours": "Horário",
+      "directions": "Como chegar",
+      "agenda": "Os dias de atendimento em cada cidade estão na agenda do site.",
+      "agendaLink": "Ver a agenda",
+      "faq": "Perguntas frequentes",
+      "other": "Outros serviços",
+      "notice": "Os resultados variam de pessoa para pessoa. A indicação de cada procedimento é feita só depois da consulta de avaliação."
+    },
+    "list": [
+      {
+        "slug": "harmonizacao-facial-maringa",
+        "location": "maringa",
+        "service": "Harmonização facial",
+        "h1": "Harmonização facial em Maringá",
+        "title": "Harmonização facial em Maringá | Dra. Mayara Bacellar",
+        "description": "Harmonização facial em Maringá com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Avaliação individual, plano para o seu rosto e agendamento pelo WhatsApp.",
+        "intro": [
+          "A Dra. Mayara Bacellar atende harmonização facial em Maringá, na Zona 08. Cada tratamento começa por uma consulta de avaliação, em que ela ouve o que te incomoda, examina o rosto e explica quais caminhos fazem sentido para o seu caso."
+        ],
+        "sections": [
+          {
+            "heading": "O que é harmonização facial",
+            "paragraphs": [
+              "Harmonização facial é o nome dado a um conjunto de procedimentos estéticos que buscam equilíbrio entre as partes do rosto. Não é um procedimento único: dependendo da queixa, o plano pode combinar toxina botulínica, preenchimento com ácido hialurônico, bioestimuladores de colágeno e cuidados com a pele.",
+              "O objetivo é tratar o que incomoda respeitando os seus traços. Mudanças grandes não são o ponto de partida: o plano é pensado para que você continue se reconhecendo no espelho."
+            ]
+          },
+          {
+            "heading": "Para quem é indicada",
+            "paragraphs": [
+              "Para adultos que querem suavizar linhas de expressão, repor volume perdido com o tempo, melhorar o contorno do rosto ou cuidar da qualidade da pele. Também para quem ainda não sabe qual procedimento quer: indicar o caminho é papel da profissional, depois da avaliação.",
+              "Gestantes, lactantes e pessoas com infecção ou inflamação ativa na região a tratar normalmente não fazem os procedimentos nesse período. Doenças autoimunes, alergias e uso de medicamentos são conversados na consulta."
+            ]
+          },
+          {
+            "heading": "Como é o atendimento",
+            "paragraphs": [
+              "Na consulta de avaliação, a Dra. Mayara conversa sobre suas queixas e expectativas, avalia o rosto em repouso e em movimento e, se você concordar, registra fotos. Ao final, você recebe as opções indicadas, o número de sessões previsto e os valores, e pode tirar suas dúvidas antes de decidir.",
+              "Os procedimentos são feitos em consultório, com material descartável e, quando indicado, anestésico tópico para deixar a aplicação mais confortável. Antes de qualquer procedimento você recebe e assina o termo de consentimento."
+            ]
+          },
+          {
+            "heading": "Quanto tempo dura",
+            "paragraphs": [
+              "Depende de cada procedimento, do produto usado e do seu organismo. Em geral, a toxina botulínica dura alguns meses, os preenchimentos com ácido hialurônico duram mais tempo e os bioestimuladores agem de forma gradual. Na avaliação você recebe a estimativa para cada opção do seu plano."
+            ]
+          },
+          {
+            "heading": "Cuidados depois",
+            "paragraphs": [
+              "As orientações mudam conforme o procedimento, mas costumam incluir evitar exercícios intensos, calor excessivo e massagens na região nas primeiras horas ou dias. Pequenos inchaços e manchas roxas podem aparecer e tendem a sumir em poucos dias. Você recebe as orientações por escrito e pode falar com a equipe pelo WhatsApp se tiver dúvidas."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "Preciso saber qual procedimento quero antes da consulta?",
+            "answer": "Não. Basta contar o que te incomoda. Na avaliação a Dra. Mayara explica as opções e indica as que fazem sentido para você."
+          },
+          {
+            "question": "A harmonização facial deixa o rosto artificial?",
+            "answer": "O plano é feito para respeitar os seus traços. Você pode dizer na consulta se prefere um resultado mais sutil, e as quantidades são definidas com esse cuidado."
+          },
+          {
+            "question": "Quanto custa a harmonização facial em Maringá?",
+            "answer": "O valor depende dos procedimentos indicados para o seu caso. Ele é apresentado depois da avaliação, junto com o plano."
+          },
+          {
+            "question": "Onde é o atendimento em Maringá?",
+            "answer": "Na Travessa Japurá, 175, sala 301, no Madison Centro Empresarial, Zona 08. O link \"Como chegar\" abre o endereço no Google Maps."
+          }
+        ]
+      },
+      {
+        "slug": "harmonizacao-facial-siqueira-campos",
+        "location": "siqueira_campos",
+        "service": "Harmonização facial",
+        "h1": "Harmonização facial em Siqueira Campos",
+        "title": "Harmonização facial em Siqueira Campos | Dra. Mayara Bacellar",
+        "description": "Harmonização facial em Siqueira Campos (PR) com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Veja os dias de atendimento e agende sua avaliação pelo WhatsApp.",
+        "intro": [
+          "A Dra. Mayara Bacellar também atende em Siqueira Campos, no Norte Pioneiro do Paraná, em dias marcados na agenda do site. O atendimento segue o mesmo cuidado de Maringá: primeiro a avaliação, depois o plano feito para o seu rosto."
+        ],
+        "sections": [
+          {
+            "heading": "O que é harmonização facial",
+            "paragraphs": [
+              "Harmonização facial é um conjunto de procedimentos estéticos que buscam equilíbrio entre as partes do rosto. O plano pode combinar toxina botulínica, preenchimento com ácido hialurônico, bioestimuladores de colágeno e cuidados com a pele, conforme a sua queixa.",
+              "A ideia não é mudar quem você é, e sim tratar o que te incomoda de um jeito que combine com os seus traços."
+            ]
+          },
+          {
+            "heading": "Para quem é indicada",
+            "paragraphs": [
+              "Para adultos que querem suavizar linhas de expressão, repor volume, melhorar o contorno do rosto ou cuidar da pele. Se você não sabe por onde começar, a consulta de avaliação serve justamente para isso.",
+              "Gestantes, lactantes e pessoas com infecção ou inflamação ativa no local normalmente aguardam para fazer os procedimentos. Histórico de saúde, alergias e medicamentos em uso são conversados antes de qualquer indicação."
+            ]
+          },
+          {
+            "heading": "Como funciona o atendimento em Siqueira Campos",
+            "paragraphs": [
+              "A Dra. Mayara atende em Siqueira Campos em alguns períodos do mês. Os dias ficam na agenda do site; para marcar, você escolhe a cidade e fala com a equipe pelo WhatsApp, que confirma a data e o horário com você.",
+              "Na consulta ela ouve suas queixas, avalia o rosto em repouso e em movimento e, com a sua autorização, registra fotos. Você sai com as opções indicadas, o número de sessões previsto e os valores. Os procedimentos usam material descartável e são feitos depois que você lê e assina o termo de consentimento."
+            ]
+          },
+          {
+            "heading": "Quanto tempo dura",
+            "paragraphs": [
+              "Cada procedimento tem uma duração própria, que também depende do produto e do seu organismo. A toxina botulínica costuma durar alguns meses; preenchimentos e bioestimuladores, mais tempo. A estimativa para o seu caso é passada na avaliação.",
+              "Como a Dra. Mayara atende em Siqueira Campos em períodos definidos, o retorno e as próximas sessões são combinados já pensando nas datas da agenda."
+            ]
+          },
+          {
+            "heading": "Cuidados depois",
+            "paragraphs": [
+              "Em geral, recomenda-se evitar exercícios intensos, calor excessivo e massagens na região nas primeiras horas ou dias. Inchaço leve e manchas roxas podem aparecer e costumam passar em poucos dias. As orientações são entregues por escrito, e a equipe responde dúvidas pelo WhatsApp."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "Em quais dias a Dra. Mayara atende em Siqueira Campos?",
+            "answer": "Os dias de cada mês estão na agenda do site. A equipe confirma pelo WhatsApp a data e o horário do seu atendimento."
+          },
+          {
+            "question": "Preciso ir a Maringá para algum retorno?",
+            "answer": "Não necessariamente. O retorno pode ser feito em Siqueira Campos, nos dias de atendimento na cidade."
+          },
+          {
+            "question": "Quanto custa?",
+            "answer": "Depende do plano indicado para você. Os valores são apresentados depois da avaliação."
+          },
+          {
+            "question": "Posso tirar dúvidas antes de agendar?",
+            "answer": "Pode. É só chamar a equipe da Dra. Mayara pelo WhatsApp."
+          }
+        ]
+      },
+      {
+        "slug": "toxina-botulinica-maringa",
+        "location": "maringa",
+        "service": "Toxina botulínica",
+        "h1": "Toxina botulínica em Maringá",
+        "title": "Toxina botulínica (botox) em Maringá | Dra. Mayara Bacellar",
+        "description": "Toxina botulínica (botox) em Maringá com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Como é a aplicação, quanto dura, cuidados e agendamento pelo WhatsApp.",
+        "intro": [
+          "A toxina botulínica, conhecida pelo nome comercial botox, é usada para suavizar linhas de expressão. Em Maringá, a Dra. Mayara Bacellar faz a aplicação depois de uma consulta de avaliação, com doses pensadas para o seu rosto."
+        ],
+        "sections": [
+          {
+            "heading": "O que é a toxina botulínica",
+            "paragraphs": [
+              "É uma substância que relaxa de forma temporária os músculos em que é aplicada. Com menos contração, as linhas que se formam quando você franze a testa, sorri ou levanta as sobrancelhas ficam mais suaves.",
+              "A aplicação é feita em pontos e quantidades escolhidos para cada pessoa, para que o rosto continue com expressão. O produto usado tem registro na Anvisa."
+            ]
+          },
+          {
+            "heading": "Para quem é indicada",
+            "paragraphs": [
+              "Para adultos com linhas de expressão na testa, entre as sobrancelhas e ao redor dos olhos (os chamados pés de galinha). Também pode ser indicada para outras queixas, como o sorriso que mostra muita gengiva, conforme a avaliação.",
+              "Não é feita em gestantes e lactantes, em quem tem infecção no local ou certas doenças neuromusculares. Medicamentos em uso e aplicações anteriores são conversados na consulta."
+            ]
+          },
+          {
+            "heading": "Como é a aplicação",
+            "paragraphs": [
+              "Depois da avaliação e da assinatura do termo de consentimento, a pele é limpa e a Dra. Mayara marca os pontos de aplicação. A toxina é aplicada com agulhas bem finas. A sessão costuma levar poucos minutos e, na maioria dos casos, você volta à rotina no mesmo dia.",
+              "O efeito começa a aparecer em alguns dias e fica completo em cerca de duas semanas. Por isso costuma ser marcado um retorno nesse período, para avaliar o resultado e fazer ajustes se forem necessários."
+            ]
+          },
+          {
+            "heading": "Quanto tempo dura o efeito",
+            "paragraphs": [
+              "Em geral, de quatro a seis meses. A duração varia com a dose, a região tratada, a força dos músculos e o organismo de cada pessoa. Com o tempo, o movimento volta aos poucos, e uma nova aplicação pode ser feita se você quiser manter o efeito."
+            ]
+          },
+          {
+            "heading": "Cuidados depois da aplicação",
+            "paragraphs": [
+              "Nas primeiras quatro horas, evite deitar e não massageie nem pressione a região. No dia da aplicação, evite exercícios intensos, sauna e bebida alcoólica. Pequenas marcas dos pontos de aplicação costumam sumir em poucas horas. Se tiver qualquer dúvida, fale com a equipe pelo WhatsApp."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "Botox e toxina botulínica são a mesma coisa?",
+            "answer": "Botox é o nome comercial de uma das marcas de toxina botulínica. Existem outras marcas aprovadas pela Anvisa; a escolha é explicada na consulta."
+          },
+          {
+            "question": "A aplicação dói?",
+            "answer": "A agulha é bem fina e a maioria das pessoas sente um leve incômodo. Quando necessário, pode ser usado anestésico tópico ou gelo antes."
+          },
+          {
+            "question": "Vou perder a expressão do rosto?",
+            "answer": "A dose é definida para suavizar as linhas mantendo movimento. Na avaliação você pode dizer se prefere um efeito mais leve."
+          },
+          {
+            "question": "Quanto custa a toxina botulínica em Maringá?",
+            "answer": "O valor depende das regiões tratadas e é apresentado depois da avaliação."
+          }
+        ]
+      },
+      {
+        "slug": "preenchimento-labial-maringa",
+        "location": "maringa",
+        "service": "Preenchimento labial",
+        "h1": "Preenchimento labial em Maringá",
+        "title": "Preenchimento labial em Maringá | Dra. Mayara Bacellar",
+        "description": "Preenchimento labial com ácido hialurônico em Maringá com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Como é, quanto dura, cuidados e agendamento pelo WhatsApp.",
+        "intro": [
+          "O preenchimento labial com ácido hialurônico pode dar mais contorno, hidratação ou volume aos lábios. Em Maringá, a Dra. Mayara Bacellar planeja cada preenchimento depois de avaliar o seu rosto, buscando lábios que combinem com os seus traços."
+        ],
+        "sections": [
+          {
+            "heading": "O que é o preenchimento labial",
+            "paragraphs": [
+              "É a aplicação de ácido hialurônico, uma substância que o próprio corpo produz, nos lábios. O gel atrai água e dá sustentação, o que permite definir o contorno, corrigir assimetrias, repor volume perdido com o tempo ou apenas melhorar a hidratação.",
+              "A quantidade e a técnica mudam de pessoa para pessoa. O plano leva em conta o formato da boca, a proporção com o restante do rosto e o que você espera do tratamento."
+            ]
+          },
+          {
+            "heading": "Para quem é indicado",
+            "paragraphs": [
+              "Para adultos que querem lábios mais definidos, mais hidratados, com volume reposto ou mais simétricos. Também para quem sente que os lábios afinaram com o tempo.",
+              "Não é feito em gestantes e lactantes, em quem tem herpes ativo, infecção ou inflamação na boca, nem em pessoas com alergia aos componentes do produto. Quem tem histórico de herpes labial pode precisar de cuidados antes, combinados na consulta."
+            ]
+          },
+          {
+            "heading": "Como é o procedimento",
+            "paragraphs": [
+              "Depois da avaliação e da assinatura do termo de consentimento, a região é limpa e recebe anestésico tópico. Muitos produtos também já têm anestésico na fórmula. O ácido hialurônico é aplicado com agulha fina ou cânula, em pequenas quantidades, e a Dra. Mayara modela o resultado durante a aplicação.",
+              "A sessão leva cerca de uma hora, contando a anestesia. Logo depois, os lábios ficam um pouco inchados; o resultado final aparece quando o inchaço passa, em geral em alguns dias."
+            ]
+          },
+          {
+            "heading": "Quanto tempo dura o efeito",
+            "paragraphs": [
+              "Em geral, de seis meses a um ano. A duração depende do produto, da quantidade aplicada e do organismo, já que o corpo absorve o ácido hialurônico aos poucos. Um retorno é combinado para acompanhar o resultado."
+            ]
+          },
+          {
+            "heading": "Cuidados depois",
+            "paragraphs": [
+              "Nas primeiras horas, evite pressionar ou massagear os lábios, a não ser que a Dra. Mayara oriente. Nos primeiros dias, evite exercícios intensos, calor excessivo, sauna e bebida alcoólica. Compressas frias ajudam com o inchaço. Dor forte, mudança de cor da pele ou qualquer sinal diferente deve ser informado à equipe pelo WhatsApp na hora."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "O resultado fica exagerado?",
+            "answer": "O volume é planejado com você e respeita a proporção do rosto. Dá para começar com pouco e complementar no retorno, se fizer sentido."
+          },
+          {
+            "question": "Dói?",
+            "answer": "Com o anestésico, a maioria das pessoas sente um incômodo leve. A sensibilidade varia de pessoa para pessoa."
+          },
+          {
+            "question": "O preenchimento pode ser desfeito?",
+            "answer": "O ácido hialurônico pode ser dissolvido com uma enzima, em casos indicados pela profissional."
+          },
+          {
+            "question": "Quanto custa o preenchimento labial em Maringá?",
+            "answer": "O valor depende da quantidade de produto indicada e é apresentado depois da avaliação."
+          }
+        ]
+      },
+      {
+        "slug": "bioestimulador-de-colageno-maringa",
+        "location": "maringa",
+        "service": "Bioestimulador de colágeno",
+        "h1": "Bioestimulador de colágeno em Maringá",
+        "title": "Bioestimulador de colágeno em Maringá | Dra. Mayara Bacellar",
+        "description": "Bioestimulador de colágeno em Maringá com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Para que serve, como é feito, quanto tempo dura e cuidados.",
+        "intro": [
+          "Com o passar dos anos, o corpo produz menos colágeno e a pele perde firmeza. Os bioestimuladores de colágeno ajudam a pele a produzir mais colágeno, de forma gradual. Em Maringá, a Dra. Mayara Bacellar indica o bioestimulador depois de avaliar a sua pele e o seu rosto."
+        ],
+        "sections": [
+          {
+            "heading": "O que é o bioestimulador de colágeno",
+            "paragraphs": [
+              "São substâncias, como o ácido poli-L-lático e a hidroxiapatita de cálcio, aplicadas na pele para estimular a produção natural de colágeno. Diferente do preenchimento, o efeito não é imediato: ele aparece aos poucos, conforme o organismo responde.",
+              "O tratamento busca melhorar a firmeza e a qualidade da pele, e pode ser combinado com outros procedimentos no mesmo plano."
+            ]
+          },
+          {
+            "heading": "Para quem é indicado",
+            "paragraphs": [
+              "Para adultos que notam a pele mais flácida ou fina no rosto, no pescoço ou em outras regiões, e para quem quer cuidar da firmeza da pele de forma gradual.",
+              "Não é indicado para gestantes e lactantes, pessoas com infecção ou inflamação no local, algumas doenças autoimunes ou tendência a quelóide. Seu histórico de saúde é avaliado antes da indicação."
+            ]
+          },
+          {
+            "heading": "Como é o procedimento",
+            "paragraphs": [
+              "Depois da avaliação e da assinatura do termo de consentimento, a pele é limpa e, se necessário, recebe anestésico. O produto é aplicado com agulha ou cânula em pontos definidos. A sessão leva cerca de uma hora.",
+              "Em geral, o plano tem mais de uma sessão, com intervalo de algumas semanas entre elas. O número de sessões depende da pele de cada pessoa e é definido na avaliação."
+            ]
+          },
+          {
+            "heading": "Quanto tempo dura o efeito",
+            "paragraphs": [
+              "A melhora começa a ser percebida algumas semanas depois e continua nos meses seguintes. O efeito costuma durar de um ano e meio a dois anos, variando com o produto, o número de sessões, a idade e os hábitos de cada pessoa, como exposição ao sol e tabagismo."
+            ]
+          },
+          {
+            "heading": "Cuidados depois",
+            "paragraphs": [
+              "Dependendo do produto, a Dra. Mayara pode orientar massagens na região nos dias seguintes. Nos primeiros dias, evite exercícios intensos, sol e calor excessivo. Inchaço leve e manchas roxas podem aparecer e costumam passar em poucos dias. Use protetor solar todos os dias; ele ajuda a preservar o colágeno."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "Bioestimulador é a mesma coisa que preenchimento?",
+            "answer": "Não. O preenchimento repõe volume com efeito imediato; o bioestimulador estimula o próprio colágeno, com melhora gradual da firmeza."
+          },
+          {
+            "question": "Quantas sessões são necessárias?",
+            "answer": "Varia conforme a pele. Em geral são de uma a três sessões, definidas na avaliação."
+          },
+          {
+            "question": "Posso combinar com outros procedimentos?",
+            "answer": "Pode, quando indicado. O plano e a ordem das sessões são combinados na consulta."
+          },
+          {
+            "question": "Quanto custa o bioestimulador de colágeno em Maringá?",
+            "answer": "Depende do produto e do número de sessões. O valor é apresentado depois da avaliação."
+          }
+        ]
+      },
+      {
+        "slug": "limpeza-de-pele-maringa",
+        "location": "maringa",
+        "service": "Limpeza de pele",
+        "h1": "Limpeza de pele em Maringá",
+        "title": "Limpeza de pele em Maringá | Dra. Mayara Bacellar",
+        "description": "Limpeza de pele profunda em Maringá com a Dra. Mayara Bacellar, biomédica (CRBM 7137). Etapas, frequência indicada, cuidados depois e agendamento pelo WhatsApp.",
+        "intro": [
+          "A limpeza de pele remove impurezas, cravos e células mortas que a rotina de casa não alcança. Em Maringá, a Dra. Mayara Bacellar faz a limpeza depois de avaliar o seu tipo de pele, escolhendo os produtos e as etapas para o seu caso."
+        ],
+        "sections": [
+          {
+            "heading": "O que é a limpeza de pele",
+            "paragraphs": [
+              "É um procedimento feito em consultório para limpar a pele em profundidade. Inclui higienização, esfoliação, extração de cravos e, ao final, produtos calmantes e hidratantes. Os produtos variam conforme a pele seja oleosa, seca, mista ou sensível.",
+              "Além de deixar a pele mais limpa, a limpeza prepara a pele para outros tratamentos e ajuda a entender quais cuidados fazem sentido no dia a dia."
+            ]
+          },
+          {
+            "heading": "Para quem é indicada",
+            "paragraphs": [
+              "Para quem tem cravos, poros obstruídos, oleosidade ou pele sem viço, e para quem quer manter a pele cuidada. Pode ser feita em pessoas de diferentes idades, com ajustes para cada tipo de pele.",
+              "Acne inflamada, rosácea, feridas, queimaduras de sol recentes ou uso de alguns medicamentos para acne podem pedir outro cuidado ou adiar a limpeza. Isso é avaliado antes do procedimento."
+            ]
+          },
+          {
+            "heading": "Como é o procedimento",
+            "paragraphs": [
+              "A sessão começa com a higienização e a avaliação da pele. Depois vem a esfoliação, a emoliência, que amolece os cravos, e a extração manual com cuidado para não machucar a pele. Em seguida são aplicados produtos para acalmar, uma máscara conforme a necessidade e, ao final, hidratante e protetor solar.",
+              "A sessão costuma levar de uma hora a uma hora e meia."
+            ]
+          },
+          {
+            "heading": "Com que frequência fazer",
+            "paragraphs": [
+              "Em geral, a cada 30 a 60 dias, de acordo com o tipo de pele e a rotina de cuidados em casa. Peles mais oleosas podem precisar de intervalos menores; peles secas ou sensíveis, de intervalos maiores. A Dra. Mayara indica a frequência para você."
+            ]
+          },
+          {
+            "heading": "Cuidados depois",
+            "paragraphs": [
+              "É normal a pele ficar um pouco avermelhada por algumas horas. Nas primeiras 24 horas, evite maquiagem, sol, academia e piscina. Use protetor solar e os produtos indicados, e não esprema espinhas em casa. Se aparecer algo diferente do esperado, fale com a equipe pelo WhatsApp."
+            ]
+          }
+        ],
+        "faq": [
+          {
+            "question": "A limpeza de pele dói?",
+            "answer": "A extração pode causar um incômodo leve, que varia com a sensibilidade de cada pessoa e a quantidade de cravos."
+          },
+          {
+            "question": "Posso fazer limpeza de pele com acne?",
+            "answer": "Depende do tipo e da fase da acne. Em alguns casos a limpeza é adaptada ou substituída por outro tratamento. Isso é avaliado na consulta."
+          },
+          {
+            "question": "Posso me maquiar depois?",
+            "answer": "O ideal é esperar 24 horas para a pele se recuperar."
+          },
+          {
+            "question": "Quanto custa a limpeza de pele em Maringá?",
+            "answer": "O valor é informado pela equipe pelo WhatsApp e pode variar conforme o protocolo indicado."
+          }
+        ]
+      }
+    ],
+    "notFound": {
+      "title": "Página não encontrada | Dra. Mayara Bacellar",
+      "h1": "Página não encontrada",
+      "text": "O endereço que você abriu não existe ou mudou. Veja a página inicial ou um dos serviços abaixo.",
+      "home": "Ir para a página inicial"
     }
   },
   "areas": [
@@ -579,6 +1050,8 @@
     "start": {
       "locations": "Maringá · Siqueira Campos",
       "name": ["Dra. Mayara", "Bacellar"],
+      "subtitle": "Harmonização facial em Maringá e Siqueira Campos",
+      "credential": "Biomédica · CRBM 7137",
       "tagline": "Harmonização facial com ciência, naturalidade e propósito.",
       "photoAlt": "Foto da Dra. Mayara Bacellar",
       "agenda": "Verificar agenda",
@@ -588,7 +1061,17 @@
       "cases": "Ver resultados reais",
       "map": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar",
-      "cookies": "Privacidade e cookies"
+      "cookies": "Privacidade e cookies",
+      "about": {
+        "heading": "Sobre a Dra. Mayara",
+        "paragraphs": [
+          "A Dra. Mayara Bacellar é biomédica esteta (CRBM 7137) e atende harmonização facial em Maringá e em Siqueira Campos, no Paraná.",
+          "Cada tratamento começa por uma consulta de avaliação: ela ouve o que te incomoda, examina o rosto e explica as opções que fazem sentido para você, respeitando os seus traços."
+        ],
+        "services": "Serviços",
+        "addresses": "Onde atende",
+        "directions": "Como chegar"
+      }
     },
     "cookies": {
       "label": "Aviso de cookies",

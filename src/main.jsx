@@ -1,13 +1,5 @@
 import { render } from "preact";
-import "@fontsource/jost/400.css";
-import "@fontsource/jost/500.css";
-import "@fontsource/jost/600.css";
-import "@fontsource/jost/700.css";
-import "@fontsource/playfair-display/400.css";
-import "@fontsource/playfair-display/500.css";
-import "@fontsource/playfair-display/400-italic.css";
-import "./theme.css";
-import "./style.css";
+import "./styles.js";
 import { AnalyticsProvider } from "./analytics/AnalyticsProvider.jsx";
 import { App } from "./App.jsx";
 import { CookieNotice } from "./components/CookieNotice.jsx";

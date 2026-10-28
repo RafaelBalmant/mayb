@@ -2,12 +2,19 @@ import { useEffect, useState } from "preact/hooks";
 import { professional, t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
 import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
+import { AboutSection } from "../components/AboutSection.jsx";
 import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
 
-// The photo lives in public/ (file name in content.json -> professional.photo).
+// The photo lives in public/ (file name in content.json -> professional.photo). `npm run images` writes lighter AVIF
+// and WebP copies next to it (photo-600.avif …); the browser picks the smallest it supports, the JPEG is the fallback.
 const photoUrl = (file) => import.meta.env.BASE_URL + file;
+const PHOTO_WIDTHS = [600, 1200];
+const photoSrcset = (format) =>
+  PHOTO_WIDTHS.map((w) => `${photoUrl(professional.photo.replace(/\.\w+$/, `-${w}.${format}`))} ${w}w`).join(", ");
+// as wide as the screen on phones, 480px (the text column) on wider screens
+const PHOTO_SIZES = "(min-width: 512px) 480px, 100vw";
 
 // The tagline fades in slowly only the first time the start page appears (coming back from the agenda does not repeat it).
 let taglineShown = false;
@@ -36,7 +43,18 @@ export function StartScreen() {
       <header class="profile">
         <div class="profile-photo">
           {!photoFailed && (
-            <img src={photoUrl(professional.photo)} alt={t("start.photoAlt")} onError={() => setPhotoFailed(true)} />
+            <picture>
+              <source type="image/avif" srcset={photoSrcset("avif")} sizes={PHOTO_SIZES} />
+              <source type="image/webp" srcset={photoSrcset("webp")} sizes={PHOTO_SIZES} />
+              <img
+                src={photoUrl(professional.photo)}
+                alt={t("start.photoAlt")}
+                width={professional.photoSize.width}
+                height={professional.photoSize.height}
+                fetchpriority="high"
+                onError={() => setPhotoFailed(true)}
+              />
+            </picture>
           )}
         </div>
         <div class="profile-text">
@@ -45,6 +63,8 @@ export function StartScreen() {
               <span key={line}>{line}</span>
             ))}
           </h1>
+          <p class="profile-subtitle">{t("start.subtitle")}</p>
+          <p class="profile-credential">{t("start.credential")}</p>
           <p class={animateTagline ? "profile-tagline appear" : "profile-tagline"}>{t("start.tagline")}</p>
         </div>
       </header>
@@ -82,6 +102,7 @@ export function StartScreen() {
         )}
       </div>
       <GoogleReviews />
+      <AboutSection />
       <p class="profile-locations">{t("start.locations")}</p>
       <a
         class="profile-instagram"
