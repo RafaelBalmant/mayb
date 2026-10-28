@@ -1,41 +1,43 @@
-// Plugin do Vite que prepara o site para o Google: título, descrição, prévia de link (Open Graph),
-// dados estruturados (schema.org), um texto já pronto no HTML, robots.txt e sitemap.xml.
-// Tudo sai de src/data/conteudo.json (seções "profissional", "seo" e textos.geral).
+// Vite plugin that prepares the site for Google: title, description, link preview (Open Graph),
+// structured data (schema.org), ready-made text in the HTML, robots.txt and sitemap.xml.
+// Everything comes from src/data/content.json (sections "professional", "seo" and texts.general).
 import { readFileSync } from "node:fs";
 
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-function ler() {
-  const { profissional, seo, textos } = JSON.parse(readFileSync(new URL("../src/data/conteudo.json", import.meta.url), "utf8"));
+function read() {
+  const { professional, seo, texts } = JSON.parse(
+    readFileSync(new URL("../src/data/content.json", import.meta.url), "utf8"),
+  );
   const url = seo.url.trim();
-  const imagem = url && seo.imagem ? new URL(seo.imagem, url).href : "";
-  return { profissional, seo, titulo: textos.geral.tituloPagina, marca: textos.geral.marca, url, imagem };
+  const image = url && seo.image ? new URL(seo.image, url).href : "";
+  return { professional, seo, title: texts.general.pageTitle, brand: texts.general.brand, url, image };
 }
 
-function dadosEstruturados({ profissional, seo, url, imagem }) {
-  const telefone = `+${profissional.whatsapp}`;
-  const cidades = seo.cidades.map(nome => ({
+function structuredData({ professional, seo, url, image }) {
+  const phone = `+${professional.whatsapp}`;
+  const cities = seo.cities.map((name) => ({
     "@type": "City",
-    name: nome,
-    containedInPlace: { "@type": "State", name: seo.estado, containedInPlace: { "@type": "Country", name: "BR" } },
+    name,
+    containedInPlace: { "@type": "State", name: seo.state, containedInPlace: { "@type": "Country", name: "BR" } },
   }));
   return {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    name: `Dra. ${profissional.nome} · ${profissional.especialidade}`,
-    description: seo.descricao,
+    name: `Dra. ${professional.name} · ${professional.specialty}`,
+    description: seo.description,
     ...(url && { url }),
-    ...(imagem && { image: imagem }),
-    telephone: telefone,
-    medicalSpecialty: profissional.especialidade,
-    areaServed: cidades,
-    location: seo.cidades.map(nome => ({
+    ...(image && { image }),
+    telephone: phone,
+    medicalSpecialty: professional.specialty,
+    areaServed: cities,
+    location: seo.cities.map((name) => ({
       "@type": "Place",
-      name: nome,
-      address: { "@type": "PostalAddress", addressLocality: nome, addressRegion: seo.estado, addressCountry: "BR" },
+      name,
+      address: { "@type": "PostalAddress", addressLocality: name, addressRegion: seo.state, addressCountry: "BR" },
     })),
-    contactPoint: { "@type": "ContactPoint", telephone: telefone, contactType: "Agendamento", availableLanguage: "pt-BR" },
-    employee: { "@type": "Person", name: profissional.nome, honorificPrefix: "Dra.", jobTitle: profissional.especialidade },
+    contactPoint: { "@type": "ContactPoint", telephone: phone, contactType: "Agendamento", availableLanguage: "pt-BR" },
+    employee: { "@type": "Person", name: professional.name, honorificPrefix: "Dra.", jobTitle: professional.specialty },
   };
 }
 
@@ -44,52 +46,54 @@ export function seo() {
     name: "seo",
 
     transformIndexHtml(html) {
-      const dados = ler();
-      const { profissional, seo, titulo, marca, url, imagem } = dados;
+      const data = read();
+      const { professional, seo, title, brand, url, image } = data;
       const meta = [
-        `<meta name="description" content="${esc(seo.descricao)}" />`,
-        `<meta name="keywords" content="${esc(seo.palavrasChave.join(", "))}" />`,
+        `<meta name="description" content="${esc(seo.description)}" />`,
+        `<meta name="keywords" content="${esc(seo.keywords.join(", "))}" />`,
         `<meta name="robots" content="index, follow" />`,
-        `<meta name="geo.region" content="BR-${esc(seo.estado)}" />`,
+        `<meta name="geo.region" content="BR-${esc(seo.state)}" />`,
         `<meta property="og:type" content="website" />`,
         `<meta property="og:locale" content="pt_BR" />`,
-        `<meta property="og:site_name" content="${esc(titulo)}" />`,
-        `<meta property="og:title" content="${esc(seo.conteudo.titulo)}" />`,
-        `<meta property="og:description" content="${esc(seo.descricao)}" />`,
+        `<meta property="og:site_name" content="${esc(title)}" />`,
+        `<meta property="og:title" content="${esc(seo.content.title)}" />`,
+        `<meta property="og:description" content="${esc(seo.description)}" />`,
         url && `<link rel="canonical" href="${esc(url)}" />`,
         url && `<meta property="og:url" content="${esc(url)}" />`,
-        imagem && `<meta property="og:image" content="${esc(imagem)}" />`,
-        `<meta name="twitter:card" content="${imagem ? "summary_large_image" : "summary"}" />`,
-        `<script type="application/ld+json">${JSON.stringify(dadosEstruturados(dados)).replace(/</g, "\\u003c")}</script>`,
-      ].filter(Boolean).join("\n    ");
+        image && `<meta property="og:image" content="${esc(image)}" />`,
+        `<meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}" />`,
+        `<script type="application/ld+json">${JSON.stringify(structuredData(data)).replace(/</g, "\\u003c")}</script>`,
+      ]
+        .filter(Boolean)
+        .join("\n    ");
 
-      // Texto que o Google lê sem rodar o JavaScript; a primeira tela substitui assim que o site carrega.
-      const c = seo.conteudo;
-      const estatico = `
-      <div class="marca">${esc(marca)}</div>
-      <h1 class="pergunta-grande">${esc(c.titulo)}</h1>
-      ${c.paragrafos.map(p => `<p>${esc(p)}</p>`).join("\n      ")}
-      <p><a href="https://wa.me/${esc(profissional.whatsapp)}">${esc(c.whatsapp.replace("{telefone}", profissional.whatsappExibicao))}</a></p>
+      // Text that Google reads without running JavaScript; main.jsx clears it as soon as the site loads.
+      const c = seo.content;
+      const staticText = `
+      <div class="brand">${esc(brand)}</div>
+      <h1 class="big-question">${esc(c.title)}</h1>
+      ${c.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("\n      ")}
+      <p><a href="https://wa.me/${esc(professional.whatsapp)}">${esc(c.whatsapp.replace("{phone}", professional.whatsappDisplay))}</a></p>
     `;
 
       return html
-        .replace(/<title>.*?<\/title>/, `<title>${esc(titulo)}</title>\n    ${meta}`)
-        .replace(/(<div class="app" id="app">)(<\/div>)/, `$1${estatico}$2`);
+        .replace(/<title>.*?<\/title>/, `<title>${esc(title)}</title>\n    ${meta}`)
+        .replace(/(<div id="root">)(<\/div>)/, `$1${staticText}$2`);
     },
 
     generateBundle() {
-      const { url } = ler();
-      const linhas = ["User-agent: *", "Allow: /"];
-      if (url) linhas.push("", `Sitemap: ${new URL("sitemap.xml", url).href}`);
-      this.emitFile({ type: "asset", fileName: "robots.txt", source: linhas.join("\n") + "\n" });
+      const { url } = read();
+      const lines = ["User-agent: *", "Allow: /"];
+      if (url) lines.push("", `Sitemap: ${new URL("sitemap.xml", url).href}`);
+      this.emitFile({ type: "asset", fileName: "robots.txt", source: lines.join("\n") + "\n" });
       if (!url) return;
-      const hoje = new Date().toISOString().slice(0, 10);
+      const today = new Date().toISOString().slice(0, 10);
       this.emitFile({
         type: "asset",
         fileName: "sitemap.xml",
         source: `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${esc(url)}</loc><lastmod>${hoje}</lastmod></url>
+  <url><loc>${esc(url)}</loc><lastmod>${today}</lastmod></url>
 </urlset>
 `,
       });

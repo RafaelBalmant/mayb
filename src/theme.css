@@ -1,0 +1,121 @@
+/* ==========================================================
+   SITE THEME: fonts and colors all live here.
+   To change the visual identity, edit only this file.
+   The rest of the CSS and the face drawings use these variables.
+   ========================================================== */
+
+/* 1. Fonts. They are served by this site (npm packages @fontsource/*, imported in main.jsx), not by Google.
+      To change them: install another @fontsource package, update the imports in main.jsx and the names below.
+      Previous fonts: Young Serif (titles) + Figtree (text). */
+
+:root {
+  --font-title: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-text: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* the big name on the start screen (uppercase; for now the same font as the titles) */
+  --font-display: var(--font-title);
+
+  /* 2. Palette (light mode). Base: #edede9 (light gray), #d6ccc2 (taupe), #f5ebe0 (cream),
+        #e3d5ca (beige), #d5bdaf (pinkish beige). Buttons and text use darker versions of these
+        same tones (no caramel), to read well. */
+  --bg: #f5ebe0; /* page background (cream) */
+  --surface: #ffffff; /* cards, fields, drawing area */
+  --ink: #3d3632; /* main text and drawing strokes (warm graphite) */
+  --muted: #6f655f; /* secondary text */
+  --line: #e3d5ca; /* borders (beige) */
+  --accent: #776c66; /* brand color: buttons (#d6ccc2 darkened, taupe gray) */
+  --accent-soft: #edede9; /* background of marked items (light gray) */
+  --on-accent: #ffffff; /* text on top of the brand color */
+  --marked: #d5bdaf; /* marked face areas (pinkish beige) */
+  --danger: #b3261e; /* delete button */
+
+  /* face drawing */
+  --skin: #fbf6f0;
+  --hair: #d6ccc2;
+  --lip: #d5bdaf;
+
+  /* 3. Derived tones (follow --marked automatically; usually no need to edit) */
+  --zone: color-mix(in srgb, var(--marked) 5%, transparent);
+  --zone-line: color-mix(in srgb, var(--marked) 40%, transparent);
+  --zone-hover: color-mix(in srgb, var(--marked) 16%, transparent);
+  --zone-selected: color-mix(in srgb, var(--marked) 90%, transparent);
+  --scrim: color-mix(in srgb, var(--ink) 28%, transparent);
+  --name-color: #776c66; /* the big name on the start screen */
+  --photo-empty: #e3d5ca; /* background of the start photo while the file does not exist */
+
+  /* 4. Shape */
+  --r: 14px; /* corner radius of cards */
+  --r-btn: 0; /* corner radius of buttons (0 = square; 999px = round) */
+}
+
+/* 5. Dark mode palette (when the phone is in dark mode).
+      The block appears twice, with the same values: keep both identical. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #2b2725;
+    --surface: #36312e;
+    --ink: #f5ebe0;
+    --muted: #c9bfb6;
+    --line: #4a433f;
+    --accent: #d5bdaf;
+    --accent-soft: #48403b;
+    --marked: #d5bdaf;
+    --on-accent: #2b2725;
+    --danger: #f2a19a;
+    --skin: #3d3632;
+    --hair: #5a524c;
+    --lip: #8a7468;
+    --name-color: #d5bdaf;
+    --photo-empty: #48403b;
+    --scrim: color-mix(in srgb, #000 45%, transparent);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #2b2725;
+  --surface: #36312e;
+  --ink: #f5ebe0;
+  --muted: #c9bfb6;
+  --line: #4a433f;
+  --accent: #d5bdaf;
+  --accent-soft: #48403b;
+  --marked: #d5bdaf;
+  --on-accent: #2b2725;
+  --danger: #f2a19a;
+  --skin: #3d3632;
+  --hair: #5a524c;
+  --lip: #8a7468;
+  --name-color: #d5bdaf;
+  --photo-empty: #48403b;
+  --scrim: color-mix(in srgb, #000 45%, transparent);
+  color-scheme: dark;
+}
+
+/* 6. City colors in the agenda (the class name is the city code in data/agenda.json).
+      They apply to both modes. --on-location-* is the text written on top of each color. */
+:root {
+  --location-maringa: #d5bdaf; /* pinkish beige */
+  --on-location-maringa: #3d3632;
+  --location-siqueira_campos: #cddcc3; /* light sage green */
+  --on-location-siqueira_campos: #3d3632;
+}
+
+/* Previous palettes (to compare): copy the values back into the blocks above.
+   Warm brown:
+     Light:  --bg #fff8ee; --surface #fff; --ink #3b2312; --muted #7a6250; --line #ecdcc4;
+             --accent #724319; --accent-soft #fde4e3; --on-accent #fff; --marked #d88180;
+             --skin #fff3e0; --hair #e6cfb6; --lip #f7b1b0
+     Dark:   --bg #241a12; --surface #2f2318; --ink #feeac7; --muted #c9b49a; --line #4a3826;
+             --accent #f7b1b0; --accent-soft #4a2e2a; --marked #f7b1b0; --on-accent #3b2312;
+             --skin #3a2c20; --hair #5a4330; --lip #8a4f4e
+     Cities: Maringá #d88180 and Siqueira Campos #cad182, text #3b2312 on both.
+   First version of the neutral palette (more muted):
+     Light:  --accent #7a5c4b; --accent-soft #edede9; --marked #b8968a; --zone-selected 60%
+     Dark:   --accent #d5bdaf; --accent-soft #4a3d35; --marked #d5bdaf
+     Cities: Maringá #d5bdaf (text #3d322b) and Siqueira Campos #7d7266 (white text).
+   Older versions:
+     Rose and sage (Oct 27): --bg #faf7f5; --ink #3a3336; --muted #756a6e; --line #ede4e4; --accent #a85a6e;
+             --accent-soft #f7e6e9; --marked #e3a3b1 (zone-selected 75%); --skin #fffaf7; --hair #e6dcd6; --lip #efbcc6;
+             cities Maringá #f3c6cf and Siqueira Campos #bfd3bd (text #3a3336).
+     Neutral with caramel (Oct 26): --accent #9a5f42; --accent-soft #f6e1d3; --marked #c9805f;
+             cities Maringá #e8b49a and Siqueira Campos #8e5a6a (white text).
+     Gray-sage (Oct 27, before the lighter green): Siqueira Campos #c2c3b6. */

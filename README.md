@@ -1,54 +1,90 @@
 # Site de Mayara Bacellar · harmonização facial
 
-Site estático (Vite + JavaScript puro) em que o paciente marca no desenho do rosto
-o que o incomoda, responde algumas perguntas e envia o resumo pelo WhatsApp.
+Site estático (Vite + Preact) da Dra. Mayara Bacellar. A página inicial mostra a doutora, a **agenda** de atendimento
+(Maringá e Siqueira Campos, com "Agendar horário" pelo WhatsApp) e o contato. O **mapa do rosto**, em que o paciente
+marca o que o incomoda, vê fotos de casos reais, responde algumas perguntas e envia o resumo pelo WhatsApp, está pronto,
+mas desligado para os visitantes (veja "Links diretos").
 Nada é salvo em servidor: as respostas ficam no navegador até o paciente enviar.
 
 ## Rodar
 
 ```sh
 npm install
-npm run dev      # servidor local (abre no celular pela rede com --host)
-npm run build    # gera dist/ para qualquer hospedagem estática
+npm run dev          # servidor local (abre no celular pela rede com --host)
+npm run build        # gera dist/ para qualquer hospedagem estática
+npm run lint         # ESLint
+npm run format       # Prettier (format:check só confere)
+npm test             # testes unitários e de telas renderizadas (Vitest, sem navegador)
+npm run test:e2e     # fluxo completo no navegador (Playwright; E2E_BASE_URL aponta para um site já no ar)
+npm run faces        # regera os SVGs do rosto
 ```
 
-## Onde está cada coisa
+## Convenção de idioma
 
-- `src/data/conteudo.json`: **todo texto do site** fica aqui, para editar sem mexer no código: áreas e opções,
-  rótulos das respostas, FAQ, WhatsApp e, em `textos`, os títulos, explicações, botões e avisos de cada tela,
-  além do formato do resumo. `{n}`, `{area}` etc. são trocados pelo valor certo. O código lê tudo com `t("tela.chave")`.
-- `src/data/agenda.json`: **dias de atendimento** (Maringá e Siqueira Campos), por mês. É só pôr o número do dia
-  na lista da cidade; dia que não aparece = não atende. As instruções estão no próprio arquivo (`_comoEditar`).
-- `src/tema.css`: **fontes e cores do site**, num lugar só. Trocar a cor da marca (`--accent`) já muda botões e áreas
-  marcadas; os desenhos do rosto também usam essas cores (`--skin`, `--hair`, `--lip`, `--ink`).
-- `src/rostos/*.svg`: as 4 ilustrações (feminino/masculino, frente/perfil). Cada área tocável é um
-  `<path class="zona" data-area="codigo">`. Gere de novo com `npm run rostos` depois de mexer em
-  `scripts/gerar-rostos.mjs`, ou troque por SVGs feitos por um ilustrador mantendo o mesmo `data-area`.
-- `src/estado.js`: o formato dos dados do paciente (comentado no arquivo).
-- `src/resumo.js`: monta a mensagem do WhatsApp (formato do doc de fluxo) e o link wa.me. Se passar de
-  `profissional.limiteMensagem` caracteres (conteudo.json), os textos livres são encurtados.
-- `src/data/casos.json` + `public/casos/<parte>/`: **fotos de casos reais** mostradas logo depois do mapa,
-  separadas por parte do rosto e, dentro dela, por procedimento. Para acrescentar: ponha as fotos na pasta da parte e,
-  na lista dessa parte em `casos.json`, crie um bloco `{ "procedimento": "Toxina botulínica", "fotos": [...] }` com as fotos
-  sempre intercalando antes e depois (o site põe as etiquetas ANTES/DEPOIS sozinho; `legenda` é opcional).
-  Lista vazia mostra "Fotos em breve". As instruções e um exemplo estão no próprio arquivo (`_comoEditar`, `_exemplo`).
-- `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (os meses cadastrados em agenda.json, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
+- **Código em inglês**: arquivos, pastas, funções, variáveis, classes CSS, chaves do JSON, comentários e commits.
+- **Conteúdo do site em português**: só os _valores_ de texto em `src/data/content.json` (o que o paciente lê).
 
-## Links diretos
+## Como editar sem mexer no código
+
+| Quero mudar…                                                  | Edite                                                                      |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Qualquer texto, título, botão, aviso ou o formato da mensagem | `src/data/content.json` → `texts`                                          |
+| Áreas do rosto, suas opções de "o que incomoda" e o WhatsApp  | `src/data/content.json` → `areas`, `professional`                          |
+| Rótulos das respostas (lado, desde quando…)                   | `src/data/content.json` → `labels`                                         |
+| As perguntas de cada área (ordem, tipo, quais áreas mostram)  | `src/data/questions.json`                                                  |
+| Em que etapa cada tela fica na barra de progresso             | `src/data/flow.json`                                                       |
+| Cores e fontes                                                | `src/theme.css` (fontes: pacotes `@fontsource/*` importados no `main.jsx`) |
+| Tempos, limites, escala de 1 a 5                              | `src/config.js`                                                            |
+
+`{n}`, `{area}` etc. nos textos são trocados pelo valor certo. `npm test` confere que toda chave de texto usada no
+código existe no JSON, que os ids são únicos e que as perguntas apontam para campos e rótulos que existem.
+
+## Estrutura
+
+```
+src/
+  main.jsx, App.jsx     entrada e escolha da tela (resolveScreen)
+  screens/              uma tela por arquivo; index.js liga o id de data/flow.json ao componente
+  components/           Layout, Topbar, Face (SVG), OtherModal, perguntas por tipo…
+  store/                reducer puro, StoreProvider (Context + useReducer), storage (sessionStorage)
+  domain/               regras sem DOM: perguntas, fluxo, resumo/mensagem do WhatsApp, áreas
+  faces/                as 4 ilustrações (female/male, front/profile) e o leitor delas
+  data/                 content.json, questions.json, flow.json
+tests/                  Vitest: reducer, storage, fluxo, perguntas, mensagem, telas, consistência do JSON
+e2e/                    Playwright: o fluxo completo (desktop e celular)
+```
+
+- Para **adicionar uma tela**: crie o componente, registre em `screens/index.js` e em `data/flow.json`.
+- Para **adicionar um tipo de pergunta**: um componente em `components/questions.jsx` e uma entrada em `QUESTION_COMPONENTS`.
+- `src/domain/`: também `agenda.js` (meses e dias de atendimento), `cases.js` (fotos de casos) e `features.js`
+  (mapa ligado/desligado e links diretos), todos sem DOM e testados.
+- `src/store/legacy-storage.js` converte respostas salvas pela versão antiga (nomes em português) para o formato atual.
+- `src/faces/*.svg`: cada área tocável é um `<path class="zone" data-area="code">`. Gere de novo com `npm run faces`
+  depois de mexer em `scripts/generate-faces.mjs`, ou troque por SVGs de um ilustrador mantendo o mesmo `data-area`.
+
+## Links diretos e mapa do rosto
 
 O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
-Por enquanto o mapa do rosto está desligado (`MAPA_LIGADO = false` em `src/main.js`): o início mostra só a agenda.
-Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`). Vale até fechar a aba; `?mapa=0` desliga.
+Por enquanto o mapa do rosto está desligado (`MAP_ENABLED = false` em `src/config.js`): a página inicial mostra só a
+agenda e o contato. Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`).
+Vale até fechar a aba; `?mapa=0` desliga. Os nomes `#agenda`, `#mapa` e `?mapa=` são públicos e por isso ficam em português.
 
 ## Google (SEO)
 
 Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
 (WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
-Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `conteudo.json`, seção `seo`.
+Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `content.json`, seção `seo`.
 Quando o domínio estiver definido, preencha `seo.url` (sem ele não há sitemap nem link canônico) e, se quiser uma
-imagem na prévia do link, ponha-a em `public/` e o nome em `seo.imagem`.
+imagem na prévia do link, ponha-a em `public/` e o nome em `seo.image`.
+
+## Entrega
+
+`Dockerfile` (build com Node, servido por nginx) e `nginx.conf`: gzip, cache longo para `/assets` (têm hash no nome),
+cache de um dia para as fotos, `index.html` sempre revalidado, `robots.txt`/`sitemap.xml` que dão 404 quando não existem
+e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais). A cada push na `main`, o workflow
+`.github/workflows/docker.yml` publica a imagem no Docker Hub; `ci.yml` roda lint, formatação, testes e o E2E nos PRs.
 
 ## Situação
 
-Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aviso de privacidade).
-Faltam: boas-vindas, sobre você (por enquanto só o nome, pedido na revisão), objetivo, saúde e FAQ.
+Prontas: início, agenda, e o fluxo do mapa do rosto (escolher o rosto, marcar, ver resultados, contar mais, revisar e enviar
+pelo WhatsApp, com aviso de privacidade). Faltam: sobre você (por enquanto só o nome, pedido na revisão), objetivo, saúde e FAQ.
