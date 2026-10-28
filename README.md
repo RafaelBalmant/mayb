@@ -1,7 +1,9 @@
 # Site de Mayara Bacellar · harmonização facial
 
-Site estático (Vite + Preact) em que o paciente marca no desenho do rosto
-o que o incomoda, responde algumas perguntas e envia o resumo pelo WhatsApp.
+Site estático (Vite + Preact) da Dra. Mayara Bacellar. A página inicial mostra a doutora, a **agenda** de atendimento
+(Maringá e Siqueira Campos, com "Agendar horário" pelo WhatsApp) e o contato. O **mapa do rosto**, em que o paciente
+marca o que o incomoda, vê fotos de casos reais, responde algumas perguntas e envia o resumo pelo WhatsApp, está pronto,
+mas desligado para os visitantes (veja "Links diretos").
 Nada é salvo em servidor: as respostas ficam no navegador até o paciente enviar.
 
 ## Rodar
@@ -54,16 +56,35 @@ e2e/                    Playwright: o fluxo completo (desktop e celular)
 
 - Para **adicionar uma tela**: crie o componente, registre em `screens/index.js` e em `data/flow.json`.
 - Para **adicionar um tipo de pergunta**: um componente em `components/questions.jsx` e uma entrada em `QUESTION_COMPONENTS`.
+- `src/domain/`: também `agenda.js` (meses e dias de atendimento), `cases.js` (fotos de casos) e `features.js`
+  (mapa ligado/desligado e links diretos), todos sem DOM e testados.
 - `src/store/legacy-storage.js` converte respostas salvas pela versão antiga (nomes em português) para o formato atual.
 - `src/faces/*.svg`: cada área tocável é um `<path class="zone" data-area="code">`. Gere de novo com `npm run faces`
   depois de mexer em `scripts/generate-faces.mjs`, ou troque por SVGs de um ilustrador mantendo o mesmo `data-area`.
 
+## Links diretos e mapa do rosto
+
+O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
+Por enquanto o mapa do rosto está desligado (`MAP_ENABLED = false` em `src/config.js`): a página inicial mostra só a
+agenda e o contato. Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`).
+Vale até fechar a aba; `?mapa=0` desliga. Os nomes `#agenda`, `#mapa` e `?mapa=` são públicos e por isso ficam em português.
+
+## Google (SEO)
+
+Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
+(WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
+Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `content.json`, seção `seo`.
+Quando o domínio estiver definido, preencha `seo.url` (sem ele não há sitemap nem link canônico) e, se quiser uma
+imagem na prévia do link, ponha-a em `public/` e o nome em `seo.image`.
+
 ## Entrega
 
 `Dockerfile` (build com Node, servido por nginx) e `nginx.conf`: gzip, cache longo para `/assets` (têm hash no nome),
-`index.html` sempre revalidado e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais).
+cache de um dia para as fotos, `index.html` sempre revalidado, `robots.txt`/`sitemap.xml` que dão 404 quando não existem
+e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais). A cada push na `main`, o workflow
+`.github/workflows/docker.yml` publica a imagem no Docker Hub; `ci.yml` roda lint, formatação, testes e o E2E nos PRs.
 
 ## Situação
 
-Prontas: etapas 3 (mapa do rosto), 4 (detalhes de cada área) e 8 (revisar e enviar pelo WhatsApp, com aceite LGPD).
-Faltam: boas-vindas, sobre você (por enquanto só o nome, pedido na revisão), objetivo, saúde e FAQ.
+Prontas: início, agenda, e o fluxo do mapa do rosto (escolher o rosto, marcar, ver resultados, contar mais, revisar e enviar
+pelo WhatsApp, com aviso de privacidade). Faltam: sobre você (por enquanto só o nome, pedido na revisão), objetivo, saúde e FAQ.
