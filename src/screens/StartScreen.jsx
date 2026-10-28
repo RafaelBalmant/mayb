@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { professional, t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
+import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
 
@@ -66,6 +67,7 @@ export function StartScreen() {
           </button>
         )}
       </div>
+      <GoogleReviews />
       <p class="profile-locations">{t("start.locations")}</p>
       <a
         class="profile-instagram"

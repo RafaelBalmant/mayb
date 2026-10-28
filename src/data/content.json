@@ -10,6 +10,16 @@
     "_photos": "photo: imagem dentro de public/ (ex.: \"profile/photo.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
     "photo": "profile/photo.jpg"
   },
+  "googleReviews": {
+    "_howToEdit": [
+      "Nota e avaliações do Google mostradas no início, buscadas na hora pela Places API (New).",
+      "A chave de API NÃO fica aqui: vai no .env (VITE_GOOGLE_MAPS_KEY) e, no deploy, no secret GOOGLE_MAPS_KEY do GitHub. Sem chave, o bloco não aparece.",
+      "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\"). Vazio = o bloco não aparece.",
+      "minStars: só entram avaliações com essa nota ou mais (o Google manda no máximo 5, as mais relevantes)."
+    ],
+    "placeId": "ChIJNUgQq-7R7JQRFUP6rqeCifE",
+    "minStars": 4
+  },
   "seo": {
     "_howToEdit": [
       "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
@@ -347,6 +357,19 @@
       "cases": "Ver resultados reais",
       "map": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar"
+    },
+    "reviews": {
+      "title": "Avaliações no Google",
+      "rating": "Nota {rating} de 5",
+      "total": { "one": "1 avaliação", "many": "{n} avaliações" },
+      "stars": "{n} de 5 estrelas",
+      "list": "Avaliações de pacientes",
+      "position": "Avaliação {current} de {total}",
+      "goTo": "Mostrar avaliação {n}",
+      "readMore": "Ler mais",
+      "readLess": "Ler menos",
+      "seeAll": "Ver todas no Google",
+      "source": "Avaliações publicadas no Google"
     },
     "agenda": {
       "title": "Agenda",

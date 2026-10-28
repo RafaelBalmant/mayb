@@ -81,6 +81,19 @@ O site acha as fotos sozinho no build, e o teste avisa se faltar uma foto ou o �
 Os casos aparecem na página "Ver resultados reais" (botão na página inicial, ou `…/#casos`) e na etapa de
 resultados do mapa do rosto. A página segue o mesmo interruptor do mapa (`?mapa=1`).
 
+## Avaliações do Google
+
+A página inicial mostra a nota e as avaliações do perfil da Dra. Mayara no Google num carrossel
+(`src/components/GoogleReviews.jsx`), buscadas na hora pela Places API (New) (`src/domain/reviews.js`).
+
+- **Chave de API**: fica fora do código. Localmente, copie `.env.example` para `.env` e preencha `VITE_GOOGLE_MAPS_KEY`.
+  No deploy, o `docker.yml` passa o secret `GOOGLE_MAPS_KEY` do repositório para o build do Docker. Como o site roda
+  no navegador, a chave acaba no JavaScript publicado: quem a protege é a restrição por domínio no Google Cloud.
+- **Place ID** e nota mínima: `content.json` → `googleReviews` (não é segredo).
+
+Sem chave ou Place ID, ou se o Google não responder em 10 s, o bloco simplesmente não aparece. O Google manda no
+máximo 5 avaliações (as mais relevantes).
+
 ## Google (SEO)
 
 Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
@@ -93,7 +106,8 @@ imagem na prévia do link, ponha-a em `public/` e o nome em `seo.image`.
 
 `Dockerfile` (build com Node, servido por nginx) e `nginx.conf`: gzip, cache longo para `/assets` (têm hash no nome),
 cache de um dia para as fotos, `index.html` sempre revalidado, `robots.txt`/`sitemap.xml` que dão 404 quando não existem
-e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais). A cada push na `main`, o workflow
+e `Content-Security-Policy` restrita ao próprio site (fontes e scripts são locais; de fora, só a Places API do Google e
+as fotos de perfil de quem avaliou). A cada push na `main`, o workflow
 `.github/workflows/docker.yml` publica a imagem no Docker Hub; `ci.yml` roda lint, formatação, testes e o E2E nos PRs.
 
 ## Situação

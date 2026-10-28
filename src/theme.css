@@ -41,6 +41,8 @@
   --scrim: color-mix(in srgb, var(--ink) 28%, transparent);
   --name-color: #776c66; /* the big name on the start screen */
   --photo-empty: #e3d5ca; /* background of the start photo while the file does not exist */
+  --star: #a58d7f; /* Google review stars (pinkish beige, darkened) */
+  --star-empty: #e3d5ca;
   --viewer-bg: rgb(20 17 15 / 0.96); /* behind a case photo shown full screen */
   --viewer-ink: #f5ebe0; /* text and × over that background */
   --viewer-close: rgb(255 255 255 / 0.16);
@@ -69,6 +71,8 @@
     --lip: #8a7468;
     --name-color: #d5bdaf;
     --photo-empty: #48403b;
+    --star: #d5bdaf;
+    --star-empty: #4a433f;
     --scrim: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
@@ -89,6 +93,8 @@
   --lip: #8a7468;
   --name-color: #d5bdaf;
   --photo-empty: #48403b;
+  --star: #d5bdaf;
+  --star-empty: #4a433f;
   --scrim: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }

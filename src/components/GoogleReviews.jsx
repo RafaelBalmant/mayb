@@ -1,0 +1,146 @@
+import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { REVIEWS_AUTOPLAY_MS } from "../config.js";
+import { googleReviews, t, tn } from "../content.js";
+import { fetchReviews } from "../domain/reviews.js";
+
+// The key comes from .env (VITE_GOOGLE_MAPS_KEY), baked in at build time; it is never in the repository.
+const KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
+
+// One request per page load: coming back to the start page reuses the answer.
+let request;
+const loadReviews = () =>
+  (request ??= fetchReviews({ key: KEY, placeId: googleReviews?.placeId, minStars: googleReviews?.minStars }));
+
+const decimal = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+// Five stars filled up to the rating (4.8 -> the last one is 80% full). The fill comes from the CSS (--rating).
+const Stars = ({ value }) => (
+  <span class="stars" style={{ "--rating": value }} role="img" aria-label={t("reviews.stars", { n: decimal(value) })}>
+    ★★★★★
+  </span>
+);
+
+// "Read more" only shows when the text did not fit in the card's lines.
+function Review({ review, index, total }) {
+  const textRef = useRef(null);
+  const [overflows, setOverflows] = useState(false);
+  const [open, setOpen] = useState(false);
+  useLayoutEffect(() => {
+    const el = textRef.current;
+    setOverflows(el.scrollHeight > el.clientHeight + 1);
+  }, []);
+
+  return (
+    <figure class={open ? "review open" : "review"} aria-label={t("reviews.position", { current: index + 1, total })}>
+      <Stars value={review.stars} />
+      <blockquote class="review-text" ref={textRef}>
+        {review.text}
+      </blockquote>
+      {(overflows || open) && (
+        <button class="review-more" type="button" onClick={() => setOpen(!open)}>
+          {t(open ? "reviews.readLess" : "reviews.readMore")}
+        </button>
+      )}
+      <figcaption class="review-author">
+        {review.photo && <img src={review.photo} alt="" referrerpolicy="no-referrer" loading="lazy" />}
+        <span>
+          {review.authorLink ? (
+            <a href={review.authorLink} target="_blank" rel="noopener noreferrer">
+              {review.author}
+            </a>
+          ) : (
+            review.author
+          )}
+          {review.when && ` · ${review.when}`}
+        </span>
+      </figcaption>
+    </figure>
+  );
+}
+
+/**
+ * Rating and reviews from Google on the start page: a carousel that moves on by itself and stops for good once the
+ * visitor touches it. Renders nothing until (and unless) Google answers.
+ */
+export function GoogleReviews() {
+  const [data, setData] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [autoplay, setAutoplay] = useState(true);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    let alive = true;
+    loadReviews().then((d) => alive && setData(d));
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const count = data?.reviews.length ?? 0;
+  const scrollTo = (i) => trackRef.current?.scrollTo({ left: i * trackRef.current.clientWidth, behavior: "smooth" });
+
+  useEffect(() => {
+    if (!autoplay || count < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = setInterval(() => {
+      if (document.hidden) return;
+      const track = trackRef.current;
+      if (track) scrollTo((Math.round(track.scrollLeft / track.clientWidth) + 1) % count);
+    }, REVIEWS_AUTOPLAY_MS);
+    return () => clearInterval(timer);
+  }, [autoplay, count]);
+
+  if (!data) return null;
+  const stop = () => setAutoplay(false);
+  const { rating, total, link, reviews } = data;
+
+  return (
+    <section
+      class="reviews"
+      aria-label={t("reviews.title")}
+      onPointerDown={stop}
+      onTouchStart={stop}
+      onFocusIn={stop}
+      onWheel={stop}
+    >
+      <h2 class="reviews-title">{t("reviews.title")}</h2>
+      <div class="reviews-summary">
+        <span class="reviews-rating" aria-label={t("reviews.rating", { rating: decimal(rating) })}>
+          {decimal(rating)}
+        </span>
+        <Stars value={rating} />
+        <span class="reviews-total">{tn("reviews.total", total)}</span>
+      </div>
+      <div
+        class="reviews-track"
+        role="region"
+        aria-label={t("reviews.list")}
+        tabIndex={0}
+        ref={trackRef}
+        onScroll={(e) => setCurrent(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
+      >
+        {reviews.map((r, i) => (
+          <Review key={i} review={r} index={i} total={count} />
+        ))}
+      </div>
+      {count > 1 && (
+        <div class="reviews-dots">
+          {reviews.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={t("reviews.goTo", { n: i + 1 })}
+              aria-current={i === current ? "true" : undefined}
+              onClick={() => scrollTo(i)}
+            />
+          ))}
+        </div>
+      )}
+      {link && (
+        <a class="reviews-link" href={link} target="_blank" rel="noopener noreferrer">
+          {t("reviews.seeAll")}
+        </a>
+      )}
+      <p class="reviews-source">{t("reviews.source")}</p>
+    </section>
+  );
+}
