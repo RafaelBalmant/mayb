@@ -41,6 +41,9 @@
   --scrim: color-mix(in srgb, var(--ink) 28%, transparent);
   --name-color: #776c66; /* the big name on the start screen */
   --photo-empty: #e3d5ca; /* background of the start photo while the file does not exist */
+  --viewer-bg: rgb(20 17 15 / 0.96); /* behind a case photo shown full screen */
+  --viewer-ink: #f5ebe0; /* text and × over that background */
+  --viewer-close: rgb(255 255 255 / 0.16);
 
   /* 4. Shape */
   --r: 14px; /* corner radius of cards */

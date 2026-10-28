@@ -2,6 +2,7 @@
   "screens": [
     { "id": "start" },
     { "id": "agenda", "flow": "agenda", "step": 1 },
+    { "id": "cases", "needsMap": true, "standalone": true },
     { "id": "opening", "flow": "face", "step": 1, "needsMap": true },
     { "id": "map", "flow": "face", "step": 2, "needsMap": true },
     { "id": "results", "flow": "face", "step": 3, "needsMap": true, "requires": "areas" },

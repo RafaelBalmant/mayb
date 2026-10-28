@@ -36,14 +36,18 @@ describe("every screen renders inside the shared layout", () => {
 });
 
 describe("with the map off (the default)", () => {
-  it.each(["opening", "map", "results", "next", "details", "review", "sent"])("%s shows the start page", (id) => {
-    const out = html(stateOn(id, {}, {}, false));
-    expect(out).toContain("Verificar agenda");
-    expect(out).not.toContain("Me conta o que te incomoda no rosto");
-  });
+  it.each(["opening", "map", "results", "next", "details", "review", "sent", "cases"])(
+    "%s shows the start page",
+    (id) => {
+      const out = html(stateOn(id, {}, {}, false));
+      expect(out).toContain("Verificar agenda");
+      expect(out).not.toContain("Me conta o que te incomoda no rosto");
+    },
+  );
 
-  it("the start page does not offer the map flow", () => {
+  it("the start page does not offer the map flow nor the cases page", () => {
     expect(html(stateOn("start", {}, {}, false))).not.toContain('id="go-map"');
+    expect(html(stateOn("start", {}, {}, false))).not.toContain('id="go-cases"');
   });
 });
 
@@ -147,6 +151,23 @@ describe("results", () => {
   it("without any photo entry for the marked parts it says so", () => {
     const out = html(stateOn("results", { areas: [{ ...newArea("other") }] }));
     expect(out).toContain("Ainda não temos fotos das partes que você marcou");
+  });
+});
+
+describe("cases page", () => {
+  it("is offered on the start page with the map on, and needs no face or marked part", () => {
+    expect(html(stateOn("start"))).toContain('id="go-cases"');
+    const out = html(stateOn("cases", { face: null, areas: [] }));
+    expect(out).toContain("Resultados reais");
+    expect(out).toContain('id="back"');
+    expect(out).toContain('id="go-agenda"');
+    expect(out).not.toContain('class="progress"');
+  });
+
+  it("without any case yet it says so instead of showing the parts", () => {
+    const out = html(stateOn("cases"));
+    expect(out).toContain("Em breve vamos mostrar aqui casos reais");
+    expect(out).not.toContain('id="cases-all"');
   });
 });
 

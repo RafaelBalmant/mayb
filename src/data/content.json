@@ -344,6 +344,7 @@
       "contact": "Entrar em contato",
       "review": "Compartilhe sua experiência",
       "contactMessage": "Olá! Vim pelo site da Dra. Mayara e gostaria de mais informações.",
+      "cases": "Ver resultados reais",
       "map": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar"
     },
@@ -429,22 +430,44 @@
     },
     "results": {
       "title": "Quer ver resultados de quem tinha as mesmas queixas?",
-      "explanation": "Separamos fotos de casos reais atendidos pela Dra. Mayara, organizadas pelas partes do rosto que você marcou e pelo procedimento feito. Toque numa parte para ver.",
+      "explanation": "Separamos fotos de casos reais atendidos pela Dra. Mayara, organizadas pelas partes do rosto que você marcou. Toque numa parte para ver.",
       "photos": {
         "one": "1 caso",
         "many": "{n} casos"
       },
       "comingSoon": "Fotos em breve",
-      "before": "Antes",
-      "after": "Depois",
       "noPhotos": "Ainda não há fotos desta parte. Em breve!",
-      "photo": "{moment}: {procedure}, {area}",
-      "openPhoto": "Ampliar foto de {moment}: {procedure}, {area}",
-      "close": "Fechar",
       "none": "Ainda não temos fotos das partes que você marcou. Você pode seguir normalmente.",
       "notice": "Cada rosto é único: os resultados variam de pessoa para pessoa. As fotos são publicadas com autorização dos pacientes.",
       "skip": "Pular",
       "continue": "Continuar"
+    },
+    "cases": {
+      "title": "Resultados reais",
+      "explanation": "Escolha uma ou mais partes do rosto para ver o antes e depois de pacientes atendidas pela Dra. Mayara.",
+      "none": "Em breve vamos mostrar aqui casos reais atendidos pela Dra. Mayara.",
+      "areas": "Partes do rosto",
+      "all": "Todos",
+      "pick": "Toque numa parte acima para ver os casos.",
+      "jump": "Ir para a parte",
+      "count": {
+        "one": "1 caso",
+        "many": "{n} casos"
+      },
+      "end": "Fim dos casos de {area}",
+      "before": "Antes",
+      "after": "Depois",
+      "afterWhen": "Depois · {when}",
+      "photo": "{moment}: {title}",
+      "openPhoto": "Ampliar foto de {moment}: {title}",
+      "close": "Fechar",
+      "areasJoin": " + ",
+      "audio": "Ouça a Dra. Mayara explicar este caso",
+      "play": "Ouvir a explicação",
+      "pause": "Pausar",
+      "audioText": "Ler o que ela disse",
+      "back": "Voltar",
+      "agenda": "Verificar agenda"
     },
     "next": {
       "title": "Anotado! E agora?",

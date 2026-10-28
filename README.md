@@ -56,7 +56,7 @@ e2e/                    Playwright: o fluxo completo (desktop e celular)
 
 - Para **adicionar uma tela**: crie o componente, registre em `screens/index.js` e em `data/flow.json`.
 - Para **adicionar um tipo de pergunta**: um componente em `components/questions.jsx` e uma entrada em `QUESTION_COMPONENTS`.
-- `src/domain/`: também `agenda.js` (meses e dias de atendimento), `cases.js` (fotos de casos) e `features.js`
+- `src/domain/`: também `agenda.js` (meses e dias de atendimento), `cases.js` (casos reais) e `features.js`
   (mapa ligado/desligado e links diretos), todos sem DOM e testados.
 - `src/store/legacy-storage.js` converte respostas salvas pela versão antiga (nomes em português) para o formato atual.
 - `src/faces/*.svg`: cada área tocável é um `<path class="zone" data-area="code">`. Gere de novo com `npm run faces`
@@ -64,10 +64,22 @@ e2e/                    Playwright: o fluxo completo (desktop e celular)
 
 ## Links diretos e mapa do rosto
 
-O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
+O site institucional pode abrir direto numa parte: `…/#agenda` (agenda), `…/#mapa` (começo do mapa do rosto) ou
+`…/#casos` (casos reais).
 Por enquanto o mapa do rosto está desligado (`MAP_ENABLED = false` em `src/config.js`): a página inicial mostra só a
 agenda e o contato. Para testar o mapa sem ligar para todos, abra o site com `?mapa=1` no endereço (ex.: `…/?mapa=1`).
 Vale até fechar a aba; `?mapa=0` desliga. Os nomes `#agenda`, `#mapa` e `?mapa=` são públicos e por isso ficam em português.
+
+## Casos reais (antes e depois)
+
+Cada caso tem uma pasta em `src/cases/<pasta>/` com `antes.jpg` e `depois.jpg` (outros ângulos: `antes-2.jpg` e
+`depois-2.jpg`…; vale também .png ou .webp) e, se quiser, um áudio da Dra. explicando o caso (`audio.mp3`). Os dados
+de cada caso ficam na lista `cases` de `src/data/cases.json`: pasta, título, partes do rosto e, opcionais,
+procedimentos, tempo depois, descrição, áudio, texto do áudio e `visible`. As instruções estão no próprio arquivo.
+O site acha as fotos sozinho no build, e o teste avisa se faltar uma foto ou o áudio.
+
+Os casos aparecem na página "Ver resultados reais" (botão na página inicial, ou `…/#casos`) e na etapa de
+resultados do mapa do rosto. A página segue o mesmo interruptor do mapa (`?mapa=1`).
 
 ## Google (SEO)
 

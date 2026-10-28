@@ -28,8 +28,8 @@ export const NOTICE_DURATION_MS = 1400;
 export const SEND_REDIRECT_DELAY_MS = 300;
 
 /**
- * Whether the face-map flow is open to everyone. While false, the start page only offers the agenda;
- * the map can still be tried with ?mapa=1 in the address (kept until the tab is closed; ?mapa=0 turns it off).
+ * Whether the face-map flow and the real cases page are open to everyone. While false, the start page only offers
+ * the agenda; both can still be tried with ?mapa=1 in the address (kept until the tab is closed; ?mapa=0 turns it off).
  */
 export const MAP_ENABLED = false;
 

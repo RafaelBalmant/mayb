@@ -94,12 +94,25 @@ describe("agenda.json and cases.json", () => {
     }
   });
 
-  it("cases.json has an entry per area (except 'other'), with photos in before/after pairs and folders that exist", () => {
-    for (const a of areas.filter((x) => x.code !== "other")) expect(Array.isArray(cases[a.code]), a.code).toBe(true);
-    for (const [code, procedures] of Object.entries(cases)) {
-      if (code.startsWith("_")) continue;
-      expect(existsSync(`public/cases/${code}`), `public/cases/${code}`).toBe(true);
-      for (const p of procedures) expect(p.photos.length % 2, `${code}/${p.procedure}`).toBe(0);
+  it("every case in cases.json has a unique folder with before/after photos, known areas and its audio file", () => {
+    const folders = new Set();
+    for (const c of cases.cases) {
+      expect(c.title, c.folder).toBeTruthy();
+      expect(folders.has(c.folder), `${c.folder} repeated`).toBe(false);
+      folders.add(c.folder);
+      const dir = `src/cases/${c.folder}`;
+      expect(existsSync(dir), dir).toBe(true);
+      const names = readdirSync(dir).map((f) => f.toLowerCase());
+      for (const m of ["antes", "depois"]) {
+        expect(
+          names.some((f) => new RegExp(`^${m}(-1)?\\.(jpe?g|png|webp)$`).test(f)),
+          `${dir}/${m}.jpg`,
+        ).toBe(true);
+      }
+      expect(c.areas.length, c.folder).toBeGreaterThan(0);
+      for (const code of c.areas)
+        expect(code !== "other" && areas.some((a) => a.code === code), `${c.folder}: ${code}`).toBe(true);
+      if (c.audio) expect(names, `${dir}/${c.audio}`).toContain(c.audio.toLowerCase());
     }
   });
 });

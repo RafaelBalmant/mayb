@@ -50,6 +50,10 @@ describe("screenFromHash", () => {
     expect(screenFromHash("#mapa", true)).toBe("opening");
     expect(screenFromHash("#mapa", false)).toBe("start");
   });
+  it("#casos opens the cases page only when the map is on, else the start page", () => {
+    expect(screenFromHash("#casos", true)).toBe("cases");
+    expect(screenFromHash("#casos", false)).toBe("start");
+  });
   it("anything else does nothing", () => {
     expect(screenFromHash("", true)).toBeNull();
     expect(screenFromHash("#outra", true)).toBeNull();

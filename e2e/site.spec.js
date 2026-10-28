@@ -50,6 +50,18 @@ test.describe("start page", () => {
     await expect(page.getByRole("button", { name: "Me conta o que te incomoda no rosto" })).toHaveCount(0);
   });
 
+  test("?mapa=1 also adds the real cases page, with back to the start page", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("button", { name: "Ver resultados reais" })).toHaveCount(0);
+    await page.goto("/?mapa=1");
+    await page.getByRole("button", { name: "Ver resultados reais" }).click();
+    await expect(page.getByRole("heading", { name: "Resultados reais" })).toBeVisible();
+    await page.getByRole("button", { name: "Voltar" }).click();
+    await expect(page.getByRole("button", { name: "Ver resultados reais" })).toBeVisible();
+    await page.goto("/?mapa=0#casos");
+    await expect(page.getByRole("heading", { name: "Resultados reais" })).toHaveCount(0);
+  });
+
   test("direct links: #agenda opens the agenda; #mapa stays on the start page while the map is off", async ({
     page,
   }) => {
