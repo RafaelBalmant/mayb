@@ -154,6 +154,24 @@ describe("Google Analytics provider", () => {
     expect(calls()[1]).toEqual(["config", "G-TEST1234", { send_page_view: false, traffic_type: "internal" }]);
   });
 
+  it("sends a screen name as /name, and a name starting with / as that exact path", () => {
+    const calls = setup();
+    globalThis.location = { origin: "https://x.com", search: "?utm_source=ig" };
+    const ga = googleAnalytics("G-TEST1234");
+    ga.load();
+    for (const name of ["start", "agenda", "/toxina-botulinica-maringa/"]) ga.screen(name);
+    expect(
+      calls()
+        .filter((c) => c[1] === "page_view")
+        .map((c) => c[2].page_location),
+    ).toEqual([
+      "https://x.com/?utm_source=ig",
+      "https://x.com/agenda?utm_source=ig",
+      "https://x.com/toxina-botulinica-maringa/?utm_source=ig",
+    ]);
+    delete globalThis.location;
+  });
+
   it("with Consent Mode, denies everything before the config and grants analytics on OK", () => {
     const calls = setup();
     const ga = googleAnalytics("G-TEST1234");

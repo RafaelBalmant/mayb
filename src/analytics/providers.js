@@ -49,8 +49,9 @@ export function googleAnalytics(measurementId) {
       addScript(`https://www.googletagmanager.com/gtag/js?id=${measurementId}`);
     },
     screen(name) {
-      // a path per screen (/agenda, /cases…) keeps the reports readable; the query keeps utm_* for the source
-      const path = name === "start" ? "/" : `/${name}`;
+      // a path per screen (/agenda, /cases…) keeps the reports readable; the query keeps utm_* for the source.
+      // A name that already starts with "/" is a real page path (the static pages) and is used as it is.
+      const path = name.startsWith("/") ? name : name === "start" ? "/" : `/${name}`;
       gtag("event", "page_view", {
         page_title: name,
         page_location: `${location.origin}${path}${location.search}`,
