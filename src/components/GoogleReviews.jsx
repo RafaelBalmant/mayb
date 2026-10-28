@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import { REVIEWS_AUTOPLAY_MS, REVIEWS_GROUP_KEY, REVIEWS_RESUME_AFTER_MS } from "../config.js";
-import { t, tn } from "../content.js";
-import { groupForVisit, reviewGroups } from "../domain/reviews.js";
-import { savedReviews } from "../domain/saved-reviews.js";
+import { googleReviews, t, tn } from "../content.js";
+import { groupForVisit, reviewGroups, showableReviews } from "../domain/reviews.js";
+import { savedRating } from "../domain/saved-rating.js";
 
 const storage = (name) => {
   try {
@@ -12,21 +12,20 @@ const storage = (name) => {
   }
 };
 
-// The reviews come from the file saved at build time (no request to Google). Each visit shows the next group;
-// chosen once per page load, so coming back to the start page keeps the same cards.
+// The reviews come from content.json and the rating from the file saved at build time (no request to Google).
+// Each visit shows the next group; chosen once per page load, so coming back to the start page keeps the same cards.
 let visitGroup;
 function reviewsForThisVisit() {
-  if (!savedReviews) return null;
   if (!visitGroup) {
-    const groups = reviewGroups(savedReviews.reviews);
+    const groups = reviewGroups(showableReviews(googleReviews.reviews, googleReviews));
     const index = groupForVisit(groups.length, {
       local: storage("localStorage"),
       session: storage("sessionStorage"),
       key: REVIEWS_GROUP_KEY,
     });
-    visitGroup = groups[index];
+    visitGroup = groups[index] ?? [];
   }
-  return { ...savedReviews, reviews: visitGroup };
+  return visitGroup.length ? { ...savedRating, reviews: visitGroup } : null;
 }
 
 // Distance between two cards (card width plus the gap between them), so scrolling lands exactly on a card.
@@ -65,18 +64,7 @@ function Review({ review, index, total }) {
           {t(open ? "reviews.readLess" : "reviews.readMore")}
         </button>
       )}
-      <figcaption class="review-author">
-        {review.photo && <img src={review.photo} alt="" referrerpolicy="no-referrer" loading="lazy" />}
-        <span>
-          {review.authorLink ? (
-            <a href={review.authorLink} target="_blank" rel="noopener noreferrer">
-              {review.author}
-            </a>
-          ) : (
-            review.author
-          )}
-        </span>
-      </figcaption>
+      <figcaption class="review-author">{review.author}</figcaption>
     </figure>
   );
 }
@@ -84,7 +72,8 @@ function Review({ review, index, total }) {
 /**
  * Rating and reviews from Google on the start page: a carousel that moves on by itself every REVIEWS_AUTOPLAY_MS.
  * Once the visitor taps or drags it, it only moves by hand; after REVIEWS_RESUME_AFTER_MS without a change it
- * goes back to moving by itself. Renders nothing when the build saved no reviews.
+ * goes back to moving by itself. Renders nothing when there is no review to show; without the rating saved at build
+ * time, the reviews show without the rating summary.
  */
 export function GoogleReviews() {
   const [data] = useState(reviewsForThisVisit);
@@ -128,13 +117,15 @@ export function GoogleReviews() {
       onWheel={takeOver}
     >
       <h2 class="reviews-title">{t("reviews.title")}</h2>
-      <div class="reviews-summary">
-        <span class="reviews-rating" aria-label={t("reviews.rating", { rating: decimal(rating) })}>
-          {decimal(rating)}
-        </span>
-        <Stars value={rating} />
-        <span class="reviews-total">{tn("reviews.total", total)}</span>
-      </div>
+      {rating && (
+        <div class="reviews-summary">
+          <span class="reviews-rating" aria-label={t("reviews.rating", { rating: decimal(rating) })}>
+            {decimal(rating)}
+          </span>
+          <Stars value={rating} />
+          <span class="reviews-total">{tn("reviews.total", total)}</span>
+        </div>
+      )}
       <div
         class="reviews-track"
         role="region"

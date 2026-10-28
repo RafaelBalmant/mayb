@@ -12,13 +12,243 @@
   },
   "googleReviews": {
     "_howToEdit": [
-      "Nota e avaliações do Google mostradas no início, buscadas na hora pela Places API (New).",
-      "A chave de API NÃO fica aqui: vai no .env (VITE_GOOGLE_MAPS_KEY) e, no deploy, no secret GOOGLE_MAPS_KEY do GitHub. Sem chave, o bloco não aparece.",
-      "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\"). Vazio = o bloco não aparece.",
-      "minStars: só entram avaliações com essa nota ou mais (o Google manda no máximo 5, as mais relevantes)."
+      "Avaliações do Google mostradas no início, num carrossel. Cada visita mostra um grupo diferente delas.",
+      "reviews: as avaliações, copiadas do perfil no Google (author = nome como aparece lá, stars = 1 a 5, text = o texto; quebras de linha com \\n). Para incluir uma nova, acrescente na lista; avaliações sem texto ficam de fora.",
+      "A nota média e o total de avaliações vêm do Google no deploy (uma vez por dia), com a chave que fica no secret GOOGLE_MAPS_KEY do GitHub (no computador, no .env). Sem a chave, as avaliações aparecem sem a nota.",
+      "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\").",
+      "minStars: só entram avaliações com essa nota ou mais.",
+      "hideIfMentions: avaliações que citam alguma dessas palavras não aparecem (o foco agora é harmonização facial, então as que falam de sobrancelha ficam de fora). Maiúsculas e acentos não importam."
     ],
     "placeId": "ChIJNUgQq-7R7JQRFUP6rqeCifE",
-    "minStars": 4
+    "minStars": 4,
+    "hideIfMentions": ["sobrancelha"],
+    "reviews": [
+      {
+        "author": "SUELLEN BELASQUE",
+        "stars": 5,
+        "text": "Clínica linda, atendimento impecável e uma profissional de excelência. Confio de olhos fechados!\nMinha autoestima foi devolvida graças à Mayara 💖\nJá estou contando os dias pra voltar e fazer outros procedimentos!"
+      },
+      {
+        "author": "Piedade Belasque",
+        "stars": 5,
+        "text": "Profissional competente e atenciosa, com mãos leves e precisas!"
+      },
+      {
+        "author": "Beatriz Gomes",
+        "stars": 5,
+        "text": "Atendimento e resultado incrível! Desde a avaliação super atenciosa ate a sutileza nos detalhes de acordo com a necessidade e gosto de cada paciente 💖🥰🙏🏻"
+      },
+      {
+        "author": "Renata Leal",
+        "stars": 5,
+        "text": "Excelente profissional, Atendimento maravilhoso, super atenciosa, educada e sempre disposta a ajudar. Dá pra ver o carinho e o cuidado em cada detalhe. Recomendo de olhos fechados."
+      },
+      {
+        "author": "Andressa Vargas",
+        "stars": 5,
+        "text": "Profissional maravilhosa! Trabalho impecável 💖"
+      },
+      {
+        "author": "Raiany Sene",
+        "stars": 5,
+        "text": "Ótimo atendimento e resultado incrível! Minha primeira vez com procedimentos estéticos, e amei!"
+      },
+      {
+        "author": "Andréia Coutinho",
+        "stars": 5,
+        "text": "Ótima maravilhosa, ótima profissional, educada, simpática, cuidadosa uma pessoa fantástica tudo perfeito muito limpo, ambiente delicioso tudo ótimo"
+      },
+      {
+        "author": "Eduarda Pichioli",
+        "stars": 5,
+        "text": "A May é incrível, ela oferece um atendimento de altíssima qualidade, além de ser super respeitosa e humana! Sou fidelizada, recomendo!"
+      },
+      {
+        "author": "Amanda Leme",
+        "stars": 5,
+        "text": "A melhor limpeza de pele da vida! Já realizei limpeza de pele e design de sobrancelhas, ambos feitos com muito cuidado e focado nas minhas necessidades.\nA Ma tem cuidado não só com nossa pele, mas também com nosso emocional, ela conduz o atendimento de uma forma tão gostosa, com conversas do início ao fim. Ela usa produtos específicos para o que sua pele necessita no momento, sempre ouvindo e atendendo nossas queixas. Além de que a limpeza é super completa, incluindo momentos com massagens que ajudam muito a relaxar, e o design sempre acompanha o que a gente busca, não confio minhas sobrancelhas a mais ninguém hoje em dia 🥰. No final o saldo é uma pele limpinha, sobrancelhas do jeito que amo e também boas conversas com atendimentos que são únicos para cada pessoa ❤️"
+      },
+      {
+        "author": "Rafaela França",
+        "stars": 5,
+        "text": "Melhor atendimento nao há, lugar maravilhoso, tranquilo, com um trabalho excelente ❤️"
+      },
+      {
+        "author": "Psicóloga Isabella L Santos",
+        "stars": 5,
+        "text": "O trabalho da Mayara é excepcional, ela deixa minha pele como ninguém!! Super profissional, acolhedora, calma, competente e paciente. Sou fã e com certeza indico de olhos fechados! May muito obrigada por todo carinho comigo."
+      },
+      {
+        "author": "Eluana Moraes",
+        "stars": 5,
+        "text": "Super recomendo, ótima profissional, procedimentos feitos com todo conforto e segurança!\nEquipe nota mil!"
+      },
+      {
+        "author": "Helena",
+        "stars": 5,
+        "text": "Uma profissional e pessoa incrível!! O trabalho é impecável!! Você percebe que é feito com muito carinho e atenção. Recomendo demais"
+      },
+      {
+        "author": "Maria Aurora Galdino Vieira",
+        "stars": 5,
+        "text": "Profissional excelente, atendimento como sempre maravilhoso, que nos acalma, tranquiliza e nos faz sentir o cuidado em cada detalhe. A limpeza de pele foi feita com muita delicadeza e técnica, sai de lá sentindo a pele renovada e com uma sensação incrível de leveza, principalmente na área do nariz que era onde mais me encomodava, a atenção em cada etapa tornam a experiência super tranquila 🥰🙏🏻"
+      },
+      {
+        "author": "Elisa T. de Souza",
+        "stars": 5,
+        "text": "Minha experiência na clínica foi incrível. A Mayara é uma profissional muito cuidadosa, nos orienta no pré, durante e no pós procedimento. Sem contar no resultado que ficou perfeito. Amei muito."
+      },
+      {
+        "author": "Jessica Inocencio da Rosa",
+        "stars": 5,
+        "text": "Foi uma experiência maravilhosa, me senti muito bem acolhida e tive alguns aprendizados de como cuidar da minha pele."
+      },
+      {
+        "author": "ALINE CAROLINE Silva",
+        "stars": 5,
+        "text": "Há quase 6 anos a May cuida das minhas sobrancelhas, e depois conhecei o trabalho da Carla, elas são impecáveis e muito perfeccionistas, atendimento profissional e personalizado! Amo e indico de olhos fechados! ❤️"
+      },
+      {
+        "author": "danielle soares",
+        "stars": 5,
+        "text": "A Mayara é uma excelente profissional! Sempre muito atenciosa e querida, ela faz todo o procedimento com muito cuidado. Minha pele sai linda, lisinha, com todos os cravinhos removidos. Dá pra ver o capricho e a dedicação em cada detalhe. Até mesmo no pós procedimento ! Recomendo de olhos fechados!"
+      },
+      {
+        "author": "Raquel Azevedo",
+        "stars": 5,
+        "text": "Incrível!!!!!"
+      },
+      {
+        "author": "Leandra Velasque",
+        "stars": 5,
+        "text": "Atendimento maravilhoso! A Mayara é muito querida, atenciosa, e seu trabalho é impecável!"
+      },
+      {
+        "author": "Ana Elisa Ress Socio",
+        "stars": 5,
+        "text": "Ótima experiência! Já sou cliente da Mayara há anos e sempre recomendei os serviços dela. É uma profissional capacitada e de muito sucesso 🥰"
+      },
+      {
+        "author": "Simone Fernandes",
+        "stars": 5,
+        "text": "A Mayara é maravilhosa! A limpeza de pele foi excelente, e ela nos explicou cada passo do tratamento. Estou muito satisfeita com os resultados. O ambiente é acolhedor, e ela é super atenciosa."
+      },
+      {
+        "author": "Elidiane Rodrigues",
+        "stars": 5,
+        "text": "Profissional MARAVILHOSA!! Clínica linda, atenção personalizada desde a recepção. A limpeza de pele é perfeita, com direito a massagem e tudo. Recomendo demaaaaais!!!!"
+      },
+      {
+        "author": "Maristela Belasque",
+        "stars": 5,
+        "text": "Fiz um procedimento com a Dra. Mayara e estou muito satisfeita com o resultado! Ela demonstrou muito profissionalismo, atenção e cuidado. Explicou tudo com clareza, tirou todas as minhas dúvidas e me deixou muito segura. Além disso, o procedimento foi realizado com muita habilidade e o resultado ficou excelente. Recomendo de olhos fechados"
+      },
+      {
+        "author": "Luiza santos",
+        "stars": 5,
+        "text": "A Mayara é uma profissional maravilhosa! Extremamente cuidadosa, detalhista e atenciosa. Ela transmite muita segurança e carinho durante seu atendimento, e o resultado do seu trabalho é impecável, indico ela de olhos fechados !"
+      },
+      {
+        "author": "Raiane Vitoria da Silva",
+        "stars": 5,
+        "text": "Incrível, quase que uma terapia. Muito profissionalismo e muito carinho no atendimento"
+      },
+      {
+        "author": "Tiago Vicélli",
+        "stars": 5,
+        "text": "A melhor experiência que já tive em uma limpeza de pele!\nSem duvidas, a May é a melhor profissional que já passei nesta área. Seu trabalho é digno de cinco estrelas, desde o momento do procedimento até o pós, onde ela procura saber como está o seu cliente e se está seguindo suas recomendações.\nEssa foi minha primeira sessão, mas já estou marcando a próxima, pois o resultado está sendo surpreendente!"
+      },
+      {
+        "author": "Cidinha Costa",
+        "stars": 5,
+        "text": "Trabalho fantástico super recomendo, Mayara super profissional e atenta aos mínimos detalhes. Além da preocupação no ato da atendimento total suporte no pós."
+      },
+      {
+        "author": "Bionda Passos",
+        "stars": 5,
+        "text": "Profissional incrível! Faço minhas sobrancelhas com ela desde 2018 e não troco por nada! Super talentosa e cuidadosa, sempre deixando tudo perfeito. Além disso, faz minha limpeza de pele e minha pele melhorou muito depois que comecei o tratamento com ela. Tem mãos de fada! E para o botox, simplesmente arrasa! Atendimento impecável, ambiente agradável, lindíssimo e resultado sempre maravilhoso. Recomendo de olhos fechados! 🩷🩷🩷"
+      },
+      {
+        "author": "Jéssica Rangel",
+        "stars": 5,
+        "text": "Atendimento perfeito 😍"
+      },
+      {
+        "author": "Emanuel Fernandes",
+        "stars": 5,
+        "text": "Com toda certeza a melhor designer de sobrancelha da região, muito atenciosa, caprichosa e detalhista. O trabalho é impecável."
+      },
+      {
+        "author": "Camila Isabel",
+        "stars": 5,
+        "text": "Maravilhoso , trabalho impecável, qualidade excelente . Um profissionalismo incomparável , super recomendo."
+      },
+      {
+        "author": "Izabela Lopes",
+        "stars": 5,
+        "text": "Atendimento impecavél, uma profissional incrével, muito transparente em todas as dúvidas e informações, atenciosa e carinhosa. O resulto muito melhor que o esperado! recomendo a todos, sem medo podem confiar de olhos fechados!"
+      },
+      {
+        "author": "Danielle Felix",
+        "stars": 5,
+        "text": "Uma ótima profissional, minha sobrancelhas e pele fica maravilhosas quando ela faz, fora a delicadeza e carinho com a gente, e lindo ver o amor que ela tem pelo que faz."
+      },
+      {
+        "author": "Jessica Santos (Jessy)",
+        "stars": 5,
+        "text": "Faço minhas sobrancelhas com a Mayara há 7 anos e sou completamente apaixonada pelo trabalho dela! Sempre saio satisfeita, porque ela entende exatamente o que combina com meu rosto e deixa tudo impecável, sempre respeitando também meu gosto pessoal.\nRecentemente, fiz uma limpeza de pele com ela e adorei! Minha pele ficou super macia e renovada. Ela também me deu várias dicas para cuidar melhor no dia a dia, o que fez toda diferença.\nO atendimento dela é ótimo, sempre muito atenciosa e cuidadosa. O espaço é limpinho e aconchegante, e eu me sinto super a vontade.\nDepois de tanto tempo, só posso dizer que confio 100% no trabalho dela e recomendo de olhos fechados! 💕"
+      },
+      {
+        "author": "Farmácia Ponto Certo",
+        "stars": 5,
+        "text": "Maravilhosa, super recomendo 🥰👍🏻🙏🏻"
+      },
+      {
+        "author": "JULIANA VITORIA AVANS0",
+        "stars": 5,
+        "text": "Incrível! O cuidado e carinho transparente em todo momentos, me senti em paz e cuidada, trabalho excelente e de respeito a individualidade!\nMayara é dedicada, cautelosa, profissional! se preocupou em todo momento como estava me sentindo, agradeço pela experiência volto sempre!"
+      },
+      {
+        "author": "RONALDO JOSE",
+        "stars": 5,
+        "text": "A Dra. Mayara é uma excelente profissional, muito inteligente e atenciosa, sempre atenta aos detalhes. Cuido das sobrancelhas com ela há 8 anos e recentemente fiz limpeza de pele e toxina botulínica e gostei muito do resultado. Confio de olhos fechados!"
+      },
+      {
+        "author": "Carlalarissa Prado",
+        "stars": 5,
+        "text": "A MELHOR profissional que já conheci. Dedicada, atenciosa, inteligentíssima e extremamente caprichosa.\nConfio de olhos fechados, mãos de fada ❤️"
+      },
+      {
+        "author": "Juninho Bacellar",
+        "stars": 5,
+        "text": "Uma experiência completa, Mayara profissional incrível que pensa em todos os detalhes, desde a música ambiente, iluminação tudo para deixar os clientes mais a vontade e o principal o capricho nos procedimentos buscando maximizar os resultados para cada cliente, sucesso sua linda"
+      },
+      {
+        "author": "Kemily H. B.",
+        "stars": 5,
+        "text": "Amei fazer meu design de sobrancelhas e limpeza de pele com a May, ela é super detalhista, não deixa nenhum detalhe passar! Além do procedimento excelente, a experiência durante o atendimento é incrível, relaxante e aconchegante. Já virei cliente!"
+      },
+      {
+        "author": "Anna Júlia",
+        "stars": 5,
+        "text": "Foi uma experiência maravilhosa!\nMarquei a limpeza com a Ma, para diminuir meus cravinhos e oleosidade, que estavam me incomodando bastante. Eu chegava a passar muita maquiagem para esconder, mas ainda assim aparecia porque a pele estava bem porosa.\nDurante a limpeza, recebi o maior carinho e cuidado, além disso ela me deu muitas dicas de como cuidar da pele e os produtos certos para minha.\nDepois da limpeza e da cicatrização, praticamente não voltou os cravinhos e espinhas e minha pele estava muito macia e saudável.\nEu amei demais! Tenho até passado menos maquiagem e minha autoestima é outra. Obrigada Ma, por tudo! Você é uma profissional incrível! ❤️"
+      },
+      {
+        "author": "Isabela Cruz",
+        "stars": 5,
+        "text": "profissional otima, experiencia incrivel, muito delicada e simpatica, tranquila tbm e o lugar é bem gostoso e calmo"
+      },
+      {
+        "author": "amanda klassmann",
+        "stars": 5,
+        "text": "Profissional extremamente qualificada e querida. Os atendimentos são sempre uma \"terapia\" de tao relaxantes.\nO local onde atende é muito muito lindo, organizado e limpo."
+      },
+      {
+        "author": "Beatriz Lemes",
+        "stars": 5,
+        "text": "Maravilhosa em tudo o que faz. Extremamente cautelosa nos procedimentos, se atenta em cada detalhe, seja de higiene ou nos cuidados na hora de avaliar cada caso. Confio de olhos fechados para qualquer procedimento!"
+      }
+    ]
   },
   "seo": {
     "_howToEdit": [
@@ -361,7 +591,10 @@
     "reviews": {
       "title": "Avaliações no Google",
       "rating": "Nota {rating} de 5",
-      "total": { "one": "1 avaliação", "many": "{n} avaliações" },
+      "total": {
+        "one": "1 avaliação",
+        "many": "{n} avaliações"
+      },
       "stars": "{n} de 5 estrelas",
       "list": "Avaliações de pacientes",
       "position": "Avaliação {current} de {total}",

@@ -3,7 +3,7 @@ dist
 .env
 .env.*
 !.env.example
-src/data/reviews.generated.json
+src/data/google-rating.generated.json
 .DS_Store
 test-results
 playwright-report

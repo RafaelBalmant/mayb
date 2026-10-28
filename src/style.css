@@ -909,6 +909,7 @@ a.btn[aria-disabled="true"] {
   font-size: 15px;
   line-height: 1.55;
   color: var(--ink);
+  white-space: pre-line; /* keeps the line breaks of the original review */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
@@ -930,22 +931,9 @@ a.btn[aria-disabled="true"] {
   text-decoration: underline;
 }
 .review-author {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin-top: auto;
   font-size: 14px;
   color: var(--muted);
-}
-.review-author img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-}
-.review-author a {
-  color: inherit;
-  font-weight: 600;
-  text-decoration: none;
 }
 .reviews-dots {
   display: flex;
