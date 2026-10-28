@@ -1,15 +1,33 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
-import { REVIEWS_AUTOPLAY_MS, REVIEWS_RESUME_AFTER_MS } from "../config.js";
-import { googleReviews, t, tn } from "../content.js";
-import { fetchReviews } from "../domain/reviews.js";
+import { REVIEWS_AUTOPLAY_MS, REVIEWS_GROUP_KEY, REVIEWS_RESUME_AFTER_MS } from "../config.js";
+import { t, tn } from "../content.js";
+import { groupForVisit, reviewGroups } from "../domain/reviews.js";
+import { savedReviews } from "../domain/saved-reviews.js";
 
-// The key comes from .env (VITE_GOOGLE_MAPS_KEY), baked in at build time; it is never in the repository.
-const KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
+const storage = (name) => {
+  try {
+    return globalThis[name] ?? null;
+  } catch {
+    return null; // blocked by the browser
+  }
+};
 
-// One request per page load: coming back to the start page reuses the answer.
-let request;
-const loadReviews = () =>
-  (request ??= fetchReviews({ key: KEY, placeId: googleReviews?.placeId, minStars: googleReviews?.minStars }));
+// The reviews come from the file saved at build time (no request to Google). Each visit shows the next group;
+// chosen once per page load, so coming back to the start page keeps the same cards.
+let visitGroup;
+function reviewsForThisVisit() {
+  if (!savedReviews) return null;
+  if (!visitGroup) {
+    const groups = reviewGroups(savedReviews.reviews);
+    const index = groupForVisit(groups.length, {
+      local: storage("localStorage"),
+      session: storage("sessionStorage"),
+      key: REVIEWS_GROUP_KEY,
+    });
+    visitGroup = groups[index];
+  }
+  return { ...savedReviews, reviews: visitGroup };
+}
 
 const decimal = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
@@ -60,22 +78,14 @@ function Review({ review, index, total }) {
 /**
  * Rating and reviews from Google on the start page: a carousel that moves on by itself every REVIEWS_AUTOPLAY_MS.
  * Once the visitor taps or drags it, it only moves by hand; after REVIEWS_RESUME_AFTER_MS without a change it
- * goes back to moving by itself. Renders nothing until (and unless) Google answers.
+ * goes back to moving by itself. Renders nothing when the build saved no reviews.
  */
 export function GoogleReviews() {
-  const [data, setData] = useState(null);
+  const [data] = useState(reviewsForThisVisit);
   const [current, setCurrent] = useState(0);
   const [manual, setManual] = useState(false); // the visitor took over; wait longer before moving on
   const [touches, setTouches] = useState(0); // every touch restarts the wait
   const trackRef = useRef(null);
-
-  useEffect(() => {
-    let alive = true;
-    loadReviews().then((d) => alive && setData(d));
-    return () => {
-      alive = false;
-    };
-  }, []);
 
   const count = data?.reviews.length ?? 0;
   const scrollTo = (i) => trackRef.current?.scrollTo({ left: i * trackRef.current.clientWidth, behavior: "smooth" });

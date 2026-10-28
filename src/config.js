@@ -49,11 +49,12 @@ export const SWIPE_DIRECTION_RATIO = 1.5;
 /** How many "coming soon" frames a part without photos shows (one before/after pair). */
 export const PLACEHOLDER_PHOTOS = 2;
 
-/** Google Places API (New): place details are read from here + the place id. */
-export const GOOGLE_PLACES_URL = "https://places.googleapis.com/v1/places/";
+/** Google reviews on the start page: each visit shows one of up to REVIEWS_MAX_GROUPS groups of this many reviews. */
+export const REVIEWS_GROUP_SIZE = 5;
+export const REVIEWS_MAX_GROUPS = 3;
 
-/** Wait for Google's answer before giving up and hiding the reviews (ms). */
-export const REVIEWS_TIMEOUT_MS = 10000;
+/** Storage key that remembers which group of reviews the last visit showed. */
+export const REVIEWS_GROUP_KEY = "site-mayara:reviews-group";
 
 /** Time each review stays on screen before the carousel moves on by itself (ms). */
 export const REVIEWS_AUTOPLAY_MS = 10000;
