@@ -1,5 +1,5 @@
-import { AREA_BY_CODE, optionLabel, professional, labels, t } from "./content.js";
-import { FREE_TEXT_SHRINK, NAME_MAX_LENGTH, WHATSAPP_BASE_URL } from "./config.js";
+import { AREA_BY_CODE, optionLabel, professional, labels, t } from "../content.js";
+import { FREE_TEXT_SHRINK, NAME_MAX_LENGTH, WHATSAPP_BASE_URL } from "../config.js";
 
 /**
  * Areas block in the WhatsApp format (flow doc); labels come from texts.summary.

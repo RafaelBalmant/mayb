@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildMessage, formatAreas, whatsappLink } from "../src/summary.js";
+import { buildMessage, formatAreas, whatsappLink } from "../src/domain/summary.js";
 import { professional } from "../src/content.js";
 import { newArea } from "../src/domain/questions.js";
 

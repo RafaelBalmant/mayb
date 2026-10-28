@@ -1,6 +1,6 @@
 // Reads data saved by the old Portuguese-named code (sessionStorage key "site-mayara:v2")
 // and converts it to the current shape. This is the only place where the old names live on.
-import { AREA_BY_CODE } from "./content.js";
+import { AREA_BY_CODE } from "../content.js";
 
 const FACE = { feminino: "female", masculino: "male" };
 const VIEW = { frente: "front", perfil: "profile" };

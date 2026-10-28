@@ -18,7 +18,7 @@ function ellipse(cx, cy, rx, ry, rot = 0) {
 const pair = (cx, cy, rx, ry, rot = 0) => ellipse(cx, cy, rx, ry, rot) + ellipse(320 - cx, cy, rx, ry, -rot);
 
 const zone = (code, d) => `<path class="zone" data-area="${code}" d="${d}"/>`;
-const zoneLine = (code, d) => `<path class="zone zone-linha" data-area="${code}" d="${d}"/>`;
+const zoneLine = (code, d) => `<path class="zone zone-line" data-area="${code}" d="${d}"/>`;
 
 /* ---------- Front ---------- */
 function frontArt(f) {

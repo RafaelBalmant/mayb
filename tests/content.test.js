@@ -7,7 +7,7 @@ import questions from "../src/data/questions.json";
 const { areas, labels, texts } = content;
 const source = dir =>
   readdirSync(dir, { recursive: true })
-    .filter(f => f.endsWith(".js"))
+    .filter(f => /\.jsx?$/.test(f))
     .map(f => readFileSync(`${dir}/${f}`, "utf8"))
     .join("\n");
 const lookup = (obj, path) => path.split(".").reduce((o, k) => o?.[k], obj);
@@ -33,7 +33,7 @@ describe("content.json", () => {
     }
   });
 
-  it("the face SVGs have a tappable zone for every area except 'other'", () => {
+  it("the face SVGs only have zones for known areas", () => {
     const needed = areas.map(a => a.code).filter(c => c !== "other");
     const svgs = readdirSync("src/faces").filter(f => f.endsWith(".svg"));
     expect(svgs).toHaveLength(4);

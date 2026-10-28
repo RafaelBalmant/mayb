@@ -16,7 +16,7 @@
     <path class="zone" data-area="nose" d="M108 168L68 224L100 244L118 204Z"/>
     <path class="zone" data-area="mouth" d="M93 264A13 18 0 1 0 119 264A13 18 0 1 0 93 264Z"/>
     <path class="zone" data-area="chin" d="M94 306A16 18 0 1 0 126 306A16 18 0 1 0 94 306Z"/>
-    <path class="zone zone-linha" data-area="jawline" d="M204 238 C208 266 204 290 192 300 C172 314 152 320 134 324"/>
+    <path class="zone zone-line" data-area="jawline" d="M204 238 C208 266 204 290 192 300 C172 314 152 320 134 324"/>
     <path class="zone" data-area="neck" d="M140 364A42 38 0 1 0 224 364A42 38 0 1 0 140 364Z"/>
   </g>
 </svg>

@@ -1,11 +1,30 @@
 {
   "totalSteps": 8,
   "screens": [
-    { "id": "opening" },
-    { "id": "map", "step": 3 },
-    { "id": "next" },
-    { "id": "details", "step": 4 },
-    { "id": "review", "step": 8 },
-    { "id": "sent" }
+    {
+      "id": "opening"
+    },
+    {
+      "id": "map",
+      "step": 3
+    },
+    {
+      "id": "next",
+      "requires": "areas"
+    },
+    {
+      "id": "details",
+      "step": 4,
+      "requires": "areas"
+    },
+    {
+      "id": "review",
+      "step": 8,
+      "requires": "areas"
+    },
+    {
+      "id": "sent",
+      "requires": "areas"
+    }
   ]
 }
