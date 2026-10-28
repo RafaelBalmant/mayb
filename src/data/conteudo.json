@@ -10,6 +10,17 @@
     "_fotos": "foto: imagem dentro de public/ (ex.: \"perfil/foto.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
     "foto": "perfil/foto.jpg"
   },
+  "avaliacoesGoogle": {
+    "_comoEditar": [
+      "Nota e avaliações do Google mostradas no início, buscadas na hora (Google Maps JavaScript API, biblioteca Places).",
+      "chave: chave de API do Google Cloud, restrita ao domínio do site (mayarabacellar.com/*). Vazio = o bloco não aparece.",
+      "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\"). Vazio = o bloco não aparece.",
+      "minimoEstrelas: só entram avaliações com essa nota ou mais (o Google manda no máximo 5, as mais relevantes)."
+    ],
+    "chave": "",
+    "placeId": "",
+    "minimoEstrelas": 4
+  },
   "seo": {
     "_comoEditar": [
       "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
@@ -253,6 +264,22 @@
       "mensagemContato": "Olá! Vim pelo site da Dra. Mayara e gostaria de mais informações.",
       "mapa": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar"
+    },
+    "avaliacoes": {
+      "titulo": "Avaliações no Google",
+      "nota": "Nota {nota} de 5",
+      "total": {
+        "um": "1 avaliação",
+        "varios": "{n} avaliações"
+      },
+      "estrelas": "{n} de 5 estrelas",
+      "lista": "Avaliações de pacientes",
+      "posicao": "Avaliação {atual} de {total}",
+      "irPara": "Mostrar avaliação {n}",
+      "lerMais": "Ler mais",
+      "lerMenos": "Ler menos",
+      "verTodas": "Ver todas no Google",
+      "fonte": "Avaliações publicadas no Google"
     },
     "agenda": {
       "titulo": "Agenda",

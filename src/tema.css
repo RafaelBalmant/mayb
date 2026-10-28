@@ -44,6 +44,8 @@
   --veu: color-mix(in srgb, var(--ink) 28%, transparent);
   --nome-cor: #776c66;     /* nome grande no início */
   --foto-vazia: #e3d5ca;  /* fundo da foto do início enquanto ela não existe */
+  --estrela: #a58d7f;     /* estrelas das avaliações do Google (bege rosado escurecido) */
+  --estrela-vazia: #e3d5ca;
 
   /* 4. Forma */
   --r: 14px;              /* arredondamento dos cartões */
@@ -57,7 +59,7 @@
     --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
-    --nome-cor: #d5bdaf; --foto-vazia: #48403b;
+    --nome-cor: #d5bdaf; --foto-vazia: #48403b; --estrela: #d5bdaf; --estrela-vazia: #4a433f;
     --veu: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
@@ -66,7 +68,7 @@
   --bg: #2b2725; --surface: #36312e; --ink: #f5ebe0; --muted: #c9bfb6; --line: #4a433f;
     --accent: #d5bdaf; --accent-soft: #48403b; --destaque: #d5bdaf; --on-accent: #2b2725; --perigo: #f2a19a;
     --skin: #3d3632; --hair: #5a524c; --lip: #8a7468;
-    --nome-cor: #d5bdaf; --foto-vazia: #48403b;
+    --nome-cor: #d5bdaf; --foto-vazia: #48403b; --estrela: #d5bdaf; --estrela-vazia: #4a433f;
   --veu: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }

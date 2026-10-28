@@ -1,6 +1,6 @@
 import conteudo from "./data/conteudo.json";
 
-export const { profissional, areas, rotulos, faq, textos } = conteudo;
+export const { profissional, avaliacoesGoogle, areas, rotulos, faq, textos } = conteudo;
 
 /** Área pelo código. */
 export const AREA = Object.fromEntries(areas.map(a => [a.codigo, a]));

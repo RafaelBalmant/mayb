@@ -34,6 +34,13 @@ npm run build    # gera dist/ para qualquer hospedagem estática
   Lista vazia mostra "Fotos em breve". As instruções e um exemplo estão no próprio arquivo (`_comoEditar`, `_exemplo`).
 - `src/telas/`: início (dois botões: agenda e mapa do rosto), agenda (os meses cadastrados em agenda.json, com "Agendar horário" que abre o WhatsApp com a cidade e o mês), abertura (pergunta + escolha do rosto), mapa, resultados de casos reais (cartões por parte marcada, com Voltar e Pular), próximo passo, detalhes por área, revisar e enviar, e a tela depois do envio.
 
+## Avaliações do Google
+
+O início mostra a nota e as avaliações do perfil da Dra. Mayara no Google num carrossel (`src/avaliacoes.js`),
+buscadas na hora pela Google Maps JavaScript API (biblioteca Places). Configure em `conteudo.json`, seção
+`avaliacoesGoogle`: `chave` (chave de API restrita ao domínio do site) e `placeId`. Sem os dois, ou se o Google
+não responder, o bloco simplesmente não aparece. O Google manda no máximo 5 avaliações (as mais relevantes).
+
 ## Links diretos
 
 O site institucional pode abrir direto numa parte: `…/#agenda` (agenda) ou `…/#mapa` (começo do mapa do rosto).
