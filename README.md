@@ -137,8 +137,12 @@ A página inicial mostra a nota e avaliações do perfil da Dra. Mayara no Googl
 Na hora do `npm run build`, o plugin `scripts/seo.mjs` coloca no HTML a descrição para o Google, a prévia do link
 (WhatsApp, Instagram), os dados estruturados (schema.org, com Maringá e Siqueira Campos), um texto já pronto que o
 Google lê sem rodar o JavaScript, e gera `robots.txt` e `sitemap.xml`. Tudo se edita em `content.json`, seção `seo`.
-Quando o domínio estiver definido, preencha `seo.url` (sem ele não há sitemap nem link canônico) e, se quiser uma
-imagem na prévia do link, ponha-a em `public/` e o nome em `seo.image`.
+O endereço oficial é `seo.url` (`https://dramayarabacellar.com/`); o `nginx.conf` manda `mayarabacellar.com` e o `www`
+para ele com um redirecionamento 301, para o Google não ver a mesma página com dois nomes. O título da página
+(resultado do Google e aba do navegador) é `texts.general.pageTitle`.
+
+Fora do código, o que mais conta para aparecer: verificar o site no [Google Search Console](https://search.google.com/search-console)
+e enviar `https://dramayarabacellar.com/sitemap.xml`, e pôr o link do site no Perfil da Empresa no Google.
 
 ## Entrega
 
