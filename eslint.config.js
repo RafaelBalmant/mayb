@@ -11,7 +11,7 @@ export default [
     languageOptions: { globals: globals.browser },
   },
   {
-    files: ["scripts/**/*.mjs", "tests/**/*.js", "*.config.js"],
+    files: ["scripts/**/*.mjs", "tests/**/*.js", "e2e/**/*.js", "*.config.js"],
     languageOptions: { globals: globals.node },
   },
   prettier,
