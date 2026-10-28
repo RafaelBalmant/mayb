@@ -1,4 +1,5 @@
 import { AgendaScreen } from "./AgendaScreen.jsx";
+import { CasesScreen } from "./CasesScreen.jsx";
 import { DetailsScreen } from "./DetailsScreen.jsx";
 import { MapScreen } from "./MapScreen.jsx";
 import { NextScreen } from "./NextScreen.jsx";
@@ -12,6 +13,7 @@ import { StartScreen } from "./StartScreen.jsx";
 export const SCREENS = {
   start: StartScreen,
   agenda: AgendaScreen,
+  cases: CasesScreen,
   opening: OpeningScreen,
   map: MapScreen,
   results: ResultsScreen,

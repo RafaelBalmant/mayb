@@ -12,7 +12,8 @@ describe("resolveScreen with the map on", () => {
     for (const id of MAP_SCREENS) expect(resolveScreen(id, { ...on, face: null, areas: marked })).toBe("opening");
   });
 
-  it("start and agenda never depend on a face", () => {
+  it("start, agenda and the cases page never depend on a face", () => {
+    expect(resolveScreen("cases", { ...on, face: null, areas: [] })).toBe("cases");
     expect(resolveScreen("start", { ...on, face: null, areas: [] })).toBe("start");
     expect(resolveScreen("agenda", { ...on, face: null, areas: [] })).toBe("agenda");
   });
@@ -38,6 +39,10 @@ describe("resolveScreen with the map off", () => {
 
   it("every map screen sends the visitor to the start page", () => {
     for (const id of MAP_SCREENS) expect(resolveScreen(id, off)).toBe("start");
+  });
+
+  it("the cases page also stays behind the switch", () => {
+    expect(resolveScreen("cases", off)).toBe("start");
   });
 
   it("start and agenda stay available", () => {

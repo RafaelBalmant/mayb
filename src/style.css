@@ -1072,50 +1072,6 @@ a.btn[aria-disabled="true"] {
   gap: 10px;
   padding: 0 18px 18px;
 }
-.procedure {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.procedure + .procedure {
-  margin-top: 8px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-}
-.procedure h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-}
-.photos {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  margin-inline: -18px;
-  padding-inline: 18px;
-  scroll-padding-inline: 18px;
-  scrollbar-width: none;
-}
-.photos::-webkit-scrollbar {
-  display: none;
-}
-/* before and after side by side: each pair takes the card's width */
-.photos figure {
-  margin: 0;
-  flex: 0 0 calc(50% - 5px);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.photos figure:nth-child(even) {
-  scroll-snap-align: none;
-}
-.photos figcaption {
-  font-size: 14px;
-  color: var(--muted);
-}
 .photo {
   display: block;
   width: 100%;
@@ -1141,13 +1097,27 @@ a.btn[aria-disabled="true"] {
   font-size: 14px;
   font-weight: 600;
 }
+/* a photo full screen: dark background, × fixed at the top right corner */
 .photo-backdrop {
   align-items: center;
-  padding: 16px;
+  padding: max(64px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+    max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: var(--viewer-bg);
+}
+.photo-backdrop .modal-close {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  width: 48px;
+  height: 48px;
+  font-size: 28px;
+  border: 0;
+  background: var(--viewer-close);
+  color: var(--viewer-ink);
 }
 .photo-large {
   position: relative;
-  max-width: 480px;
+  max-width: 560px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1158,13 +1128,11 @@ a.btn[aria-disabled="true"] {
 }
 .photo-large img {
   width: 100%;
-  max-height: 80vh;
+  max-height: calc(100dvh - 160px);
   object-fit: contain;
-  border-radius: 14px;
-  background: var(--surface);
 }
 .photo-large p {
-  color: var(--bg);
+  color: var(--viewer-ink);
   font-size: 15px;
   text-align: center;
 }
@@ -1176,9 +1144,229 @@ a.btn[aria-disabled="true"] {
   color: var(--accent);
 }
 .photo-large .moment {
-  color: var(--bg);
+  color: var(--viewer-ink);
   text-align: center;
   font-size: 14px;
+}
+
+/* One real case (cases page and results step): title, audio, then before above after */
+.case {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px;
+}
+.gallery .case {
+  padding: 0;
+  border: 0;
+}
+.gallery .case + .case {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+}
+.case-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.case-head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+.case-procedures,
+.case-description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.case-areas {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--marked);
+  color: var(--ink);
+}
+.case-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.case-pair figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.case-pair .photo {
+  aspect-ratio: 4 / 5;
+  cursor: zoom-in;
+}
+.case-pair .photo.placeholder {
+  aspect-ratio: 3 / 2;
+  cursor: default;
+}
+
+/* the doctor's audio about a case */
+.audio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+}
+.audio-play {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.audio-play svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.audio-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+.audio-bar {
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.audio-bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.audio-time {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.audio-text {
+  margin-top: 6px;
+  font-size: 14px;
+}
+.audio-text summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 6px 0;
+}
+.audio-text p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+/* Cases page: chips to pick parts, shortcuts, one section per part */
+.case-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.case-chip {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.case-chip small {
+  font-size: 12px;
+  color: var(--muted);
+}
+.case-chip[aria-pressed="true"] {
+  background: var(--marked);
+  border-color: var(--marked);
+}
+.case-chip[aria-pressed="true"] small {
+  color: var(--ink);
+}
+#cases-all {
+  font-weight: 700;
+}
+.case-jump {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 4;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-block: 10px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+.case-jump button {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.case-empty {
+  margin: 0;
+  padding: 28px 12px;
+  text-align: center;
+  color: var(--muted);
+  border: 1.5px dashed var(--line);
+  border-radius: var(--r);
+}
+.case-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-margin-top: 56px;
+}
+.case-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 2px solid var(--ink);
+}
+.case-group-head h2 {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 26px;
+}
+.case-group-head span {
+  font-size: 14px;
+  color: var(--muted);
+}
+.case-group-end {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
 }
 
 /* notice with an info icon (agenda modal) */

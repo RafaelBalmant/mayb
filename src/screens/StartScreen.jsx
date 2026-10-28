@@ -56,6 +56,11 @@ export function StartScreen() {
           {t("start.review")}
         </a>
         {state.features.map && (
+          <button class="btn" id="go-cases" onClick={() => goTo("cases")}>
+            {t("start.cases")}
+          </button>
+        )}
+        {state.features.map && (
           <button class="btn" id="go-map" onClick={() => goTo("opening")}>
             {t("start.map")}
           </button>

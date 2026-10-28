@@ -17,7 +17,8 @@ export function isMapEnabled({ search = "", storage = null } = {}) {
   }
 }
 
-/** The screen a link like /#agenda or /#mapa opens directly, or null. */
+/** The screen a link like /#agenda, /#mapa or /#casos opens directly, or null. */
 export function screenFromHash(hash, mapEnabled) {
-  return { agenda: "agenda", mapa: mapEnabled ? "opening" : "start" }[hash.replace(/^#/, "")] ?? null;
+  const off = (screen) => (mapEnabled ? screen : "start");
+  return { agenda: "agenda", mapa: off("opening"), casos: off("cases") }[hash.replace(/^#/, "")] ?? null;
 }

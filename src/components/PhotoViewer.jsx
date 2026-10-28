@@ -14,7 +14,7 @@ export function PhotoViewer({ src, label, caption, origin, onClose }) {
   return (
     <div class="modal-backdrop photo-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="photo-large" ref={dialogRef} tabindex="-1" role="dialog" aria-modal="true" aria-label={label}>
-        <button class="modal-close" aria-label={t("results.close")} onClick={onClose}>
+        <button class="modal-close" aria-label={t("cases.close")} onClick={onClose}>
           ×
         </button>
         <span class="moment">{label}</span>
