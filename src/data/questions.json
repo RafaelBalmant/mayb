@@ -1,0 +1,35 @@
+{
+  "fields": {
+    "concerns": { "default": [], "answer": "filled" },
+    "concernsOther": { "default": "", "answer": "filled" },
+    "description": { "default": "" },
+    "side": { "default": null, "answer": "filled" },
+    "since": { "default": null, "answer": "filled" },
+    "intensity": { "default": null, "answer": "filled" },
+    "appearsWhen": { "default": null, "answer": "filled" },
+    "procedure": { "default": null, "answer": "filled" },
+    "procedureDetail": { "default": "" },
+    "comment": { "default": "", "answer": "trimmed" }
+  },
+  "questions": [
+    {
+      "field": "description",
+      "type": "textarea",
+      "labelKey": "otherDescription",
+      "placeholder": "details.otherAreaPlaceholder",
+      "onlyFor": "other"
+    },
+    { "field": "concerns", "type": "areaOptions", "exceptFor": "other" },
+    { "field": "side", "type": "single", "labels": "side" },
+    { "field": "since", "type": "single", "labels": "since" },
+    { "field": "intensity", "type": "scale" },
+    { "field": "appearsWhen", "type": "single", "labels": "appearsWhen", "requires": "movement" },
+    {
+      "field": "procedure",
+      "type": "single",
+      "labels": "procedure",
+      "detail": { "field": "procedureDetail", "showWhen": "yes", "placeholder": "details.procedurePlaceholder" }
+    },
+    { "field": "comment", "type": "textarea", "placeholder": "details.commentPlaceholder" }
+  ]
+}

@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-# Chave do Google (avaliações no início). Vem do secret GOOGLE_MAPS_KEY no GitHub Actions.
+# Google key for the reviews on the start page; GitHub Actions passes the GOOGLE_MAPS_KEY secret.
 ARG VITE_GOOGLE_MAPS_KEY
 ENV VITE_GOOGLE_MAPS_KEY=$VITE_GOOGLE_MAPS_KEY
 RUN npm run build

@@ -3,5 +3,10 @@ dist
 .env
 .env.*
 .git
+.github
 *.md
 .DS_Store
+e2e
+tests
+test-results
+playwright-report

@@ -1,8 +1,10 @@
+import preact from "@preact/preset-vite";
 import { defineConfig } from "vite";
 import { seo } from "./scripts/seo.mjs";
 
 export default defineConfig({
-  // caminhos relativos: o build funciona em qualquer hospedagem estática
+  plugins: [preact(), seo()],
+  // relative paths: the build works on any static host
   base: "./",
-  plugins: [seo()],
+  test: { include: ["tests/**/*.test.{js,jsx}"] },
 });

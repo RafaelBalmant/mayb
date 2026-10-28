@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 220 330">
+  <defs><clipPath id="crop-female-front-0"><path d="M150 54 C201 54 231 88 232 140 C233 180 227 212 213 238 C199 264 176 288 150 291 C124 288 101 264 87 238 C73 212 67 180 68 140 C69 88 99 54 150 54 Z"/></clipPath><clipPath id="crop-female-front-1"><path d="M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"/></clipPath></defs>
+  <g class="art">
+    <path class="hair" d="M150 36 C86 36 52 88 54 160 C56 228 48 286 34 338 C60 352 92 352 116 340 C110 300 104 270 92 240 L208 240 C196 270 190 300 184 340 C208 352 240 352 266 338 C252 286 244 228 246 160 C248 88 214 36 150 36 Z"/>
+    <path class="skin" d="M122 250 L121 318 C119 336 104 346 72 356 C52 362 40 372 34 390 L266 390 C260 372 248 362 228 356 C196 346 181 336 179 318 L178 250 Z"/>
+    <path class="skin" d="M72 150 C58 142 50 154 53 172 C56 190 63 204 77 206 Z"/>
+    <path class="skin" d="M228 150 C242 142 250 154 247 172 C244 190 237 204 223 206 Z"/>
+    <path class="skin" d="M150 54 C201 54 231 88 232 140 C233 180 227 212 213 238 C199 264 176 288 150 291 C124 288 101 264 87 238 C73 212 67 180 68 140 C69 88 99 54 150 54 Z"/>
+    <path class="stroke light" d="M66 172 C62 166 60 160 63 156"/>
+    <path class="stroke light" d="M234 172 C238 166 240 160 237 156"/>
+    <path class="hair" d="M150 50 C100 48 70 82 66 138 C64 160 66 178 70 192 C72 150 86 112 118 92 C140 80 176 78 204 92 C220 102 230 118 234 140 C236 86 204 50 150 50 Z"/>
+  </g>
+  <g class="zones" clip-path="url(#crop-female-front-0)">
+    <path class="zone" data-area="forehead" d="M82 136 C88 114 104 100 122 95 C148 88 180 88 204 97 C218 104 226 118 229 136 C200 125 176 125 150 129 C124 125 100 125 82 136 Z"/>
+    <path class="zone" data-area="eyes" d="M88 163A27 18 0 1 0 142 163A27 18 0 1 0 88 163ZM158 163A27 18 0 1 0 212 163A27 18 0 1 0 158 163Z"/>
+    <path class="zone" data-area="nose" d="M150 150 C157 150 159 170 162 188 C164 198 172 206 171 214 C170 226 130 226 129 214 C128 206 136 198 138 188 C141 170 143 150 150 150 Z"/>
+    <path class="zone" data-area="cheeks" d="M70 186 C82 184 116 184 127 196 C134 206 128 222 116 228 C102 234 86 228 72 214 Z M230 186 C218 184 184 184 173 196 C166 206 172 222 184 228 C198 234 214 228 228 214 Z"/>
+    <path class="zone" data-area="mouth" d="M118 246A32 14 0 1 0 182 246A32 14 0 1 0 118 246Z"/>
+    <path class="zone" data-area="chin" d="M129 266 C140 262 160 262 171 266 L176 300 L124 300 Z"/>
+    <path class="zone" data-area="jawline" d="M50 212 L71 220 C86 240 104 258 124 268 L124 300 L50 300 Z M250 212 L229 220 C214 240 196 258 176 268 L176 300 L250 300 Z"/>
+  </g>
+  <g class="zones" clip-path="url(#crop-female-front-1)">
+    <path class="zone" data-area="neck" d="M110 292 L190 292 L190 342 C160 350 140 350 110 342 Z"/>
+  </g>
+  <g class="art details">
+    <path class="stroke" stroke-width="3" d="M96 139 Q114 128 136 136"/>
+    <path class="stroke" stroke-width="3" d="M204 139 Q186 128 164 136"/>
+    <path class="eye" d="M98 162 Q115 150 132 162 Q115 171 98 162 Z"/><circle class="iris" cx="115" cy="161" r="5"/>
+    <path class="eye" d="M202 162 Q185 150 168 162 Q185 171 202 162 Z"/><circle class="iris" cx="185" cy="161" r="5"/>
+    <path class="stroke" stroke-width="1.6" d="M98 162 L93 157 M132 162 L136 158 M168 162 L164 158 M202 162 L207 157"/>
+    <path class="stroke light" d="M143 168 C142 186 139 198 137 206"/>
+    <path class="stroke" d="M136 211 Q131 220 141 221 Q146 225 150 223 Q154 225 159 221 Q169 220 164 211"/>
+    <path class="mouth" d="M125 247 Q137 238 150 243 Q163 238 175 247 Q150 251 125 247 Z"/><path class="mouth" d="M125 247 Q150 265 175 247 Q150 251 125 247 Z"/>
+    <path class="stroke light" d="M140 276 Q150 280 160 276"/>
+  </g>
+</svg>
