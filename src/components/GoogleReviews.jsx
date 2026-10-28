@@ -29,6 +29,12 @@ function reviewsForThisVisit() {
   return { ...savedReviews, reviews: visitGroup };
 }
 
+// Distance between two cards (card width plus the gap between them), so scrolling lands exactly on a card.
+const step = (track) => {
+  const [first, second] = track.children;
+  return second ? second.offsetLeft - first.offsetLeft : track.clientWidth;
+};
+
 const decimal = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 // Five stars filled up to the rating (4.8 -> the last one is 80% full). The fill comes from the CSS (--rating).
@@ -88,7 +94,7 @@ export function GoogleReviews() {
   const trackRef = useRef(null);
 
   const count = data?.reviews.length ?? 0;
-  const scrollTo = (i) => trackRef.current?.scrollTo({ left: i * trackRef.current.clientWidth, behavior: "smooth" });
+  const scrollTo = (i) => trackRef.current?.scrollTo({ left: i * step(trackRef.current), behavior: "smooth" });
 
   // One timer at a time, restarted whenever the card changes or the visitor touches the carousel.
   useEffect(() => {
@@ -98,7 +104,7 @@ export function GoogleReviews() {
         const track = trackRef.current;
         if (!track) return;
         setManual(false);
-        track.scrollTo({ left: ((current + 1) % count) * track.clientWidth, behavior: "smooth" });
+        track.scrollTo({ left: ((current + 1) % count) * step(track), behavior: "smooth" });
       },
       manual ? REVIEWS_RESUME_AFTER_MS : REVIEWS_AUTOPLAY_MS,
     );
@@ -135,7 +141,7 @@ export function GoogleReviews() {
         aria-label={t("reviews.list")}
         tabIndex={0}
         ref={trackRef}
-        onScroll={(e) => setCurrent(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
+        onScroll={(e) => setCurrent(Math.round(e.currentTarget.scrollLeft / step(e.currentTarget)))}
       >
         {reviews.map((r, i) => (
           <Review key={i} review={r} index={i} total={count} />

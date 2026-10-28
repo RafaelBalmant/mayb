@@ -885,6 +885,7 @@ a.btn[aria-disabled="true"] {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
+  gap: 16px; /* space between cards, so they don't look glued together while sliding */
   border-radius: var(--r);
 }
 .reviews-track::-webkit-scrollbar {
