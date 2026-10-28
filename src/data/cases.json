@@ -6,7 +6,7 @@
     "folder: nome da pasta. title: título do caso. areas: partes do rosto (códigos de content.json: forehead, eyes, cheeks, nose, mouth, chin, jawline, neck, skin).",
     "Opcionais: procedures (lista de procedimentos), after (quanto tempo depois foi tirada a foto, ex.: \"30 dias depois\"), description (uma frase), audio (arquivo de áudio da Dra. dentro da pasta, ex.: \"audio.mp3\"), audioText (o que ela diz no áudio, para ler) e visible (false tira o caso do site sem apagar).",
     "Caso com mais de uma parte aparece uma vez só, com a etiqueta das partes (ex.: Boca + Queixo).",
-    "Dica: fotos em JPG com até ~1200 px de largura, mesmo enquadramento no antes e no depois; áudio em MP3 ou M4A. Não coloque o nome da paciente."
+    "Dica: fotos em JPG no formato do Stories do Instagram, em pé, 9:16 (1080 x 1920 px), com o mesmo enquadramento no antes e no depois. Outro formato aparece cortado nas bordas; áudio em MP3 ou M4A. Não coloque o nome da paciente."
   ],
   "_example": {
     "folder": "labios-01",

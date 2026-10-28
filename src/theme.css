@@ -50,6 +50,7 @@
   /* 4. Shape */
   --r: 14px; /* corner radius of cards */
   --r-btn: 0; /* corner radius of buttons (0 = square; 999px = round) */
+  --case-photo-ratio: 9 / 16; /* before/after photos: Instagram Stories format (1080 × 1920 px) */
 }
 
 /* 5. Dark mode palette (when the phone is in dark mode).
