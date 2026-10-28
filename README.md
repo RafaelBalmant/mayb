@@ -93,7 +93,9 @@ JSON estático.
 - O `Dockerfile` roda `npm run reviews` antes do build, e o `docker.yml` gera a imagem a cada push na `main` e
   **uma vez por dia** (dá para rodar na mão em Actions → Docker CI → Run workflow).
 - **Chave de API**: `GOOGLE_MAPS_KEY`, secret do repositório no GitHub (localmente, no `.env`; veja `.env.example`).
-  Ela só é usada no build e nunca vai para o site.
+  Ela só é usada no build e nunca vai para o site. Entra no Docker como _secret_ (`--mount=type=secret`), não como
+  `ARG`, para não ficar gravada na imagem nem no registro do build que o GitHub guarda. Para gerar a imagem na sua
+  máquina com as avaliações: `docker build --secret id=google_maps_key,env=GOOGLE_MAPS_KEY .`
 - **Place ID** e nota mínima: `content.json` → `googleReviews` (não é segredo).
 - Cada visita mostra um grupo diferente (até `REVIEWS_MAX_GROUPS` grupos de `REVIEWS_GROUP_SIZE` avaliações, em
   `src/config.js`); recarregar a página na mesma visita mantém o grupo.

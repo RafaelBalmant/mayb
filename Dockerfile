@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # Build stage
 FROM node:20-alpine AS build
 
@@ -8,9 +10,9 @@ RUN npm ci
 
 COPY . .
 # Google key used only here, to save the reviews into the build (GitHub Actions passes the GOOGLE_MAPS_KEY secret).
-# It is a build argument, not an ENV, and the build stage is thrown away: the key never reaches the image or the site.
-ARG GOOGLE_MAPS_KEY
-RUN npm run reviews && npm run build
+# It comes in as a BuildKit secret mount, not ARG/ENV: it is never written to a layer, the image history or the
+# build record. Without the secret the build still works and the reviews block is simply hidden.
+RUN --mount=type=secret,id=google_maps_key,env=GOOGLE_MAPS_KEY npm run reviews && npm run build
 
 # Production stage
 FROM nginx:1.25-alpine
