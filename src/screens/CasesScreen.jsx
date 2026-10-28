@@ -29,7 +29,7 @@ export function CasesScreen() {
       <button class="btn secondary" id="back" onClick={() => goTo("start")}>
         {t("cases.back")}
       </button>
-      <button class="btn primary" id="go-agenda" onClick={() => goTo("agenda")}>
+      <button class="btn primary" id="go-agenda" data-track="agenda_open" onClick={() => goTo("agenda")}>
         {t("cases.agenda")}
       </button>
     </>

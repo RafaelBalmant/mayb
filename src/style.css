@@ -1555,3 +1555,45 @@ a.btn[aria-disabled="true"] {
   line-height: 1.45;
   color: var(--ink);
 }
+
+/* Cookie notice (LGPD): over the fixed bar, below the modals */
+.cookie-notice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 15;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 24px var(--scrim);
+  padding-top: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.cookie-notice .in {
+  max-width: 448px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cookie-notice p {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+}
+.cookie-link {
+  align-self: center;
+  margin-top: -8px;
+  padding: 8px;
+  background: none;
+  border: 0;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline;
+}

@@ -8,7 +8,9 @@ import "@fontsource/playfair-display/500.css";
 import "@fontsource/playfair-display/400-italic.css";
 import "./theme.css";
 import "./style.css";
+import { AnalyticsProvider } from "./analytics/AnalyticsProvider.jsx";
 import { App } from "./App.jsx";
+import { CookieNotice } from "./components/CookieNotice.jsx";
 import { t } from "./content.js";
 import { StoreProvider } from "./store/StoreProvider.jsx";
 
@@ -18,8 +20,11 @@ const root = document.getElementById("root");
 root.textContent = ""; // drops the text the build puts there for search engines; the first screen replaces it
 
 render(
-  <StoreProvider>
-    <App />
-  </StoreProvider>,
+  <AnalyticsProvider>
+    <StoreProvider>
+      <App />
+    </StoreProvider>
+    <CookieNotice />
+  </AnalyticsProvider>,
   root,
 );

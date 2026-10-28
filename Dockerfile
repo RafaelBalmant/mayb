@@ -9,6 +9,9 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+# Google Analytics ID (public: it shows in the page anyway). GitHub Actions passes the GA_MEASUREMENT_ID repository
+# variable; without it the site has no analytics and no cookie notice.
+ARG VITE_GA_MEASUREMENT_ID=""
 # Google key used only here, to save the reviews into the build (GitHub Actions passes the GOOGLE_MAPS_KEY secret).
 # It comes in as a BuildKit secret mount, not ARG/ENV: it is never written to a layer, the image history or the
 # build record. Without the secret the build still works and the reviews block is simply hidden.

@@ -36,6 +36,7 @@ export function ReviewScreen() {
       <a
         class="btn primary"
         id="send"
+        data-track="whatsapp_summary"
         target="_blank"
         rel="noopener noreferrer"
         href={whatsappLink(message)}

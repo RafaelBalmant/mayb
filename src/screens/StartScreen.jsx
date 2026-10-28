@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { professional, t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
+import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
 import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
@@ -23,6 +24,7 @@ const InstagramIcon = () => (
 export function StartScreen() {
   const { state } = useStore();
   const { goTo } = useNavigation();
+  const analytics = useAnalytics();
   const [photoFailed, setPhotoFailed] = useState(false); // until the file exists, only the plain background shows
   const [animateTagline] = useState(() => !taglineShown);
   useEffect(() => {
@@ -47,22 +49,34 @@ export function StartScreen() {
         </div>
       </header>
       <div class="start-buttons">
-        <button class="btn primary" id="go-agenda" onClick={() => goTo("agenda")}>
+        <button class="btn primary" id="go-agenda" data-track="agenda_open" onClick={() => goTo("agenda")}>
           {t("start.agenda")}
         </button>
-        <a class="btn" href={whatsappLink(t("start.contactMessage"))} target="_blank" rel="noopener noreferrer">
+        <a
+          class="btn"
+          data-track="whatsapp_contact"
+          href={whatsappLink(t("start.contactMessage"))}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t("start.contact")}
         </a>
-        <a class="btn" href={professional.googleReview} target="_blank" rel="noopener noreferrer">
+        <a
+          class="btn"
+          data-track="google_review_open"
+          href={professional.googleReview}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t("start.review")}
         </a>
         {state.features.map && (
-          <button class="btn" id="go-cases" onClick={() => goTo("cases")}>
+          <button class="btn" id="go-cases" data-track="cases_open" onClick={() => goTo("cases")}>
             {t("start.cases")}
           </button>
         )}
         {state.features.map && (
-          <button class="btn" id="go-map" onClick={() => goTo("opening")}>
+          <button class="btn" id="go-map" data-track="map_open" onClick={() => goTo("opening")}>
             {t("start.map")}
           </button>
         )}
@@ -71,6 +85,7 @@ export function StartScreen() {
       <p class="profile-locations">{t("start.locations")}</p>
       <a
         class="profile-instagram"
+        data-track="instagram_open"
         href={professional.instagram}
         target="_blank"
         rel="noopener noreferrer"
@@ -78,6 +93,11 @@ export function StartScreen() {
       >
         <InstagramIcon />
       </a>
+      {analytics.enabled && (
+        <button type="button" class="cookie-link" id="cookies-open" onClick={analytics.reopen}>
+          {t("start.cookies")}
+        </button>
+      )}
     </Layout>
   );
 }

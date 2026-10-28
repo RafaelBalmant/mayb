@@ -63,6 +63,7 @@ export function AgendaScreen() {
       <button
         class="btn primary two-lines"
         id="book"
+        data-track="booking_open"
         ref={bookRef}
         disabled={upcoming.length === 0}
         onClick={() => setBooking(true)}
