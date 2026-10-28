@@ -151,6 +151,12 @@ cache de um dia para as fotos, `index.html` sempre revalidado, `robots.txt`/`sit
 e `Content-Security-Policy` restrita ao próprio site (fontes, scripts e imagens são todos locais). A cada push na `main`, o workflow
 `.github/workflows/docker.yml` publica a imagem no Docker Hub; `ci.yml` roda lint, formatação, testes e o E2E nos PRs.
 
+## Ícone do site
+
+O ícone da aba do navegador e do resultado do Google é um recorte quadrado do rosto em `public/profile/photo.jpg`:
+`public/favicon.ico` (16, 32 e 48 px), `public/favicon-48.png`, `favicon-96.png`, `favicon-192.png` e
+`public/apple-touch-icon.png` (180 px, atalho no iPhone). Se a foto mudar, gere os arquivos de novo com os mesmos nomes.
+
 ## Situação
 
 Prontas: início, agenda, e o fluxo do mapa do rosto (escolher o rosto, marcar, ver resultados, contar mais, revisar e enviar
