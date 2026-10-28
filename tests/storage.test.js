@@ -7,7 +7,7 @@ const LEGACY_KEY = "site-mayara:v2";
 
 const memoryStorage = (initial = {}) => {
   const data = { ...initial };
-  return { data, getItem: k => (k in data ? data[k] : null), setItem: (k, v) => void (data[k] = String(v)) };
+  return { data, getItem: (k) => (k in data ? data[k] : null), setItem: (k, v) => void (data[k] = String(v)) };
 };
 const blockedStorage = {
   getItem() {
@@ -51,7 +51,14 @@ describe("loadState", () => {
       estado: {
         rosto: "feminino",
         sobre: { nome: "Ana" },
-        areas: [{ codigo: "testa", incomoda: ["Linhas ao franzir", "Texto que não existe mais"], lado: "direito", intensidade: 4 }],
+        areas: [
+          {
+            codigo: "testa",
+            incomoda: ["Linhas ao franzir", "Texto que não existe mais"],
+            lado: "direito",
+            intensidade: 4,
+          },
+        ],
       },
       ui: { tela: "detalhes", vista: "perfil", indice: 1, aceite: true },
     };
@@ -66,7 +73,10 @@ describe("loadState", () => {
 describe("persistState", () => {
   it("saves answers and position but not the transient UI", () => {
     const storage = memoryStorage();
-    persistState({ face: "female", about: { name: "Ana" }, areas: [], ui: { screen: "map" }, otherOpen: ["eyes"] }, storage);
+    persistState(
+      { face: "female", about: { name: "Ana" }, areas: [], ui: { screen: "map" }, otherOpen: ["eyes"] },
+      storage,
+    );
     const saved = JSON.parse(storage.data[KEY]);
     expect(saved).toEqual({ state: { face: "female", about: { name: "Ana" }, areas: [] }, ui: { screen: "map" } });
   });
@@ -81,7 +91,9 @@ describe("migrateV2", () => {
     const { state } = migrateV2({
       estado: {
         rosto: "masculino",
-        areas: [{ codigo: "mandibula", desde: "6m_2a", quandoAparece: "parado", procedimento: "nao_lembro", lado: "os_dois" }],
+        areas: [
+          { codigo: "mandibula", desde: "6m_2a", quandoAparece: "parado", procedimento: "nao_lembro", lado: "os_dois" },
+        ],
       },
     });
     expect(state.face).toBe("male");

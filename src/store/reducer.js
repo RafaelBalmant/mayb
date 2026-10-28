@@ -10,7 +10,7 @@ export const initialState = () => ({
   otherOpen: [],
 });
 
-const updateArea = (areas, code, patch) => areas.map(a => (a.code === code ? { ...a, ...patch } : a));
+const updateArea = (areas, code, patch) => areas.map((a) => (a.code === code ? { ...a, ...patch } : a));
 
 /** Pure state transitions. Every action is a plain object: { type, ...payload }. */
 export function reducer(state, action) {
@@ -29,7 +29,7 @@ export function reducer(state, action) {
       return {
         ...state,
         areas: isMarked(state.areas, action.code)
-          ? state.areas.filter(a => a.code !== action.code)
+          ? state.areas.filter((a) => a.code !== action.code)
           : [...state.areas, newArea(action.code)],
       };
     case "UPDATE_AREA":
@@ -39,7 +39,7 @@ export function reducer(state, action) {
       return { ...state, areas: updateArea(areas, "other", { description: action.text }) };
     }
     case "SET_OTHER_OPEN": {
-      const rest = state.otherOpen.filter(c => c !== action.code);
+      const rest = state.otherOpen.filter((c) => c !== action.code);
       return { ...state, otherOpen: action.open ? [...rest, action.code] : rest };
     }
     case "RESTART":

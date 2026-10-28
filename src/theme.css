@@ -12,15 +12,15 @@
   --font-text: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* 2. Palette (light mode) */
-  --bg: #f4f3f1;          /* page background */
-  --surface: #ffffff;     /* cards, fields, drawing area */
-  --ink: #2a2228;         /* main text and drawing strokes */
-  --muted: #6f6670;       /* secondary text */
-  --line: #ddd7da;        /* borders */
-  --accent: #9c3d5c;      /* brand color: buttons, marked areas */
+  --bg: #f4f3f1; /* page background */
+  --surface: #ffffff; /* cards, fields, drawing area */
+  --ink: #2a2228; /* main text and drawing strokes */
+  --muted: #6f6670; /* secondary text */
+  --line: #ddd7da; /* borders */
+  --accent: #9c3d5c; /* brand color: buttons, marked areas */
   --accent-soft: #f3e1e7; /* background of marked items */
-  --on-accent: #ffffff;   /* text on top of the brand color */
-  --danger: #b3261e;      /* delete button */
+  --on-accent: #ffffff; /* text on top of the brand color */
+  --danger: #b3261e; /* delete button */
 
   /* face drawing */
   --skin: #fbf6f3;
@@ -35,24 +35,42 @@
   --scrim: color-mix(in srgb, var(--ink) 28%, transparent);
 
   /* 4. Shape */
-  --r: 14px;              /* corner radius of cards */
+  --r: 14px; /* corner radius of cards */
 }
 
 /* 5. Dark mode palette (when the phone is in dark mode).
       The block appears twice, with the same values: keep both identical. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1b171a; --surface: #262025; --ink: #f1eaee; --muted: #b3a8b0; --line: #3d343b;
-    --accent: #e48aa8; --accent-soft: #3d2530; --on-accent: #22161b; --danger: #f2a19a;
-    --skin: #2d262b; --hair: #4a3f46; --lip: #5a3a45;
+    --bg: #1b171a;
+    --surface: #262025;
+    --ink: #f1eaee;
+    --muted: #b3a8b0;
+    --line: #3d343b;
+    --accent: #e48aa8;
+    --accent-soft: #3d2530;
+    --on-accent: #22161b;
+    --danger: #f2a19a;
+    --skin: #2d262b;
+    --hair: #4a3f46;
+    --lip: #5a3a45;
     --scrim: color-mix(in srgb, #000 45%, transparent);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #1b171a; --surface: #262025; --ink: #f1eaee; --muted: #b3a8b0; --line: #3d343b;
-  --accent: #e48aa8; --accent-soft: #3d2530; --on-accent: #22161b; --danger: #f2a19a;
-  --skin: #2d262b; --hair: #4a3f46; --lip: #5a3a45;
+  --bg: #1b171a;
+  --surface: #262025;
+  --ink: #f1eaee;
+  --muted: #b3a8b0;
+  --line: #3d343b;
+  --accent: #e48aa8;
+  --accent-soft: #3d2530;
+  --on-accent: #22161b;
+  --danger: #f2a19a;
+  --skin: #2d262b;
+  --hair: #4a3f46;
+  --lip: #5a3a45;
   --scrim: color-mix(in srgb, #000 45%, transparent);
   color-scheme: dark;
 }

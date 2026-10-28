@@ -24,7 +24,7 @@ export function TextareaQuestion({ question: q, area, P, update }) {
         id={q.field}
         placeholder={t(q.placeholder)}
         value={area[q.field]}
-        onInput={e => update({ [q.field]: e.currentTarget.value })}
+        onInput={(e) => update({ [q.field]: e.currentTarget.value })}
       />
     </div>
   );
@@ -42,9 +42,9 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
     focusOnOpenRef.current = false;
   }, [withOther]);
 
-  const toggleOption = id => {
-    const chosen = area.concerns.includes(id) ? area.concerns.filter(x => x !== id) : [...area.concerns, id];
-    update({ concerns: options.map(o => o.id).filter(x => chosen.includes(x)) }); // keep content order
+  const toggleOption = (id) => {
+    const chosen = area.concerns.includes(id) ? area.concerns.filter((x) => x !== id) : [...area.concerns, id];
+    update({ concerns: options.map((o) => o.id).filter((x) => chosen.includes(x)) }); // keep content order
   };
   const toggleOther = () => {
     if (withOther) {
@@ -62,7 +62,7 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
         {P[q.field]} <span class="hint">{t("details.multipleAllowed")}</span>
       </legend>
       <div class="chips">
-        {options.map(o => (
+        {options.map((o) => (
           <Chip key={o.id} pressed={area.concerns.includes(o.id)} onClick={() => toggleOption(o.id)}>
             {o.label}
           </Chip>
@@ -78,7 +78,7 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
           ref={inputRef}
           placeholder={t("details.otherPlaceholder")}
           value={area.concernsOther}
-          onInput={e => update({ concernsOther: e.currentTarget.value })}
+          onInput={(e) => update({ concernsOther: e.currentTarget.value })}
         />
       )}
     </fieldset>
@@ -93,7 +93,11 @@ export function SingleQuestion({ question: q, area, P, update }) {
       <legend>{P[q.field]}</legend>
       <div class="chips">
         {Object.entries(labels[q.labels]).map(([value, label]) => (
-          <Chip key={value} pressed={area[q.field] === value} onClick={() => update({ [q.field]: area[q.field] === value ? null : value })}>
+          <Chip
+            key={value}
+            pressed={area[q.field] === value}
+            onClick={() => update({ [q.field]: area[q.field] === value ? null : value })}
+          >
             {label}
           </Chip>
         ))}
@@ -104,7 +108,7 @@ export function SingleQuestion({ question: q, area, P, update }) {
           id={`${d.field}-txt`}
           placeholder={t(d.placeholder)}
           value={area[d.field]}
-          onInput={e => update({ [d.field]: e.currentTarget.value })}
+          onInput={(e) => update({ [d.field]: e.currentTarget.value })}
         />
       )}
     </fieldset>
@@ -117,8 +121,12 @@ export function ScaleQuestion({ question: q, area, P, update }) {
     <fieldset class="question">
       <legend>{P[q.field]}</legend>
       <div class="scale">
-        {INTENSITY_SCALE.map(n => (
-          <Chip key={n} pressed={area[q.field] === n} onClick={() => update({ [q.field]: area[q.field] === n ? null : n })}>
+        {INTENSITY_SCALE.map((n) => (
+          <Chip
+            key={n}
+            pressed={area[q.field] === n}
+            onClick={() => update({ [q.field]: area[q.field] === n ? null : n })}
+          >
             {n}
           </Chip>
         ))}

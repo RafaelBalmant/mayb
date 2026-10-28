@@ -5,11 +5,24 @@ import { AREA_BY_CODE } from "../content.js";
 const FACE = { feminino: "female", masculino: "male" };
 const VIEW = { frente: "front", perfil: "profile" };
 const SCREEN = {
-  abertura: "opening", mapa: "map", proximo: "next", detalhes: "details", revisar: "review", enviado: "sent",
+  abertura: "opening",
+  mapa: "map",
+  proximo: "next",
+  detalhes: "details",
+  revisar: "review",
+  enviado: "sent",
 };
 const AREA = {
-  testa: "forehead", olhos: "eyes", bochechas: "cheeks", nariz: "nose", boca: "mouth", queixo: "chin",
-  mandibula: "jawline", pescoco: "neck", pele: "skin", outra: "other",
+  testa: "forehead",
+  olhos: "eyes",
+  bochechas: "cheeks",
+  nariz: "nose",
+  boca: "mouth",
+  queixo: "chin",
+  mandibula: "jawline",
+  pescoco: "neck",
+  pele: "skin",
+  outra: "other",
 };
 const SIDE = { esquerdo: "left", direito: "right", os_dois: "both", nao_sei: "unknown" };
 const SINCE = { menos_6m: "under_6m", "6m_2a": "6m_2y", mais_2a: "over_2y", sempre: "always" };
@@ -21,7 +34,7 @@ const map = (table, value) => (value == null ? null : (table[value] ?? null));
 /** Old saves kept the option text; now we keep its id. Texts that no longer exist are dropped. */
 function concernIds(areaCode, texts = []) {
   const options = AREA_BY_CODE[areaCode]?.options ?? [];
-  return texts.map(text => options.find(o => o.label === text)?.id).filter(Boolean);
+  return texts.map((text) => options.find((o) => o.label === text)?.id).filter(Boolean);
 }
 
 function migrateArea(a) {
@@ -48,7 +61,7 @@ export function migrateV2(saved) {
     state: {
       face: map(FACE, estado.rosto),
       about: { name: estado.sobre?.nome ?? "" },
-      areas: (estado.areas ?? []).map(migrateArea).filter(a => a.code),
+      areas: (estado.areas ?? []).map(migrateArea).filter((a) => a.code),
     },
     ui: {
       screen: SCREEN[ui.tela] ?? "opening",

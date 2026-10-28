@@ -7,8 +7,8 @@ import { Layout } from "../components/Layout.jsx";
 import { OtherModal } from "../components/OtherModal.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
 
-const nameOf = code => AREA_BY_CODE[code].name;
-const nameInList = a =>
+const nameOf = (code) => AREA_BY_CODE[code].name;
+const nameInList = (a) =>
   a.code === "other" && a.description.trim() ? t("map.otherInList", { text: a.description.trim() }) : nameOf(a.code);
 
 // Map screen: just the face, the list of what was marked beside it, the controls and navigation.
@@ -24,13 +24,13 @@ export function MapScreen() {
   const otherButtonRef = useRef();
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
-  const flash = text => {
+  const flash = (text) => {
     setNotice({ text, on: true });
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setNotice(n => ({ ...n, on: false })), NOTICE_DURATION_MS);
+    timerRef.current = setTimeout(() => setNotice((n) => ({ ...n, on: false })), NOTICE_DURATION_MS);
   };
 
-  const tap = code => {
+  const tap = (code) => {
     const wasMarked = isMarked(areas, code);
     dispatch({ type: "TOGGLE_AREA", code });
     flash(t(wasMarked ? "map.noticeUnmarked" : "map.noticeMarked", { area: nameOf(code) }));
@@ -40,7 +40,7 @@ export function MapScreen() {
     setModalOpen(false);
     otherButtonRef.current?.focus({ preventScroll: true });
   };
-  const saveOther = text => {
+  const saveOther = (text) => {
     dispatch({ type: "SAVE_OTHER", text });
     flash(t("map.noticeMarked", { area: nameOf("other") }));
     closeModal();
@@ -64,7 +64,7 @@ export function MapScreen() {
 
   const segmented = (label, options, current, onPick) => (
     <div class="segmented" role="group" aria-label={label}>
-      {options.map(value => (
+      {options.map((value) => (
         <button key={value} aria-pressed={current === value} onClick={() => onPick(value)}>
           {t(`map.${value}`)}
         </button>
@@ -72,7 +72,7 @@ export function MapScreen() {
     </div>
   );
 
-  const extra = code => (
+  const extra = (code) => (
     <button
       class="extra"
       ref={code === "other" ? otherButtonRef : undefined}
@@ -83,14 +83,14 @@ export function MapScreen() {
     </button>
   );
 
-  const other = areas.find(a => a.code === "other");
+  const other = areas.find((a) => a.code === "other");
 
   return (
     <>
       <Layout className="app app-map" bar={bar}>
         <div class="controls">
-          {segmented(t("map.view"), ["front", "profile"], ui.view, view => dispatch({ type: "SET_VIEW", view }))}
-          {segmented(t("map.face"), ["female", "male"], face, f => dispatch({ type: "SET_FACE", face: f }))}
+          {segmented(t("map.view"), ["front", "profile"], ui.view, (view) => dispatch({ type: "SET_VIEW", view }))}
+          {segmented(t("map.face"), ["female", "male"], face, (f) => dispatch({ type: "SET_FACE", face: f }))}
         </div>
         <div class="stage">
           <div class="map">
@@ -98,7 +98,7 @@ export function MapScreen() {
               face={face}
               view={ui.view}
               label={t("map.drawingDescription", { face: t(`map.${face}`), view: t(`map.${ui.view}`) })}
-              isMarked={code => isMarked(areas, code)}
+              isMarked={(code) => isMarked(areas, code)}
               nameOf={nameOf}
               onToggle={tap}
             />
@@ -110,7 +110,7 @@ export function MapScreen() {
             <h3>{count ? t("map.markedCount", { n: count }) : t("map.marked")}</h3>
             {count ? (
               <ol class="marked">
-                {areas.map(a => (
+                {areas.map((a) => (
                   <li key={a.code}>
                     {a.code === "other" ? (
                       <button aria-label={t("map.edit", { area: nameInList(a) })} onClick={() => setModalOpen(true)}>

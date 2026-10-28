@@ -64,7 +64,7 @@ describe("buildMessage", () => {
   });
 
   it("respects the message limit by shortening free text", () => {
-    const areas = ["forehead", "eyes", "mouth", "chin"].map(c => area(c, { comment: "y".repeat(600) }));
+    const areas = ["forehead", "eyes", "mouth", "chin"].map((c) => area(c, { comment: "y".repeat(600) }));
     const text = buildMessage(stateWith(areas, "Ana"));
     expect(text.length).toBeLessThanOrEqual(professional.messageLimit);
     expect(text).toContain("…");

@@ -19,7 +19,7 @@ npm run faces      # regera os SVGs do rosto
 ## Convenção de idioma
 
 - **Código em inglês**: arquivos, pastas, funções, variáveis, classes CSS, chaves do JSON, comentários e commits.
-- **Conteúdo do site em português**: só os *valores* de texto em `src/data/content.json` (o que o paciente lê).
+- **Conteúdo do site em português**: só os _valores_ de texto em `src/data/content.json` (o que o paciente lê).
 
 ## Onde está cada coisa
 

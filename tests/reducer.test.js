@@ -11,7 +11,7 @@ describe("reducer", () => {
       { type: "TOGGLE_AREA", code: "mouth" },
       { type: "TOGGLE_AREA", code: "forehead" },
     );
-    expect(s.areas.map(a => a.code)).toEqual(["eyes", "mouth"]);
+    expect(s.areas.map((a) => a.code)).toEqual(["eyes", "mouth"]);
   });
 
   it("updates one area without touching the others", () => {

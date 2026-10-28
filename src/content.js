@@ -3,11 +3,10 @@ import content from "./data/content.json";
 export const { professional, areas, labels, faq, texts } = content;
 
 /** Area by code. */
-export const AREA_BY_CODE = Object.fromEntries(areas.map(a => [a.code, a]));
+export const AREA_BY_CODE = Object.fromEntries(areas.map((a) => [a.code, a]));
 
 /** Label of one "what bothers you" option of an area; falls back to the id. */
-export const optionLabel = (areaCode, id) =>
-  AREA_BY_CODE[areaCode].options.find(o => o.id === id)?.label ?? id;
+export const optionLabel = (areaCode, id) => AREA_BY_CODE[areaCode].options.find((o) => o.id === id)?.label ?? id;
 
 /**
  * Site text: t("map.empty"), t("general.step", { current: 3, total: 8, title: "…" }).

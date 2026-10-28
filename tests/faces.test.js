@@ -23,7 +23,7 @@ describe("parseFace", () => {
 
 describe("shipped faces", () => {
   // "skin" and "other" have no zone on the drawing: they are buttons beside it
-  const codes = areas.map(a => a.code).filter(c => c !== "other" && c !== "skin");
+  const codes = areas.map((a) => a.code).filter((c) => c !== "other" && c !== "skin");
 
   it.each([
     ["female", "front"],
@@ -33,6 +33,6 @@ describe("shipped faces", () => {
   ])("%s %s has art and a zone for every area", (face, view) => {
     const parsed = getFace(face, view);
     expect(parsed.art.length).toBeGreaterThan(100);
-    expect(parsed.zones.map(z => z.code).sort()).toEqual([...codes].sort());
+    expect(parsed.zones.map((z) => z.code).sort()).toEqual([...codes].sort());
   });
 });

@@ -25,8 +25,12 @@ export function OpeningScreen() {
       <section class="block">
         <h3>{t("opening.chooseFace")}</h3>
         <div class="choice">
-          {["female", "male"].map(option => (
-            <button key={option} aria-pressed={face === option} onClick={() => dispatch({ type: "SET_FACE", face: option })}>
+          {["female", "male"].map((option) => (
+            <button
+              key={option}
+              aria-pressed={face === option}
+              onClick={() => dispatch({ type: "SET_FACE", face: option })}
+            >
               <Face face={option} view="front" />
               {t(`opening.${option}`)}
             </button>

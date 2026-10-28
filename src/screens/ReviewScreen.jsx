@@ -22,7 +22,7 @@ export function ReviewScreen() {
   const redirectRef = useRef();
   useEffect(() => () => clearTimeout(redirectRef.current), []);
 
-  const send = e => {
+  const send = (e) => {
     if (!ui.consent) {
       e.preventDefault();
       setTriedWithoutConsent(true);
@@ -35,7 +35,11 @@ export function ReviewScreen() {
 
   const bar = (
     <>
-      <button class="btn secondary" id="back" onClick={() => (answered ? goTo("details", areas.length - 1) : goTo("next"))}>
+      <button
+        class="btn secondary"
+        id="back"
+        onClick={() => (answered ? goTo("details", areas.length - 1) : goTo("next"))}
+      >
         {t("general.back")}
       </button>
       <a
@@ -69,7 +73,7 @@ export function ReviewScreen() {
           autocomplete="given-name"
           placeholder={t("review.namePlaceholder")}
           value={about.name}
-          onInput={e => dispatch({ type: "SET_NAME", name: e.currentTarget.value })}
+          onInput={(e) => dispatch({ type: "SET_NAME", name: e.currentTarget.value })}
         />
       </div>
       <section class="block">
@@ -92,7 +96,7 @@ export function ReviewScreen() {
           id="consent"
           ref={consentRef}
           checked={ui.consent}
-          onChange={e => dispatch({ type: "SET_CONSENT", value: e.currentTarget.checked })}
+          onChange={(e) => dispatch({ type: "SET_CONSENT", value: e.currentTarget.checked })}
         />
         <span>{t("review.consent")}</span>
       </label>

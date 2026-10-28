@@ -22,7 +22,7 @@ export function NextScreen() {
       <div class="block">
         <h3>{tn("next.marked", state.areas.length)}</h3>
         <ul class="summary-marked">
-          {state.areas.map(a => (
+          {state.areas.map((a) => (
             <li key={a.code}>{AREA_BY_CODE[a.code].name}</li>
           ))}
         </ul>

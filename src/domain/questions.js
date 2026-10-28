@@ -16,5 +16,5 @@ const isFilled = (value, mode) => {
 };
 
 /** True if the visitor answered at least one question of the area. */
-export const hasAnswers = area =>
+export const hasAnswers = (area) =>
   Object.entries(FIELDS).some(([name, f]) => f.answer && isFilled(area[name], f.answer));

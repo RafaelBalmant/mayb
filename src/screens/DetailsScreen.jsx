@@ -7,7 +7,9 @@ import { QUESTION_COMPONENTS } from "../components/questions.jsx";
 import { useNavigation, useStore } from "../store/StoreProvider.jsx";
 
 const isVisible = (q, def) =>
-  (!q.onlyFor || q.onlyFor === def.code) && (!q.exceptFor || q.exceptFor !== def.code) && (!q.requires || def[q.requires]);
+  (!q.onlyFor || q.onlyFor === def.code) &&
+  (!q.exceptFor || q.exceptFor !== def.code) &&
+  (!q.requires || def[q.requires]);
 
 // Details: one card per marked area; the questions come from data/questions.json.
 export function DetailsScreen() {
@@ -19,8 +21,8 @@ export function DetailsScreen() {
   const def = AREA_BY_CODE[area.code];
   const isLast = index === total - 1;
 
-  const update = patch => dispatch({ type: "UPDATE_AREA", code: area.code, patch });
-  const setOtherOpen = open => dispatch({ type: "SET_OTHER_OPEN", code: area.code, open });
+  const update = (patch) => dispatch({ type: "UPDATE_AREA", code: area.code, patch });
+  const setOtherOpen = (open) => dispatch({ type: "SET_OTHER_OPEN", code: area.code, open });
   const advance = () => (isLast ? goTo("review") : goTo("details", index + 1));
 
   const bar = (
@@ -43,7 +45,7 @@ export function DetailsScreen() {
           <h2>{def.name}</h2>
           <p class="sub">{t("details.optional")}</p>
         </div>
-        {QUESTIONS.filter(q => isVisible(q, def)).map(q => {
+        {QUESTIONS.filter((q) => isVisible(q, def)).map((q) => {
           const Question = QUESTION_COMPONENTS[q.type];
           return (
             <Question

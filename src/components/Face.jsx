@@ -16,7 +16,7 @@ export function Face({ face, view, label, isMarked, nameOf, onToggle }) {
       <g class="art" dangerouslySetInnerHTML={{ __html: art }} />
       {interactive && (
         <g class="zones">
-          {zones.map(z => {
+          {zones.map((z) => {
             const marked = isMarked(z.code);
             return (
               <path
@@ -29,7 +29,7 @@ export function Face({ face, view, label, isMarked, nameOf, onToggle }) {
                 aria-pressed={marked}
                 aria-label={nameOf(z.code)}
                 onClick={() => onToggle(z.code)}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     onToggle(z.code);

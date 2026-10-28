@@ -17,10 +17,15 @@ const stateOn = (screen, patch = {}, ui = {}) => ({
   ...patch,
   ui: { ...initialState().ui, screen, ...ui },
 });
-const html = (state, index) => renderToString(<StoreProvider initialState={{ ...state, ui: { ...state.ui, index: index ?? state.ui.index } }}><App /></StoreProvider>);
+const html = (state, index) =>
+  renderToString(
+    <StoreProvider initialState={{ ...state, ui: { ...state.ui, index: index ?? state.ui.index } }}>
+      <App />
+    </StoreProvider>,
+  );
 
 describe("screens render from the state", () => {
-  it.each(SCREEN_IDS)("%s renders inside the shared layout", id => {
+  it.each(SCREEN_IDS)("%s renders inside the shared layout", (id) => {
     const out = html(stateOn(id));
     expect(out).toContain('id="app"');
     expect(out).toContain('id="bar-in"');

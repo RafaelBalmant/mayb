@@ -2,12 +2,12 @@ import flow from "../data/flow.json";
 
 export const TOTAL_STEPS = flow.totalSteps;
 
-const byId = Object.fromEntries(flow.screens.map(s => [s.id, s]));
+const byId = Object.fromEntries(flow.screens.map((s) => [s.id, s]));
 
-export const SCREEN_IDS = flow.screens.map(s => s.id);
+export const SCREEN_IDS = flow.screens.map((s) => s.id);
 
 /** Step number shown in the progress bar for a screen. */
-export const stepOf = id => byId[id]?.step;
+export const stepOf = (id) => byId[id]?.step;
 
 /**
  * The screen that can actually be shown for the requested one: without a face we are on the opening;

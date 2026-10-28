@@ -5,11 +5,11 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   // the WhatsApp link opens in another tab; we do not need to reach the internet
-  await page.context().route("https://wa.me/**", route => route.fulfill({ body: "ok", contentType: "text/html" }));
+  await page.context().route("https://wa.me/**", (route) => route.fulfill({ body: "ok", contentType: "text/html" }));
   await page.goto("/");
 });
 
-const chooseFace = async page => {
+const chooseFace = async (page) => {
   await page.getByRole("button", { name: "Feminino" }).click();
   await page.getByRole("button", { name: "Começar" }).click();
 };

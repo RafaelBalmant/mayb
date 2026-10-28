@@ -6,11 +6,13 @@ import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const destination = fileURLToPath(new URL("../src/faces/", import.meta.url));
-const n = v => +v.toFixed(2);
+const n = (v) => +v.toFixed(2);
 
 // Ellipse (with optional rotation, in degrees) as a subpath.
 function ellipse(cx, cy, rx, ry, rot = 0) {
-  const t = (rot * Math.PI) / 180, dx = rx * Math.cos(t), dy = rx * Math.sin(t);
+  const t = (rot * Math.PI) / 180,
+    dx = rx * Math.cos(t),
+    dy = rx * Math.sin(t);
   const [x1, y1, x2, y2] = [cx - dx, cy - dy, cx + dx, cy + dy].map(n);
   return `M${x1} ${y1}A${rx} ${ry} ${rot} 1 0 ${x2} ${y2}A${rx} ${ry} ${rot} 1 0 ${x1} ${y1}Z`;
 }
@@ -31,7 +33,8 @@ function frontArt(f) {
   const sb = f ? "M104 156 Q124 143 147 153" : "M101 157 Q124 149 148 155";
   const sw = f ? 3 : 5;
   return [
-    f && `<path class="hair" d="M160 40 C92 40 60 95 64 175 C68 250 58 320 44 384 L112 394 C110 360 112 340 118 318 L202 318 C208 340 210 360 208 394 L276 384 C262 320 252 250 256 175 C260 95 228 40 160 40 Z"/>`,
+    f &&
+      `<path class="hair" d="M160 40 C92 40 60 95 64 175 C68 250 58 320 44 384 L112 394 C110 360 112 340 118 318 L202 318 C208 340 210 360 208 394 L276 384 C262 320 252 250 256 175 C260 95 228 40 160 40 Z"/>`,
     `<path class="skin" d="${neck}"/>`,
     `<ellipse class="skin" cx="${f ? 84 : 82}" cy="188" rx="10" ry="22"/>`,
     `<ellipse class="skin" cx="${f ? 236 : 238}" cy="188" rx="10" ry="22"/>`,
@@ -48,7 +51,9 @@ function frontArt(f) {
     f
       ? `<path class="mouth" d="M134 279 Q146 267 160 273 Q174 267 186 279 Q160 284 134 279 Z"/><path class="mouth" d="M134 279 Q160 301 186 279 Q160 284 134 279 Z"/>`
       : `<path class="mouth" d="M136 280 Q148 273 160 277 Q172 273 184 280 Q160 283 136 280 Z"/><path class="mouth" d="M136 280 Q160 293 184 280 Q160 283 136 280 Z"/>`,
-  ].filter(Boolean).join("\n    ");
+  ]
+    .filter(Boolean)
+    .join("\n    ");
 }
 
 const frontZones = () => [
@@ -64,10 +69,13 @@ const frontZones = () => [
 
 /* ---------- Profile (looking left) ---------- */
 function profileArt(f) {
-  const chin = f ? "C104 292 100 298 100 306 C100 316 106 324 116 326" : "C102 292 96 298 96 307 C96 319 103 327 118 328";
+  const chin = f
+    ? "C104 292 100 298 100 306 C100 316 106 324 116 326"
+    : "C102 292 96 298 96 307 C96 319 103 327 118 328";
   const head = `M175 55 C135 55 112 78 108 118 C106 135 104 148 101 158 C100 164 104 168 106 172 C98 188 86 206 78 222 C76 228 82 232 96 232 C99 234 101 236 102 238 C100 244 97 248 98 252 C100 256 104 260 104 262 C100 266 97 270 98 274 C100 280 106 284 108 287 ${chin} C130 330 142 333 150 336 C155 340 158 350 160 362 L166 520 L232 520 C234 380 230 330 234 300 C238 270 250 240 256 200 C262 150 255 100 230 75 C215 60 195 55 175 55 Z`;
   return [
-    f && `<path class="hair" d="M112 92 C130 40 240 30 266 110 C282 170 270 240 284 312 C290 352 290 384 284 404 L222 404 C222 352 226 302 232 272 L140 200 Z"/>`,
+    f &&
+      `<path class="hair" d="M112 92 C130 40 240 30 266 110 C282 170 270 240 284 312 C290 352 290 384 284 404 L222 404 C222 352 226 302 232 272 L140 200 Z"/>`,
     `<path class="skin" d="${head}"/>`,
     f
       ? `<path class="hair" d="M106 114 C110 70 150 48 190 50 C236 52 262 90 262 142 C250 112 226 94 190 92 C160 90 130 94 106 114 Z"/>`
@@ -78,7 +86,9 @@ function profileArt(f) {
     `<path class="eye" d="M110 182 Q120 175 129 182 Q120 187 110 182 Z"/><circle class="iris" cx="114" cy="181.5" r="3"/>`,
     `<path class="stroke" d="M88 228 Q94 231 99 226"/>`,
     `<path class="mouth" d="M99 251 C103 255 105 259 104 262 L113 263 Q108 254 99 251 Z"/><path class="mouth" d="M104 262 C100 266 97 270 98 274 Q108 272 113 263 Z"/>`,
-  ].filter(Boolean).join("\n    ");
+  ]
+    .filter(Boolean)
+    .join("\n    ");
 }
 
 const profileZones = () => [

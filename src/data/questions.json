@@ -12,7 +12,13 @@
     "comment": { "default": "", "answer": "trimmed" }
   },
   "questions": [
-    { "field": "description", "type": "textarea", "labelKey": "otherDescription", "placeholder": "details.otherAreaPlaceholder", "onlyFor": "other" },
+    {
+      "field": "description",
+      "type": "textarea",
+      "labelKey": "otherDescription",
+      "placeholder": "details.otherAreaPlaceholder",
+      "onlyFor": "other"
+    },
     { "field": "concerns", "type": "areaOptions", "exceptFor": "other" },
     { "field": "side", "type": "single", "labels": "side" },
     { "field": "since", "type": "single", "labels": "since" },
