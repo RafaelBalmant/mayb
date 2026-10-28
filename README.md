@@ -102,7 +102,7 @@ dados → Eventos → estrela em "Marcar como evento principal").
 ## Casos reais (antes e depois)
 
 Cada caso tem uma pasta em `src/cases/<pasta>/` com `antes.jpg` e `depois.jpg` (outros ângulos: `antes-2.jpg` e
-`depois-2.jpg`…; vale também .png ou .webp) e, se quiser, um áudio da Dra. explicando o caso (`audio.mp3`). Os dados
+`depois-2.jpg`…; vale também .png ou .webp; formato do Stories do Instagram, 9:16, 1080 × 1920 px) e, se quiser, um áudio da Dra. explicando o caso (`audio.mp3`). Os dados
 de cada caso ficam na lista `cases` de `src/data/cases.json`: pasta, título, partes do rosto e, opcionais,
 procedimentos, tempo depois, descrição, áudio, texto do áudio e `visible`. As instruções estão no próprio arquivo.
 O site acha as fotos sozinho no build, e o teste avisa se faltar uma foto ou o áudio.
