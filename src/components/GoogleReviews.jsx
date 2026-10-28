@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
-import { REVIEWS_AUTOPLAY_MS } from "../config.js";
+import { REVIEWS_AUTOPLAY_MS, REVIEWS_RESUME_AFTER_MS } from "../config.js";
 import { googleReviews, t, tn } from "../content.js";
 import { fetchReviews } from "../domain/reviews.js";
 
@@ -59,13 +59,15 @@ function Review({ review, index, total }) {
 }
 
 /**
- * Rating and reviews from Google on the start page: a carousel that moves on by itself and stops for good once the
- * visitor touches it. Renders nothing until (and unless) Google answers.
+ * Rating and reviews from Google on the start page: a carousel that moves on by itself every REVIEWS_AUTOPLAY_MS.
+ * Once the visitor taps or drags it, it only moves by hand; after REVIEWS_RESUME_AFTER_MS without a change it
+ * goes back to moving by itself. Renders nothing until (and unless) Google answers.
  */
 export function GoogleReviews() {
   const [data, setData] = useState(null);
   const [current, setCurrent] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
+  const [manual, setManual] = useState(false); // the visitor took over; wait longer before moving on
+  const [touches, setTouches] = useState(0); // every touch restarts the wait
   const trackRef = useRef(null);
 
   useEffect(() => {
@@ -79,28 +81,36 @@ export function GoogleReviews() {
   const count = data?.reviews.length ?? 0;
   const scrollTo = (i) => trackRef.current?.scrollTo({ left: i * trackRef.current.clientWidth, behavior: "smooth" });
 
+  // One timer at a time, restarted whenever the card changes or the visitor touches the carousel.
   useEffect(() => {
-    if (!autoplay || count < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = setInterval(() => {
-      if (document.hidden) return;
-      const track = trackRef.current;
-      if (track) scrollTo((Math.round(track.scrollLeft / track.clientWidth) + 1) % count);
-    }, REVIEWS_AUTOPLAY_MS);
-    return () => clearInterval(timer);
-  }, [autoplay, count]);
+    if (count < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = setTimeout(
+      () => {
+        const track = trackRef.current;
+        if (!track) return;
+        setManual(false);
+        track.scrollTo({ left: ((current + 1) % count) * track.clientWidth, behavior: "smooth" });
+      },
+      manual ? REVIEWS_RESUME_AFTER_MS : REVIEWS_AUTOPLAY_MS,
+    );
+    return () => clearTimeout(timer);
+  }, [count, current, manual, touches]);
 
   if (!data) return null;
-  const stop = () => setAutoplay(false);
+  const takeOver = () => {
+    setManual(true);
+    setTouches((n) => n + 1);
+  };
   const { rating, total, link, reviews } = data;
 
   return (
     <section
       class="reviews"
       aria-label={t("reviews.title")}
-      onPointerDown={stop}
-      onTouchStart={stop}
-      onFocusIn={stop}
-      onWheel={stop}
+      onPointerDown={takeOver}
+      onTouchStart={takeOver}
+      onFocusIn={takeOver}
+      onWheel={takeOver}
     >
       <h2 class="reviews-title">{t("reviews.title")}</h2>
       <div class="reviews-summary">
