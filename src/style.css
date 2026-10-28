@@ -423,6 +423,11 @@ pre.preview {
 .btn.secondary {
   flex: 0 0 auto;
 }
+/* Always as tall as two lines, so a label that wraps for one value (e.g. a longer month) doesn't resize the bar. */
+.btn.two-lines {
+  line-height: 1.25;
+  min-height: calc(2 * 1.25em + 28px + 3px);
+}
 .btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
