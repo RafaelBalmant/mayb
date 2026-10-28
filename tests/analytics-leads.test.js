@@ -29,6 +29,12 @@ describe("generate_lead", () => {
       params: { method: "whatsapp", lead_type: "contact" },
     });
     expect(leadFor("whatsapp_summary").params).toEqual({ method: "whatsapp", lead_type: "summary" });
+    expect(leadFor("whatsapp_contact", { city: "maringa", page: "toxina-botulinica-maringa" }).params).toEqual({
+      method: "whatsapp",
+      lead_type: "contact",
+      city: "maringa",
+      page: "toxina-botulinica-maringa",
+    });
   });
 
   it("does not go with other clicks", () => {

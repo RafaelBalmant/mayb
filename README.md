@@ -107,7 +107,8 @@ do endereço são mantidos.
 | `instagram_open`      | Ícone do Instagram                             |            |
 
 **Lead**: cada `whatsapp_*` também manda `generate_lead` (evento recomendado do GA4) com `method: "whatsapp"`,
-`lead_type` (`contact`, `booking` ou `summary`) e `city` quando há cidade (`maringa` ou `siqueira_campos`). No GA,
+`lead_type` (`contact`, `booking` ou `summary`) e os parâmetros do próprio clique, como `city` quando há cidade
+(`maringa` ou `siqueira_campos`). No GA,
 só `generate_lead` é evento principal, para não contar o mesmo contato duas vezes.
 
 **Propriedade de usuário**: ao escolher a cidade no pedido de horário, o site grava `preferred_city` (`maringa` ou
