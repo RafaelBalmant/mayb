@@ -1,5 +1,5 @@
-// Junta o build (dist/) num único HTML, para publicar o protótipo como página de teste.
-// Uso: npm run build && node scripts/artifact.mjs <arquivo-de-saída>
+// Bundles the build (dist/) into a single HTML file, to publish the prototype as a test page.
+// Usage: npm run build && node scripts/artifact.mjs <output-file>
 import { readFileSync, writeFileSync } from "node:fs";
 
 const dist = new URL("../dist/", import.meta.url);

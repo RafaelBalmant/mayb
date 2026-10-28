@@ -1,33 +1,33 @@
-import "./tema.css";
+import "./theme.css";
 import "./style.css";
-import { t } from "./conteudo.js";
-import { estado, ui, salvar } from "./estado.js";
-import { telaAbertura } from "./telas/abertura.js";
-import { telaMapa } from "./telas/mapa.js";
-import { telaProximo } from "./telas/proximo.js";
-import { telaDetalhes } from "./telas/detalhes.js";
-import { telaRevisar } from "./telas/revisar.js";
-import { telaEnviado } from "./telas/enviado.js";
+import { t } from "./content.js";
+import { state, ui, save } from "./state.js";
+import { renderOpening } from "./screens/opening.js";
+import { renderMap } from "./screens/map.js";
+import { renderNext } from "./screens/next.js";
+import { renderDetails } from "./screens/details.js";
+import { renderReview } from "./screens/review.js";
+import { renderSent } from "./screens/sent.js";
 
-/** Mostra a tela certa para o estado atual. */
+/** Shows the right screen for the current state. */
 export function render() {
-  salvar();
-  if (ui.tela === "abertura" || !estado.rosto) { ui.tela = "abertura"; return telaAbertura(); }
-  if (ui.tela === "proximo" && estado.areas.length) return telaProximo();
-  if (ui.tela === "detalhes" && estado.areas.length) return telaDetalhes();
-  if (ui.tela === "revisar" && estado.areas.length) return telaRevisar();
-  if (ui.tela === "enviado" && estado.areas.length) return telaEnviado();
-  ui.tela = "mapa";
-  return telaMapa();
+  save();
+  if (ui.screen === "opening" || !state.face) { ui.screen = "opening"; return renderOpening(); }
+  if (ui.screen === "next" && state.areas.length) return renderNext();
+  if (ui.screen === "details" && state.areas.length) return renderDetails();
+  if (ui.screen === "review" && state.areas.length) return renderReview();
+  if (ui.screen === "sent" && state.areas.length) return renderSent();
+  ui.screen = "map";
+  return renderMap();
 }
 
-/** Troca de tela e volta ao topo. */
-export function irPara(tela, indice = 0) {
-  ui.tela = tela;
-  ui.indice = indice;
+/** Switches screen and scrolls back to the top. */
+export function goTo(screen, index = 0) {
+  ui.screen = screen;
+  ui.index = index;
   render();
   window.scrollTo(0, 0);
 }
 
-document.title = t("geral.tituloPagina");
+document.title = t("general.pageTitle");
 render();

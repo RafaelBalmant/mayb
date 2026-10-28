@@ -1,29 +1,29 @@
 import { expect, test } from "@playwright/test";
 
-// Os seletores usam o texto visível (conteúdo do site, em português) e papéis ARIA,
-// para continuarem valendo quando ids e nomes do código mudarem.
+// Selectors use the visible text (site content, in Portuguese) and ARIA roles,
+// so they keep working when ids and code names change.
 
 test.beforeEach(async ({ page }) => {
-  // o link do WhatsApp abre em outra aba; não precisamos sair para a internet
+  // the WhatsApp link opens in another tab; we do not need to reach the internet
   await page.context().route("https://wa.me/**", route => route.fulfill({ body: "ok", contentType: "text/html" }));
   await page.goto("/");
 });
 
-const escolherRosto = async page => {
+const chooseFace = async page => {
   await page.getByRole("button", { name: "Feminino" }).click();
   await page.getByRole("button", { name: "Começar" }).click();
 };
 
-test("começa pela abertura e só libera o botão depois de escolher o rosto", async ({ page }) => {
+test("starts on the opening and only enables the button after choosing a face", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Me conta o que anda te incomodando?" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Escolha um rosto para começar" })).toBeDisabled();
-  await escolherRosto(page);
+  await chooseFace(page);
   await expect(page.getByText("Toque no rosto para marcar.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Continuar" })).toBeDisabled();
 });
 
-test("marcar e desmarcar áreas pelo rosto e pela lista", async ({ page }) => {
-  await escolherRosto(page);
+test("marks and unmarks areas from the face and from the list", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Testa", exact: true }).click();
   await expect(page.getByText("Você marcou (1)")).toBeVisible();
   await page.getByRole("button", { name: "Pele em geral" }).click();
@@ -33,8 +33,8 @@ test("marcar e desmarcar áreas pelo rosto e pela lista", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Continuar" })).toBeEnabled();
 });
 
-test("modal 'Outra parte': só salva com texto, edita e remove", async ({ page }) => {
-  await escolherRosto(page);
+test("'Other part' modal: only saves with text, edits and removes", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Outra parte" }).click();
   const modal = page.getByRole("dialog");
   await expect(modal.getByRole("button", { name: "Salvar" })).toBeDisabled();
@@ -49,8 +49,8 @@ test("modal 'Outra parte': só salva com texto, edita e remove", async ({ page }
   await expect(page.getByText("Toque no rosto para marcar.")).toBeVisible();
 });
 
-test("Escape fecha o modal sem salvar", async ({ page }) => {
-  await escolherRosto(page);
+test("Escape closes the modal without saving", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Outra parte" }).click();
   await page.getByRole("dialog").getByRole("textbox").fill("algo");
   await page.keyboard.press("Escape");
@@ -58,10 +58,10 @@ test("Escape fecha o modal sem salvar", async ({ page }) => {
   await expect(page.getByText("Toque no rosto para marcar.")).toBeVisible();
 });
 
-test("fluxo completo com detalhes até o envio", async ({ page }) => {
-  await escolherRosto(page);
+test("full flow with details through to sending", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Testa", exact: true }).click();
-  // a zona dos olhos tem o centro entre os dois olhos; ativamos pelo teclado (também cobre a acessibilidade)
+  // the eyes zone has its center between the two eyes; we activate it by keyboard (also covers accessibility)
   await page.getByRole("button", { name: "Olhos e sobrancelhas", exact: true }).focus();
   await page.keyboard.press("Enter");
   await page.getByRole("button", { name: "Continuar" }).click();
@@ -70,7 +70,7 @@ test("fluxo completo com detalhes até o envio", async ({ page }) => {
   await expect(page.getByText("Você marcou 2 partes")).toBeVisible();
   await page.getByRole("button", { name: /Desejo passar mais informações/ }).click();
 
-  // área 1: Testa
+  // area 1: forehead
   await expect(page.getByText("Área 1 de 2")).toBeVisible();
   await page.getByRole("button", { name: "Linhas ao franzir" }).click();
   await page.getByRole("button", { name: "Outro", exact: true }).click();
@@ -79,11 +79,11 @@ test("fluxo completo com detalhes até o envio", async ({ page }) => {
   await page.getByRole("button", { name: "4", exact: true }).click();
   await page.getByRole("button", { name: "Próxima área" }).click();
 
-  // área 2: Olhos, pulada
+  // area 2: eyes, skipped
   await expect(page.getByText("Área 2 de 2")).toBeVisible();
   await page.getByRole("button", { name: "Pular esta área" }).click();
 
-  // revisar
+  // review
   await expect(page.getByRole("heading", { name: "Confira antes de enviar" })).toBeVisible();
   await page.getByPlaceholder("Seu nome").fill("Ana");
   const previa = page.locator("pre");
@@ -91,13 +91,13 @@ test("fluxo completo com detalhes até o envio", async ({ page }) => {
   await expect(previa).toContainText("linhas ao franzir, Marca antiga");
   await expect(previa).toContainText("Incômodo: 4 de 5");
 
-  // sem aceite não envia
+  // without consent it does not send
   const enviar = page.getByRole("link", { name: "Enviar pelo WhatsApp" });
-  await enviar.click({ force: true }); // aria-disabled, mas o site trata o clique e mostra o aviso
+  await enviar.click({ force: true }); // aria-disabled, but the site handles the click and shows the notice
   await expect(page.getByText("Marque a caixa acima para poder enviar.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Confira antes de enviar" })).toBeVisible();
 
-  // com aceite, o link leva a mensagem pronta e a tela muda
+  // with consent, the link carries the ready message and the screen changes
   await page.getByRole("checkbox").check();
   const href = await enviar.getAttribute("href");
   expect(href).toMatch(/^https:\/\/wa\.me\/5543988540963\?text=/);
@@ -105,21 +105,21 @@ test("fluxo completo com detalhes até o envio", async ({ page }) => {
   await enviar.click();
   await expect(page.getByRole("heading", { name: "Agora é com a Dra. Mayara" })).toBeVisible();
 
-  // recomeçar apaga tudo
+  // restarting erases everything
   await page.getByRole("button", { name: "Apagar minhas respostas e recomeçar" }).click();
   await expect(page.getByRole("heading", { name: "Me conta o que anda te incomodando?" })).toBeVisible();
 });
 
-test("caminho direto: falar com a Dra. sem detalhes", async ({ page }) => {
-  await escolherRosto(page);
+test("direct path: talk to the doctor without details", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Testa", exact: true }).click();
   await page.getByRole("button", { name: "Continuar" }).click();
   await page.getByRole("button", { name: /Desejo falar com a Dra. Mayara/ }).click();
   await expect(page.getByRole("button", { name: "Contar mais sobre cada parte" })).toBeVisible();
 });
 
-test("o estado sobrevive a recarregar a página", async ({ page }) => {
-  await escolherRosto(page);
+test("state survives a page reload", async ({ page }) => {
+  await chooseFace(page);
   await page.getByRole("button", { name: "Testa", exact: true }).click();
   await page.reload();
   await expect(page.getByText("Você marcou (1)")).toBeVisible();

@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  // caminhos relativos: o build funciona em qualquer hospedagem estática
+  // relative paths: the build works on any static host
   base: "./",
 });

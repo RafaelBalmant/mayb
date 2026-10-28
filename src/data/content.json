@@ -1,0 +1,324 @@
+{
+  "professional": {
+    "name": "Mayara Bacellar",
+    "specialty": "Harmonização facial",
+    "whatsapp": "5543988540963",
+    "whatsappDisplay": "+55 43 98854-0963",
+    "messageLimit": 1500
+  },
+  "areas": [
+    {
+      "code": "forehead",
+      "name": "Testa",
+      "movement": true,
+      "options": [
+        "Linhas ao franzir",
+        "Linhas mesmo com o rosto parado",
+        "Linhas entre as sobrancelhas",
+        "Laterais afundadas (têmporas)"
+      ]
+    },
+    {
+      "code": "eyes",
+      "name": "Olhos e sobrancelhas",
+      "movement": true,
+      "options": [
+        "Olheiras",
+        "Bolsinhas",
+        "Pés de galinha",
+        "Pálpebras caídas",
+        "Sobrancelhas caídas ou desiguais"
+      ]
+    },
+    {
+      "code": "cheeks",
+      "name": "Bochechas",
+      "options": [
+        "Perda de volume",
+        "Flacidez",
+        "Bigode chinês (dobra do nariz até a boca)",
+        "Rosto com aspecto cansado"
+      ]
+    },
+    {
+      "code": "nose",
+      "name": "Nariz",
+      "options": [
+        "Calombo",
+        "Ponta caída",
+        "Ponta larga",
+        "Torto"
+      ]
+    },
+    {
+      "code": "mouth",
+      "name": "Boca e lábios",
+      "movement": true,
+      "options": [
+        "Pouco volume",
+        "Contorno pouco definido",
+        "Linhas acima do lábio",
+        "Cantos caídos",
+        "Mostra muita gengiva ao sorrir"
+      ]
+    },
+    {
+      "code": "chin",
+      "name": "Queixo",
+      "options": [
+        "Queixo para trás",
+        "Furinhos ao contrair",
+        "Tamanho"
+      ]
+    },
+    {
+      "code": "jawline",
+      "name": "Contorno do rosto",
+      "options": [
+        "Pouca definição",
+        "Flacidez",
+        "Rosto quadrado",
+        "Aperto ou ranger os dentes"
+      ]
+    },
+    {
+      "code": "neck",
+      "name": "Papada e pescoço",
+      "options": [
+        "Papada",
+        "Linhas no pescoço",
+        "Flacidez"
+      ]
+    },
+    {
+      "code": "skin",
+      "name": "Pele em geral",
+      "options": [
+        "Manchas",
+        "Flacidez",
+        "Textura",
+        "Cicatrizes de acne",
+        "Poros",
+        "Falta de viço"
+      ]
+    },
+    {
+      "code": "other",
+      "name": "Outra parte",
+      "options": []
+    }
+  ],
+  "labels": {
+    "side": {
+      "left": "Esquerdo",
+      "right": "Direito",
+      "both": "Os dois",
+      "unknown": "Não sei"
+    },
+    "since": {
+      "under_6m": "Menos de 6 meses",
+      "6m_2y": "De 6 meses a 2 anos",
+      "over_2y": "Mais de 2 anos",
+      "always": "Sempre tive"
+    },
+    "appearsWhen": {
+      "still": "Com o rosto parado",
+      "movement": "Quando sorrio ou falo",
+      "both": "Nos dois casos",
+      "unknown": "Não sei"
+    },
+    "procedure": {
+      "no": "Não",
+      "yes": "Sim",
+      "dont_remember": "Não lembro"
+    }
+  },
+  "faq": [
+    {
+      "question": "Por onde eu começo?",
+      "answer": "Pela consulta de avaliação. Este site serve para você organizar o que te incomoda e chegar à conversa com tudo anotado."
+    },
+    {
+      "question": "O que é harmonização facial?",
+      "answer": "É um conjunto de procedimentos que buscam equilíbrio entre as partes do rosto e tratar o que te incomoda. Não é um procedimento único: o plano é feito para cada pessoa."
+    },
+    {
+      "question": "Preciso saber qual procedimento quero?",
+      "answer": "Não. Conte o que te incomoda; indicar o caminho é papel do profissional."
+    },
+    {
+      "question": "Como é a consulta de avaliação?",
+      "answer": "Uma conversa sobre suas queixas e expectativas, um exame do rosto e, se você concordar, fotos. Ao final você recebe as opções indicadas para o seu caso e pode tirar todas as dúvidas."
+    },
+    {
+      "question": "Dói?",
+      "answer": "Depende do procedimento e da sensibilidade de cada pessoa. Em muitos casos são usados anestésicos para deixar mais confortável; o profissional explica antes."
+    },
+    {
+      "question": "Quanto tempo dura o resultado?",
+      "answer": "Varia conforme o procedimento, o produto e o seu organismo. Na avaliação você recebe essa estimativa para cada opção."
+    },
+    {
+      "question": "Vai ficar artificial?",
+      "answer": "O objetivo é respeitar seus traços. Você pode dizer, inclusive neste formulário, se prefere um resultado sutil."
+    },
+    {
+      "question": "Quanto custa?",
+      "answer": "Depende do plano indicado para você. Os valores são apresentados depois da avaliação."
+    },
+    {
+      "question": "Preciso ficar afastado da rotina?",
+      "answer": "Em geral a volta à rotina é rápida, mas pode haver inchaço ou roxos por alguns dias. Você recebe as orientações específicas de cada procedimento."
+    },
+    {
+      "question": "Qualquer pessoa pode fazer?",
+      "answer": "Algumas situações, como gestação, amamentação e certas condições de saúde, pedem cuidado ou adiamento. Por isso perguntamos sobre sua saúde, e a avaliação define o que é seguro para você."
+    },
+    {
+      "question": "Minhas respostas ficam salvas no site?",
+      "answer": "Não. Elas ficam só no seu celular e são enviadas apenas quando você toca em \"Enviar pelo WhatsApp\"."
+    },
+    {
+      "question": "Posso mandar fotos?",
+      "answer": "Pode. Depois de enviar o resumo, mande as fotos direto na conversa do WhatsApp."
+    }
+  ],
+  "texts": {
+    "general": {
+      "pageTitle": "Mapa do Rosto · Mayara Bacellar",
+      "brand": "Mayara Bacellar · Harmonização facial",
+      "step": "Etapa {current} de {total} · {title}",
+      "back": "Voltar"
+    },
+    "opening": {
+      "title": "Me conta o que anda te incomodando?",
+      "explanation": [
+        "Na próxima tela você vai ver um rosto. Toque nas partes que te incomodam e elas vão aparecendo numa lista ao lado. Pode marcar quantas quiser e virar o rosto de lado para ver o perfil.",
+        "Não precisa saber o nome de nada. Depois a gente pergunta um pouquinho sobre cada parte."
+      ],
+      "chooseFace": "Qual rosto prefere usar?",
+      "female": "Feminino",
+      "male": "Masculino",
+      "start": "Começar",
+      "startWithoutFace": "Escolha um rosto para começar"
+    },
+    "map": {
+      "view": "Vista",
+      "front": "Frente",
+      "profile": "Perfil",
+      "face": "Rosto",
+      "female": "Feminino",
+      "male": "Masculino",
+      "drawingDescription": "Rosto {face}, vista de {view}",
+      "marked": "Você marcou",
+      "markedCount": "Você marcou ({n})",
+      "empty": "Toque no rosto para marcar.",
+      "remove": "Remover {area}",
+      "skin": "Pele em geral",
+      "other": "Outra parte",
+      "noticeMarked": "✓ {area}",
+      "noticeUnmarked": "✕ {area}",
+      "continue": "Continuar",
+      "otherModal": {
+        "title": "Qual outra parte te incomoda?",
+        "explanation": "Escreva com suas palavras onde fica e o que te incomoda. Não precisa saber o nome certo.",
+        "placeholder": "Ex.: perto da orelha, uma marquinha que apareceu",
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "remove": "Excluir esta parte",
+        "close": "Fechar"
+      },
+      "otherInList": "Outra parte: {text}",
+      "edit": "Editar {area}"
+    },
+    "next": {
+      "title": "Anotado! E agora?",
+      "marked": {
+        "one": "Você marcou 1 parte",
+        "many": "Você marcou {n} partes"
+      },
+      "explanation": [
+        "Se quiser, você pode contar um pouco mais sobre cada parte: há quanto tempo percebe, quanto incomoda, se já fez algo. Leva uns 2 minutos e ajuda a Dra. Mayara a chegar na conversa já sabendo do seu caso.",
+        "Se preferir, pode ir direto falar com ela. Tudo bem também."
+      ],
+      "moreInfo": "Desejo passar mais informações",
+      "moreInfoDetail": "Responder algumas perguntas rápidas sobre cada parte",
+      "talk": "Desejo falar com a Dra. Mayara",
+      "talkDetail": "Seguir agora com o que já marquei",
+      "back": "Voltar ao rosto"
+    },
+    "details": {
+      "step": "Detalhes de cada área",
+      "counter": "Área {current} de {total}",
+      "optional": "Todas as perguntas são opcionais.",
+      "questions": {
+        "concerns": "O que mais te incomoda aqui?",
+        "otherDescription": "Qual parte é e o que te incomoda?",
+        "side": "De que lado?",
+        "since": "Desde quando você percebe?",
+        "intensity": "Quanto isso te incomoda?",
+        "appearsWhen": "Quando aparece mais?",
+        "procedure": "Já fez algum procedimento nesta área?",
+        "comment": "Quer contar mais alguma coisa?"
+      },
+      "multipleAllowed": "Pode escolher mais de uma.",
+      "other": "Outro",
+      "otherPlaceholder": "Conte com suas palavras",
+      "otherAreaPlaceholder": "Ex.: uma marquinha perto da orelha esquerda",
+      "intensityLow": "Pouco",
+      "intensityHigh": "Muito",
+      "procedurePlaceholder": "Qual e quando, mais ou menos",
+      "commentPlaceholder": "Opcional",
+      "skip": "Pular esta área",
+      "nextArea": "Próxima área",
+      "finish": "Concluir"
+    },
+    "review": {
+      "step": "Revisar e enviar",
+      "title": "Confira antes de enviar",
+      "explanation": "É assim que a mensagem vai chegar no WhatsApp da Dra. Mayara.",
+      "name": "Como você se chama?",
+      "nameHint": "Opcional, mas ajuda a Dra. Mayara a te chamar pelo nome.",
+      "namePlaceholder": "Seu nome",
+      "preview": "Prévia da mensagem",
+      "editAreas": "Mudar as partes marcadas",
+      "editDetails": "Editar as respostas",
+      "addDetails": "Contar mais sobre cada parte",
+      "consent": "Concordo em enviar estas informações, que incluem dados sobre minha aparência e minha saúde, para Mayara Bacellar pelo WhatsApp, só para ela me atender. Sei que nada fica salvo neste site.",
+      "consentMissing": "Marque a caixa acima para poder enviar.",
+      "notice": "O WhatsApp vai abrir com a mensagem pronta. Você ainda pode mudar o texto antes de tocar em enviar.",
+      "send": "Enviar pelo WhatsApp"
+    },
+    "sent": {
+      "title": "Agora é com a Dra. Mayara",
+      "explanation": [
+        "Se o WhatsApp abriu com a mensagem, é só tocar em enviar por lá.",
+        "A Dra. Mayara lê o seu resumo, te responde e combina com você a consulta de avaliação.",
+        "Se quiser, mande fotos do rosto na própria conversa. Elas ajudam, mas não são obrigatórias."
+      ],
+      "didNotOpen": "O WhatsApp não abriu?",
+      "openAgain": "Abrir o WhatsApp de novo",
+      "privacy": "Suas respostas ficam só neste aparelho e somem quando você fecha a página.",
+      "erase": "Apagar minhas respostas e recomeçar",
+      "back": "Voltar ao resumo"
+    },
+    "summary": {
+      "title": "*ÁREAS QUE ME INCOMODAM ({n})*",
+      "area": "*{i}. {area}*",
+      "otherDescription": "- Onde e o quê: {text}",
+      "concerns": "- O que incomoda: {text}",
+      "side": "- Lado: {text}",
+      "since": "- Desde: {text}",
+      "intensity": "- Incômodo: {n} de 5",
+      "appearsWhen": "- Aparece mais: {text}",
+      "procedure": "- Procedimento anterior: {text}",
+      "procedureDetail": " ({text})",
+      "comment": "- Comentário: \"{text}\""
+    },
+    "message": {
+      "greeting": "Olá! Vim pelo site e gostaria de agendar uma avaliação.",
+      "name": "*Nome:* {text}",
+      "footer": "Resumo preenchido por mim no site de {professional}. Não é diagnóstico nem avaliação."
+    }
+  }
+}

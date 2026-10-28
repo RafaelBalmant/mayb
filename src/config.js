@@ -1,28 +1,31 @@
-// Constantes do app que não são texto do site (os textos ficam em data/conteudo.json).
+// App constants that are not site text (the text lives in data/content.json).
 
-/** Chave do sessionStorage; mude o sufixo quando o formato salvo deixar de ser compatível. */
-export const STORAGE_KEY = "site-mayara:v2";
+/** sessionStorage key; bump the suffix when the saved shape stops being compatible. */
+export const STORAGE_KEY = "site-mayara:v3";
 
-/** Quantidade de etapas da barra de progresso. */
+/** Old key (code with Portuguese names); read once and converted. */
+export const LEGACY_STORAGE_KEY = "site-mayara:v2";
+
+/** Number of steps in the progress bar. */
 export const TOTAL_STEPS = 8;
 
-/** Valores da escala de incômodo. */
+/** Values of the discomfort scale. */
 export const INTENSITY_SCALE = [1, 2, 3, 4, 5];
 
-/** Tamanho máximo do nome na mensagem do WhatsApp. */
+/** Maximum length of the name in the WhatsApp message. */
 export const NAME_MAX_LENGTH = 60;
 
 /**
- * Encurtamento dos textos livres quando a mensagem passa do limite:
- * começa em `start` caracteres e vai diminuindo `step` por vez até `min`.
+ * Shrinking of free-text fields when the message exceeds the limit:
+ * starts at `start` characters and shrinks by `step` until `min`.
  */
 export const FREE_TEXT_SHRINK = { start: 200, step: 20, min: 20 };
 
-/** Início do link de conversa do WhatsApp. */
+/** Start of the WhatsApp chat link. */
 export const WHATSAPP_BASE_URL = "https://wa.me/";
 
-/** Quanto tempo o aviso do mapa fica visível (ms). */
+/** How long the map notice stays visible (ms). */
 export const NOTICE_DURATION_MS = 1400;
 
-/** Espera antes de ir para a tela "enviado", para o link do WhatsApp abrir primeiro (ms). */
+/** Wait before going to the "sent" screen, so the WhatsApp link opens first (ms). */
 export const SEND_REDIRECT_DELAY_MS = 300;

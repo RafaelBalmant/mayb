@@ -1,6 +1,6 @@
 dist
 node_modules
 package-lock.json
-src/rostos/*.svg
+src/faces/*.svg
 test-results
 playwright-report

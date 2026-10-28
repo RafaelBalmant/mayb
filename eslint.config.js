@@ -3,7 +3,7 @@ import globals from "globals";
 import prettier from "eslint-config-prettier";
 
 export default [
-  { ignores: ["dist/", "node_modules/", "src/rostos/*.svg"] },
+  { ignores: ["dist/", "node_modules/", "src/faces/*.svg"] },
   js.configs.recommended,
   { rules: { "no-empty": ["error", { allowEmptyCatch: true }] } },
   {
