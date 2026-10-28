@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  # Once a day the image is built again so the Google reviews on the start page stay current.
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
 
 jobs:
   docker:
@@ -29,7 +33,7 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            VITE_GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}
+            GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }}
           tags: |
             balmantrafael/mayb:latest-amd64
             balmantrafael/mayb:${{ github.sha }}-amd64

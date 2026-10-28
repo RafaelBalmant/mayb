@@ -7,10 +7,10 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-# Google key for the reviews on the start page; GitHub Actions passes the GOOGLE_MAPS_KEY secret.
-ARG VITE_GOOGLE_MAPS_KEY
-ENV VITE_GOOGLE_MAPS_KEY=$VITE_GOOGLE_MAPS_KEY
-RUN npm run build
+# Google key used only here, to save the reviews into the build (GitHub Actions passes the GOOGLE_MAPS_KEY secret).
+# It is a build argument, not an ENV, and the build stage is thrown away: the key never reaches the image or the site.
+ARG GOOGLE_MAPS_KEY
+RUN npm run reviews && npm run build
 
 # Production stage
 FROM nginx:1.25-alpine

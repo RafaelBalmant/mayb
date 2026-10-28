@@ -2,6 +2,7 @@ node_modules
 dist
 .env
 .env.*
+src/data/reviews.generated.json
 .git
 .github
 *.md
