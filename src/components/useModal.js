@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useLayoutEffect } from "preact/hooks";
 
 const FOCUSABLE = "button:not([disabled]), textarea, input, [href], [tabindex]:not([tabindex='-1'])";
 
@@ -7,12 +7,13 @@ const FOCUSABLE = "button:not([disabled]), textarea, input, [href], [tabindex]:n
  * inside the dialog. `dialogRef` points at the dialog element; `onClose` should be stable between renders.
  */
 export function useModal(dialogRef, onClose) {
-  useEffect(() => {
+  // layout effects: the listeners are in place in the same tick as the modal, so a fast first key press is not missed
+  useLayoutEffect(() => {
     document.body.classList.add("with-modal");
     return () => document.body.classList.remove("with-modal");
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === "Escape") return onClose();
       if (e.key !== "Tab" || !dialogRef.current) return;

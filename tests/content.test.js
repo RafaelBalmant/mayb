@@ -108,5 +108,6 @@ describe("professional and seo", () => {
   it("the profile photo exists and the WhatsApp number is only digits", () => {
     expect(existsSync(`public/${content.professional.photo}`)).toBe(true);
     expect(content.professional.whatsapp).toMatch(/^\d{12,13}$/);
+    for (const link of ["instagram", "googleReview"]) expect(content.professional[link], link).toMatch(/^https:\/\//);
   });
 });

@@ -52,6 +52,9 @@ export function StartScreen() {
         <a class="btn" href={whatsappLink(t("start.contactMessage"))} target="_blank" rel="noopener noreferrer">
           {t("start.contact")}
         </a>
+        <a class="btn" href={professional.googleReview} target="_blank" rel="noopener noreferrer">
+          {t("start.review")}
+        </a>
         {state.features.map && (
           <button class="btn" id="go-map" onClick={() => goTo("opening")}>
             {t("start.map")}

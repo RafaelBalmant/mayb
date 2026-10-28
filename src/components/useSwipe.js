@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useLayoutEffect } from "preact/hooks";
 import { SWIPE_DIRECTION_RATIO, SWIPE_MIN_DISTANCE } from "../config.js";
 
 /**
@@ -7,7 +7,8 @@ import { SWIPE_DIRECTION_RATIO, SWIPE_MIN_DISTANCE } from "../config.js";
  * the middle of a touch made Safari swallow the next tap.
  */
 export function useSwipe(ref, onSwipe) {
-  useEffect(() => {
+  // layout effect: the listeners exist as soon as the calendar does, not after the next paint
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     let start = null;

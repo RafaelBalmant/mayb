@@ -29,6 +29,10 @@ test.describe("start page", () => {
     await expect(page.getByRole("button", { name: "Me conta o que te incomoda no rosto" })).toHaveCount(0);
     const contact = page.getByRole("link", { name: "Entrar em contato" });
     expect(await contact.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
+    await expect(page.getByRole("link", { name: "Compartilhe sua experiência" })).toHaveAttribute(
+      "href",
+      /g\.page|google/,
+    );
     await expect(page.getByRole("link", { name: /Instagram/ })).toHaveAttribute("href", /instagram\.com/);
   });
 
@@ -71,6 +75,7 @@ test.describe("agenda", () => {
 
   test("dragging the calendar sideways changes the month", async ({ page }) => {
     await page.goto("/#agenda");
+    await expect(page.getByRole("heading", { name: "Novembro de 2026" })).toBeVisible();
     const swipe = (fromX, toX) =>
       page.locator(".calendar").evaluate(
         (el, [a, b]) => {
