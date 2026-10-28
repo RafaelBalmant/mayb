@@ -1043,6 +1043,10 @@ a.btn[aria-disabled="true"] {
 .calendar {
   touch-action: pan-y;
 }
+/* The calendar slides in from the side; without clipping it widens the page for a moment and the fixed bar with it. */
+.app-agenda {
+  overflow-x: clip;
+}
 .calendar.enter-right {
   animation: enter-right 0.22s ease-out;
 }
