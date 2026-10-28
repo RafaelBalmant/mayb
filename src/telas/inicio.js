@@ -27,6 +27,7 @@ export function telaInicio() {
     <div class="inicio-botoes">
       <button class="btn pri" id="ir-agenda">${esc(t("inicio.agenda"))}</button>
       <a class="btn" href="${esc(linkWhatsapp(t("inicio.mensagemContato")))}" target="_blank" rel="noopener">${esc(t("inicio.contato"))}</a>
+      <p class="inicio-pergunta">${esc(t("inicio.avaliarPergunta"))}</p>
       <a class="btn" href="${esc(profissional.avaliacaoGoogle)}" target="_blank" rel="noopener">${esc(t("inicio.avaliar"))}</a>
       ${MOSTRAR_MAPA ? `<button class="btn" id="ir-mapa">${esc(t("inicio.mapa"))}</button>` : ""}
     </div>
