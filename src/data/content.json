@@ -261,7 +261,7 @@
       "image: imagem dentro de public/ que aparece quando alguém compartilha o link (1200×630 px, horizontal; imageSize é o tamanho dela). Vazio = sem imagem.",
       "O título da página (em azul no resultado do Google e na aba do navegador) fica em texts.general.pageTitle. Ter a especialidade e as cidades nele ajuda a aparecer nessas buscas.",
       "description: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
-      "content: texto que já vem pronto no HTML da página inicial (o Google lê sem precisar rodar o JavaScript). Some quando o site carrega; a tela inicial mostra a especialidade e as cidades logo abaixo do nome (texts.start.subtitle)."
+      "content: texto que já vem pronto no HTML da página inicial (o Google lê sem precisar rodar o JavaScript). Some quando o site carrega; a tela inicial mostra a especialidade e as cidades no rodapé (texts.start.locations)."
     ],
     "url": "https://dramayarabacellar.com/",
     "image": "share.jpg",
@@ -666,9 +666,8 @@
       "agenda": ["Escolher o mês", "Escolher a cidade"]
     },
     "start": {
-      "locations": "Maringá · Siqueira Campos",
+      "locations": "Harmonização facial em Maringá e Siqueira Campos",
       "name": ["Dra. Mayara", "Bacellar"],
-      "subtitle": "Harmonização facial em Maringá e Siqueira Campos",
       "credential": "Biomédica · CRBM 7137",
       "tagline": "Harmonização facial com ciência, naturalidade e propósito.",
       "photoAlt": "Foto da Dra. Mayara Bacellar",

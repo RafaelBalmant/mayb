@@ -59,7 +59,7 @@ describe("start", () => {
     expect(out).toContain(`https://wa.me/${professional.whatsapp}?text=`);
     expect(out).toContain(`href="${professional.googleReview}"`);
     expect(out).toContain("Compartilhe sua experiência");
-    expect(out).toContain("Maringá · Siqueira Campos");
+    expect(out).toContain("Harmonização facial em Maringá e Siqueira Campos");
     expect(out).toContain(professional.instagram);
     expect(out).toMatch(/id="bar"[^>]*hidden/);
   });

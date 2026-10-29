@@ -38,8 +38,8 @@ function startPageHead(content) {
     .join("\n    ");
 }
 
-// Text that Google reads without running JavaScript; main.jsx replaces it with the start screen, which keeps the
-// specialty and the cities in the subtitle under the name.
+// Text that Google reads without running JavaScript; main.jsx replaces it with the start screen, which shows the
+// specialty and the cities at the bottom (texts.start.locations).
 function startPageText({ professional, seo, texts, business }) {
   const c = seo.content;
   return `
