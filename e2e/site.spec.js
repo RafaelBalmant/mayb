@@ -24,7 +24,7 @@ test.describe("start page", () => {
   test("shows the doctor, the agenda and contact buttons and no map button by default", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: /Dra\. Mayara\s*Bacellar/ })).toBeVisible();
-    await expect(page.getByText("Maringá · Siqueira Campos")).toBeVisible();
+    await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
     await expect(page.getByRole("button", { name: "Verificar agenda" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Me conta o que te incomoda no rosto" })).toHaveCount(0);
     const contact = page.getByRole("link", { name: "Entrar em contato" });

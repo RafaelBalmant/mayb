@@ -62,7 +62,6 @@ export function StartScreen() {
               <span key={line}>{line}</span>
             ))}
           </h1>
-          <p class="profile-subtitle">{t("start.subtitle")}</p>
           <p class="profile-credential">{t("start.credential")}</p>
           <p class={animateTagline ? "profile-tagline appear" : "profile-tagline"}>{t("start.tagline")}</p>
         </div>

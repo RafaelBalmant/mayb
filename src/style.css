@@ -1660,12 +1660,7 @@ a.btn[aria-disabled="true"] {
   gap: 6px;
 }
 
-/* Start page: specialty and cities under the name */
-.profile-subtitle {
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.35;
-}
+/* Start page: registration under the name */
 .profile-credential {
   margin-top: -4px;
   font-size: 14px;

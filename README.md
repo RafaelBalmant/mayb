@@ -162,7 +162,7 @@ Tudo é feito no `npm run build` pelo plugin `scripts/seo.mjs` (as partes ficam 
 - **Página inicial**: título (`texts.general.pageTitle`), descrição, prévia do link (Open Graph, imagem
   `public/share.jpg` de 1200×630), dados estruturados e um texto pronto em `#root` para quem não roda JavaScript. Depois
   que o app carrega, a tela inicial mantém a especialidade e as cidades no subtítulo, com o CRBM, logo abaixo do nome
-  (`texts.start.subtitle` e `texts.start.credential`).
+  (`texts.start.credential`).
 - **Páginas de serviço e cidade** (`pages.list`, **vazia por enquanto**: o conteúdo vai ser alimentado depois). Cada
   item vira um HTML estático (`dist/<slug>/index.html`, ex.: `/toxina-botulinica-maringa/`) com título, descrição e link
   canônico próprios, H1 com o serviço e a cidade, perguntas frequentes (também como FAQPage para o Google), endereço,
