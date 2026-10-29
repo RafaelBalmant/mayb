@@ -1,7 +1,7 @@
 {
   "name": "site-mayara-bacellar",
   "version": "1.0.0",
-  "description": "Site de pré-avaliação de harmonização facial de Mayara Bacellar",
+  "description": "Site de pr\u00e9-avalia\u00e7\u00e3o de harmoniza\u00e7\u00e3o facial de Mayara Bacellar",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
-    "faces": "node scripts/generate-faces.mjs"
+    "faces": "node scripts/generate-faces.mjs",
+    "images": "node scripts/generate-images.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -26,6 +27,7 @@
     "globals": "^17.13.0",
     "preact-render-to-string": "^6.8.2",
     "prettier": "^3.9.10",
+    "sharp": "^0.33.5",
     "vite": "^5.4.11",
     "vitest": "^2.1.9"
   },

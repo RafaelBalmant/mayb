@@ -7,8 +7,12 @@
     "instagram": "https://www.instagram.com/dramayarabacellar/",
     "googleReview": "https://g.page/r/CRVD-q6ngonxEAE/review",
     "messageLimit": 1500,
-    "_photos": "photo: imagem dentro de public/ (ex.: \"profile/photo.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso.",
-    "photo": "profile/photo.jpg"
+    "_photos": "photo: imagem dentro de public/ (ex.: \"profile/photo.jpg\") que aparece no topo do início, inteira (sem cortes). Vertical, uns 1200×1500 px, com o rosto no terço de cima. Enquanto o arquivo não existir, aparece um fundo liso. photoSize: largura e altura da foto em px. Depois de trocar a foto, rode npm run images (gera as versões leves e a imagem de compartilhamento).",
+    "photo": "profile/photo.jpg",
+    "photoSize": {
+      "width": 1200,
+      "height": 1500
+    }
   },
   "googleReviews": {
     "_howToEdit": [
@@ -254,17 +258,19 @@
     "_howToEdit": [
       "Textos para o Google e para a prévia do link no WhatsApp/Instagram. Entram no HTML na hora do build (npm run build).",
       "url: endereço oficial do site, com https e barra no fim. Vai no link canônico, na prévia do link e no sitemap.xml (o arquivo que se envia ao Google Search Console). Vazio = sem sitemap nem link canônico.",
-      "image: imagem dentro de public/ que aparece quando alguém compartilha o link (o ideal é uma de 1200×630 px). Vazio = sem imagem.",
+      "image: imagem dentro de public/ que aparece quando alguém compartilha o link (1200×630 px, horizontal; imageSize é o tamanho dela). Vazio = sem imagem.",
       "O título da página (em azul no resultado do Google e na aba do navegador) fica em texts.general.pageTitle. Ter a especialidade e as cidades nele ajuda a aparecer nessas buscas.",
       "description: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
-      "content: texto que já vem pronto no HTML (o Google lê sem precisar rodar o JavaScript). Some assim que o site carrega."
+      "content: texto que já vem pronto no HTML da página inicial (o Google lê sem precisar rodar o JavaScript). Some quando o site carrega; a tela inicial mostra a especialidade e as cidades logo abaixo do nome (texts.start.subtitle)."
     ],
     "url": "https://dramayarabacellar.com/",
-    "image": "profile/photo.jpg",
+    "image": "share.jpg",
+    "imageSize": {
+      "width": 1200,
+      "height": 630
+    },
     "description": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Veja a agenda de atendimento e agende pelo WhatsApp.",
-    "keywords": ["harmonização facial", "Maringá", "Siqueira Campos", "Paraná", "Dra. Mayara Bacellar"],
     "state": "PR",
-    "cities": ["Maringá", "Siqueira Campos"],
     "content": {
       "title": "Dra. Mayara Bacellar · Harmonização facial em Maringá e Siqueira Campos",
       "paragraphs": [
@@ -272,6 +278,89 @@
         "Veja os meses e os dias de atendimento em cada cidade e agende sua consulta pelo WhatsApp com a equipe da Dra. Mayara."
       ],
       "whatsapp": "Agendar pelo WhatsApp: {phone}"
+    }
+  },
+  "business": {
+    "_howToEdit": [
+      "Dados da Dra. Mayara e das unidades, usados nos dados estruturados (schema.org) que o Google lê e nas páginas de cada serviço.",
+      "name: precisa ser igual ao nome do Perfil da Empresa no Google.",
+      "locations: uma entrada por cidade. id é o mesmo da agenda (maringa, siqueira_campos). Campo vazio fica de fora do site e dos dados para o Google.",
+      "hours: dias em inglês, como o schema.org pede (Monday ... Sunday), e horários no formato 09:00. hoursText é o mesmo horário escrito para o paciente.",
+      "sameAs: links de perfis da Dra. Mayara em outros sites (Instagram, Facebook). O link do Perfil da Empresa no Google de cada unidade fica em locations → map."
+    ],
+    "name": "Mayara Bacellar | Harmonização Facial",
+    "type": "HealthAndBeautyBusiness",
+    "jobTitle": "Biomédica esteta",
+    "registration": "CRBM 7137",
+    "credential": "Biomédica · CRBM 7137",
+    "sameAs": ["https://www.instagram.com/dramayarabacellar/", "https://www.facebook.com/MayaraBacellarBioMed/"],
+    "locations": [
+      {
+        "id": "maringa",
+        "city": "Maringá",
+        "state": "PR",
+        "streetAddress": "Travessa Japurá, 175, Sala 301 – Madison Centro Empresarial",
+        "neighborhood": "Zona 08",
+        "postalCode": "87050-630",
+        "geo": {
+          "latitude": -23.4378515,
+          "longitude": -51.9101809
+        },
+        "map": "https://maps.google.com/?cid=17404585891656778517",
+        "hours": [
+          {
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "hoursText": "Segunda a sábado, das 9h às 18h"
+      },
+      {
+        "id": "siqueira_campos",
+        "city": "Siqueira Campos",
+        "state": "PR",
+        "streetAddress": "Rua Benjamin Constant, 2058",
+        "neighborhood": "",
+        "postalCode": "",
+        "geo": null,
+        "map": "",
+        "hours": [],
+        "hoursText": ""
+      }
+    ]
+  },
+  "pages": {
+    "_howToEdit": [
+      "Páginas de cada serviço e cidade (ex.: /toxina-botulinica-maringa/). Por enquanto a lista está vazia: o conteúdo vai ser alimentado depois. Cada item que entrar em list vira, no build, um HTML pronto (o Google lê sem rodar o JavaScript) e entra no sitemap, nos links e no nginx sozinho.",
+      "slug: o endereço da página (só letras minúsculas, números e hífens). Ao criar ou renomear uma página, ela já entra no site, no sitemap e no nginx sozinha.",
+      "Cada item: { slug, location, service, h1, title, description, intro: [parágrafos], sections: [{ heading, paragraphs: [...] }], faq: [{ question, answer }] }. O H1, o título e a descrição precisam ter o serviço e a cidade; o texto todo, de 400 a 700 palavras.",
+      "location: id da unidade em business.locations (maringa ou siqueira_campos).",
+      "title e description: o título e o texto que aparecem no resultado do Google; um diferente por página.",
+      "Regras de publicidade em saúde: nada de resultado garantido, superlativos (\"o melhor\", \"sem dor\") ou fotos de antes e depois sem termo de consentimento.",
+      "faq: as perguntas aparecem na página e também vão para o Google (FAQPage).",
+      "common: textos que se repetem em todas as páginas. {city} e {title} são trocados pelo valor certo."
+    ],
+    "common": {
+      "home": "Página inicial: agenda e contato",
+      "whatsapp": "Agendar avaliação pelo WhatsApp",
+      "whatsappMessage": "Olá! Vi a página \"{title}\" no site da Dra. Mayara e gostaria de agendar uma avaliação.",
+      "where": "Onde atende em {city}",
+      "address": "Endereço",
+      "hours": "Horário",
+      "directions": "Como chegar",
+      "agenda": "Os dias de atendimento em cada cidade estão na agenda do site.",
+      "agendaLink": "Ver a agenda",
+      "faq": "Perguntas frequentes",
+      "other": "Outros serviços",
+      "notice": "Os resultados variam de pessoa para pessoa. A indicação de cada procedimento é feita só depois da consulta de avaliação."
+    },
+    "list": [],
+    "notFound": {
+      "title": "Página não encontrada | Dra. Mayara Bacellar",
+      "h1": "Página não encontrada",
+      "text": "O endereço que você abriu não existe ou mudou. Veja a página inicial ou um dos serviços abaixo.",
+      "home": "Ir para a página inicial"
     }
   },
   "areas": [
@@ -579,6 +668,8 @@
     "start": {
       "locations": "Maringá · Siqueira Campos",
       "name": ["Dra. Mayara", "Bacellar"],
+      "subtitle": "Harmonização facial em Maringá e Siqueira Campos",
+      "credential": "Biomédica · CRBM 7137",
       "tagline": "Harmonização facial com ciência, naturalidade e propósito.",
       "photoAlt": "Foto da Dra. Mayara Bacellar",
       "agenda": "Verificar agenda",
