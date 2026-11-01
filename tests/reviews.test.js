@@ -27,13 +27,18 @@ describe("showableReviews", () => {
     { author: "Ana", stars: 5, text: " Atendimento maravilhoso! " },
     { author: "Bia", stars: 3, text: "ok" },
     { author: "Sem texto", stars: 5, text: "" },
-    { author: "Carla", stars: 5, text: "Faço minhas SOBRANCELHAS com ela." },
+    { author: "Carla", stars: 5, text: "Faço minhas SOBRANCELHAS com ela há anos." },
     { author: "Duda", stars: 4, text: "Muito atenciosa." },
   ];
 
-  it("keeps reviews with text and enough stars, in the saved order", () => {
-    expect(showableReviews(reviews, { minStars: 4 }).map((r) => r.author)).toEqual(["Ana", "Carla", "Duda"]);
-    expect(showableReviews(reviews)[0].text).toBe("Atendimento maravilhoso!");
+  it("keeps reviews with text and enough stars, longest first", () => {
+    expect(showableReviews(reviews, { minStars: 4 }).map((r) => r.author)).toEqual(["Carla", "Ana", "Duda"]);
+    expect(showableReviews(reviews, { minStars: 5 })[1].text).toBe("Atendimento maravilhoso!");
+  });
+
+  it("hides reviews with fewer than minWords words", () => {
+    expect(showableReviews(reviews, { minWords: 6 }).map((r) => r.author)).toEqual(["Carla"]);
+    expect(showableReviews(reviews, { minWords: 2 }).map((r) => r.author)).toEqual(["Carla", "Ana", "Duda"]);
   });
 
   it("hides reviews that mention a hidden topic, ignoring case and accents", () => {
@@ -56,6 +61,10 @@ describe("reviewGroups", () => {
       [5, 6, 7, 8, 9],
       [10, 11, 12, 13, 14],
     ]);
+  });
+
+  it("uses only the first size * max reviews (the longest)", () => {
+    expect(reviewGroups(list(40), { size: 5, max: 3 }).flat()).toEqual(list(15));
   });
 
   it("with only 5 reviews, every group has them all but starts on a different one", () => {
@@ -129,5 +138,6 @@ describe("reviews in content.json", () => {
     const shown = showableReviews(googleReviews.reviews, googleReviews);
     expect(shown.length).toBeGreaterThan(15);
     expect(shown.some((r) => /sobrancelha/i.test(r.text))).toBe(false);
+    expect(shown.every((r) => r.text.split(/\s+/).length >= googleReviews.minWords)).toBe(true);
   });
 });

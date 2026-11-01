@@ -19,23 +19,30 @@ const plain = (text) =>
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 
+const wordCount = (text) => text.split(/\s+/).filter(Boolean).length;
+
 /**
- * The reviews worth showing (kept in content.json): only those with text, at least `minStars` and none of the
- * `hideIfMentions` words (topics the doctor no longer focuses on).
+ * The reviews worth showing (kept in content.json), longest first: only those with at least `minWords` words and
+ * `minStars` stars, and none of the `hideIfMentions` words (topics the doctor no longer focuses on).
  */
-export function showableReviews(reviews, { minStars = 1, hideIfMentions = [] } = {}) {
+export function showableReviews(reviews, { minStars = 1, minWords = 1, hideIfMentions = [] } = {}) {
   const hidden = hideIfMentions.map(plain);
   return (reviews ?? [])
     .map((r) => ({ author: r.author ?? "", stars: r.stars ?? 0, text: (r.text ?? "").trim() }))
-    .filter((r) => r.text && r.stars >= minStars && !hidden.some((word) => plain(r.text).includes(word)));
+    .filter(
+      (r) =>
+        wordCount(r.text) >= minWords && r.stars >= minStars && !hidden.some((word) => plain(r.text).includes(word)),
+    )
+    .sort((a, b) => b.text.length - a.text.length);
 }
 
 /**
- * Up to `max` groups of up to `size` reviews, each starting at a different review and wrapping around the list.
- * With many reviews the groups barely overlap; with few, they hold the same reviews in a different order, so every
- * visit still opens on a different one.
+ * Up to `max` groups of up to `size` reviews, taken from the first `size * max` (the longest, as showableReviews
+ * sorts them), each starting at a different review and wrapping around. With enough reviews the groups do not
+ * overlap; with few, they hold the same reviews in a different order, so every visit still opens on a different one.
  */
-export function reviewGroups(reviews, { size = REVIEWS_GROUP_SIZE, max = REVIEWS_MAX_GROUPS } = {}) {
+export function reviewGroups(all, { size = REVIEWS_GROUP_SIZE, max = REVIEWS_MAX_GROUPS } = {}) {
+  const reviews = all.slice(0, size * max);
   const n = reviews.length;
   const count = Math.min(max, n);
   const length = Math.min(size, n);
