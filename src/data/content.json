@@ -16,17 +16,34 @@
   },
   "googleReviews": {
     "_howToEdit": [
-      "Avaliações do Google mostradas no início, num carrossel. Cada visita mostra um grupo diferente delas.",
+      "Avaliações do Google mostradas no início, num carrossel. Entram as mais longas primeiro (até 15, em 3 grupos de 5), e cada visita mostra um grupo diferente.",
       "reviews: as avaliações, copiadas do perfil no Google (author = nome como aparece lá, stars = 1 a 5, text = o texto; quebras de linha com \\n). Para incluir uma nova, acrescente na lista; avaliações sem texto ficam de fora.",
       "A nota média e o total de avaliações vêm do Google no deploy (uma vez por dia), com a chave que fica no secret GOOGLE_MAPS_KEY do GitHub (no computador, no .env). Sem a chave, as avaliações aparecem sem a nota.",
       "placeId: o identificador do perfil da Dra. Mayara no Google (começa com \"ChIJ\").",
       "minStars: só entram avaliações com essa nota ou mais.",
-      "hideIfMentions: avaliações que citam alguma dessas palavras não aparecem (o foco agora é harmonização facial, então as que falam de sobrancelha ficam de fora). Maiúsculas e acentos não importam."
+      "hideIfMentions: avaliações que citam alguma dessas palavras não aparecem (o foco agora é harmonização facial, então as que falam de sobrancelha ficam de fora). Maiúsculas e acentos não importam.",
+      "minWords: avaliações com menos palavras do que isso não aparecem."
     ],
     "placeId": "ChIJNUgQq-7R7JQRFUP6rqeCifE",
     "minStars": 4,
+    "minWords": 6,
     "hideIfMentions": ["sobrancelha"],
     "reviews": [
+      {
+        "author": "Suziane Fonseca Alves",
+        "stars": 5,
+        "text": "Mayara é uma excelente profissional, além de uma pessoa maravilhosa ela escuta muito as pacientes, oferece tratamentos que de fato vão colaborar para a nossa estética valorizando nossa beleza natural sem extrapolar (que era algo importante pra mim). Da para sentir que ela ama o que faz e prioriza aquilo que é importante pra cada paciente, não me senti um número com ela, mas uma pessoa que queria se sentir mais bonita, e de fato, minha autoestima foi lá pra cima! E olha que eu tenho várias questões com autoimagem, ein! Ela tem um conhecimento técnico enorme e uma experiência imensa. Recomendo de olhos fechados e não vejo a hora de voltar pros próximos atendimentos!"
+      },
+      {
+        "author": "Daiany Garcia",
+        "stars": 5,
+        "text": "Excelente profissional!! Precisa em todos os detalhes e com muita naturalidade, sem exageros, confio de olhos fechados e super recomendo 🫶🏻"
+      },
+      {
+        "author": "Mateus Cardoso",
+        "stars": 5,
+        "text": "Gostei muito do resultado da harmonização facial. A Dra. Mayara, foi atenciosa e passou bastante confiança durante o procedimento. O resultado ficou natural, exatamente como eu queria. Recomendo!"
+      },
       {
         "author": "SUELLEN BELASQUE",
         "stars": 5,
@@ -190,7 +207,7 @@
       {
         "author": "Izabela Lopes",
         "stars": 5,
-        "text": "Atendimento impecavél, uma profissional incrével, muito transparente em todas as dúvidas e informações, atenciosa e carinhosa. O resulto muito melhor que o esperado! recomendo a todos, sem medo podem confiar de olhos fechados!"
+        "text": "Amei meu atendimento com a Mayara! ❤ Uma profissional incrível, super atenciosa, carinhosa e transparente, que me passou muita confiança desde o início. O resultado do botox facial ficou ainda melhor do que eu esperava! 🥹✨ Recomendo de olhos fechados, podem confiar sem medo! ❤"
       },
       {
         "author": "Danielle Felix",

@@ -139,8 +139,8 @@ A página inicial mostra a nota e avaliações do perfil da Dra. Mayara no Googl
 
 - **As avaliações** ficam em `content.json` → `googleReviews.reviews` (nome, estrelas e texto, copiados do perfil). O
   Google só entrega 5 pela API, por isso a lista é mantida à mão: para incluir uma nova, acrescente na lista.
-  `minStars` e `hideIfMentions` (hoje `sobrancelha`, já que o foco é harmonização facial) escondem as que não devem
-  aparecer.
+  `minStars`, `minWords` (hoje 6) e `hideIfMentions` (hoje `sobrancelha`, já que o foco é harmonização facial)
+  escondem as que não devem aparecer. Das que sobram, entram as mais longas primeiro (até 15, em 3 grupos de 5).
 - **A nota média e o total** vêm do Google no build: `npm run reviews` (`scripts/fetch-reviews.mjs`, fonte em
   `scripts/reviews/google-places.mjs`) grava `src/data/google-rating.generated.json` (fora do git). Sem ele, as
   avaliações aparecem sem a nota.
