@@ -752,6 +752,33 @@ a.btn[aria-disabled="true"] {
   font-weight: 500;
   color: var(--muted);
 }
+/* "Procedimentos" (service pages) at the bottom of the start page: discreet, like the line above it */
+.procedure-links {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+.procedure-links h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.procedure-links ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.procedure-links a {
+  display: inline-block;
+  padding: 6px 0;
+  color: inherit;
+}
+.procedure-links a:hover {
+  color: var(--ink);
+}
 .profile-instagram {
   align-self: center;
   display: grid;

@@ -87,6 +87,24 @@ describe("start", () => {
     expect(out).toMatch(/id="bar"[^>]*hidden/);
   });
 
+  it("links every service page under 'Procedimentos', and shows nothing while there are none", () => {
+    const pages = [
+      { slug: "toxina-botulinica-maringa", h1: "Toxina botulínica em Maringá" },
+      { slug: "preenchimento-labial-siqueira-campos", h1: "Preenchimento labial em Siqueira Campos" },
+    ];
+    const start = (props) =>
+      renderToString(
+        <StoreProvider initialState={initialState({ mapEnabled: false })}>
+          <StartScreen {...props} />
+        </StoreProvider>,
+      );
+    const withPages = start({ pages });
+    expect(withPages).toContain(">Procedimentos</h2>");
+    expect(withPages).toContain('href="/toxina-botulinica-maringa/"');
+    expect(withPages).toContain(">Preenchimento labial em Siqueira Campos</a>");
+    expect(start({})).not.toContain("Procedimentos");
+  });
+
   it("offers the map flow only when it is on", () => {
     expect(html(stateOn("start"))).toContain('id="go-map"');
   });

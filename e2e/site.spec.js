@@ -378,6 +378,22 @@ test.describe("HTML for search engines (without JavaScript)", () => {
     );
   });
 
+  test("the start page has enough text, the specialty with both cities and a working WhatsApp link", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const words = (await page.locator("body").innerText()).split(/\s+/).filter((w) => /\p{L}/u.test(w));
+    expect(words.length).toBeGreaterThanOrEqual(300);
+    const specialty = page.getByText(/Harmonização facial/).filter({ hasText: "Maringá" });
+    await expect(specialty.filter({ hasText: "Siqueira Campos" }).first()).toBeVisible();
+    const contact = page.locator('a[data-track="whatsapp_contact"]');
+    await expect(contact).toBeVisible();
+    const href = new URL(await contact.getAttribute("href"));
+    expect(href.origin).toBe("https://wa.me");
+    expect(href.pathname).toMatch(/^\/55\d{10,11}$/);
+    expect(href.searchParams.get("text")).toBeTruthy();
+  });
+
   test("the face map is kept out of Google", async ({ page }) => {
     await page.goto("/mapa/");
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, follow");
