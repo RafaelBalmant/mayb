@@ -14,6 +14,60 @@
       "height": 1500
     }
   },
+  "procedures": {
+    "_howToEdit": [
+      "Seção \"Procedimentos\" da página inicial: vem fechada, e cada procedimento abre separado. O título de cada um mostra só o nome; ao abrir, a primeira linha mostra o nome com a cidade (ex.: \"Harmonização facial em Maringá\"), que é o que ajuda o Google, e em seguida o texto.",
+      "Tudo fica no HTML da página, então o Google lê o conteúdo mesmo com a seção fechada. Não esconda texto só para o Google: ele trata isso como spam.",
+      "city: a cidade que aparece junto do nome. list: { id, name, text, page? }. page: slug de uma página de pages.list; quando existir, aparece o link more para ela.",
+      "Os textos são rascunhos curtos para a Dra. revisar. Regras de publicidade em saúde: nada de resultado garantido nem superlativos."
+    ],
+    "title": "Procedimentos",
+    "city": "Maringá",
+    "where": "{name} em {city}",
+    "more": "Saiba mais",
+    "list": [
+      {
+        "id": "facial_harmonization",
+        "name": "Harmonização facial",
+        "text": "Conjunto de procedimentos para equilibrar as proporções do rosto, planejado a partir de uma avaliação individual e respeitando as características de cada paciente."
+      },
+      {
+        "id": "botulinum_toxin",
+        "name": "Toxina botulínica (Botox)",
+        "text": "Suaviza as linhas de expressão da testa, entre as sobrancelhas e ao redor dos olhos. A aplicação é planejada na avaliação, de acordo com a movimentação do rosto."
+      },
+      {
+        "id": "lip_filler",
+        "name": "Preenchimento labial",
+        "text": "Ácido hialurônico para dar contorno, volume ou hidratação aos lábios, conforme o que for combinado na avaliação."
+      },
+      {
+        "id": "under_eye_filler",
+        "name": "Preenchimento de olheiras",
+        "text": "Ácido hialurônico aplicado abaixo dos olhos para suavizar a aparência de cansaço causada pela perda de volume na região."
+      },
+      {
+        "id": "chin_jawline_filler",
+        "name": "Preenchimento de queixo e contorno facial",
+        "text": "Ácido hialurônico para projetar o queixo e definir a linha da mandíbula, buscando harmonia com o restante do rosto."
+      },
+      {
+        "id": "collagen_biostimulator",
+        "name": "Bioestimulador de colágeno",
+        "text": "Estimula o próprio organismo a produzir colágeno, melhorando aos poucos a firmeza e a qualidade da pele."
+      },
+      {
+        "id": "ultraformer_mpt",
+        "name": "Ultraformer MPT",
+        "text": "Ultrassom microfocado que atua nas camadas profundas da pele, indicado para firmeza e contorno do rosto."
+      },
+      {
+        "id": "skin_cleansing",
+        "name": "Limpeza de pele",
+        "text": "Remove impurezas, cravos e células mortas, deixando a pele preparada para os demais cuidados."
+      }
+    ]
+  },
   "googleReviews": {
     "_howToEdit": [
       "Avaliações do Google mostradas no início, num carrossel. Entram as mais longas primeiro (até 15, em 3 grupos de 5), e cada visita mostra um grupo diferente.",
@@ -712,8 +766,7 @@
       "map": "Me conta o que te incomoda no rosto",
       "instagram": "Instagram da Dra. Mayara Bacellar",
       "cookies": "Privacidade e cookies",
-      "paths": "Agenda e contato",
-      "procedures": "Procedimentos"
+      "paths": "Agenda e contato"
     },
     "cookies": {
       "label": "Aviso de cookies",

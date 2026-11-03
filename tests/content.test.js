@@ -124,6 +124,16 @@ describe("agenda.json and cases.json", () => {
   );
 });
 
+describe("procedures", () => {
+  it("have unique ids, a name and a text, and every service page is linked from one of them", () => {
+    const { list } = content.procedures;
+    expect(new Set(list.map((p) => p.id)).size).toBe(list.length);
+    for (const p of list) expect(p.name && p.text, p.id).toBeTruthy();
+    const linked = new Set(list.map((p) => p.page).filter(Boolean));
+    for (const page of content.pages.list) expect(linked.has(page.slug), page.slug).toBe(true);
+  });
+});
+
 describe("professional and seo", () => {
   it("the profile photo exists and the WhatsApp number is only digits", () => {
     expect(existsSync(`public/${content.professional.photo}`)).toBe(true);

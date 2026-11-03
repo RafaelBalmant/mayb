@@ -6,7 +6,7 @@ import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { CookiesLink } from "../components/start/CookiesLink.jsx";
 import { MapLinks } from "../components/start/MapLinks.jsx";
-import { ProcedureLinks } from "../components/start/ProcedureLinks.jsx";
+import { Procedures } from "../components/start/Procedures.jsx";
 import { Tagline } from "../components/start/Tagline.jsx";
 
 // The photo lives in public/ (file name in content.json -> professional.photo). `npm run images` writes lighter AVIF
@@ -84,9 +84,9 @@ export function StartScreen({ rating, pages = [] }) {
         <MapLinks />
       </nav>
       <GoogleReviews rating={rating} />
+      <Procedures pages={pages} />
       <footer className="start-footer">
         <p className="profile-locations">{t("start.locations")}</p>
-        <ProcedureLinks pages={pages} />
         <a
           className="profile-instagram"
           data-track="instagram_open"

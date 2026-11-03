@@ -1,7 +1,7 @@
 import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CasesProvider } from "../src/components/CasesContext.jsx";
-import { professional } from "../src/content.js";
+import { procedures, professional } from "../src/content.js";
 import { SCREEN_IDS, resolveScreen } from "../src/domain/flow.js";
 import { newArea } from "../src/domain/questions.js";
 import { FacesProvider } from "../src/faces/FacesContext.jsx";
@@ -87,22 +87,22 @@ describe("start", () => {
     expect(out).toMatch(/id="bar"[^>]*hidden/);
   });
 
-  it("links every service page under 'Procedimentos', and shows nothing while there are none", () => {
-    const pages = [
-      { slug: "toxina-botulinica-maringa", h1: "Toxina botulínica em Maringá" },
-      { slug: "preenchimento-labial-siqueira-campos", h1: "Preenchimento labial em Siqueira Campos" },
-    ];
+  it("has a closed 'Procedimentos' section with one closed row per procedure, the city shown inside", () => {
     const start = (props) =>
       renderToString(
         <StoreProvider initialState={initialState({ mapEnabled: false })}>
           <StartScreen {...props} />
         </StoreProvider>,
       );
-    const withPages = start({ pages });
-    expect(withPages).toContain(">Procedimentos</h2>");
-    expect(withPages).toContain('href="/toxina-botulinica-maringa/"');
-    expect(withPages).toContain(">Preenchimento labial em Siqueira Campos</a>");
-    expect(start({})).not.toContain("Procedimentos");
+    const out = start({});
+    expect(out).toContain('<section class="procedures"');
+    expect(out).not.toMatch(/<details[^>]* open/);
+    expect(out.match(/<details class="procedure"/g)).toHaveLength(procedures.list.length);
+    expect(out).toContain("<summary><h3>Harmonização facial</h3></summary>");
+    expect(out).toContain('<p class="procedure-where">Harmonização facial em Maringá</p>');
+    expect(out).not.toContain("procedure-more");
+    const linked = start({ pages: [{ slug: "harmonizacao-facial-maringa" }] });
+    expect(linked).not.toContain("procedure-more"); // no procedure points to that page
   });
 
   it("offers the map flow only when it is on", () => {

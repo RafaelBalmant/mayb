@@ -35,6 +35,7 @@ npm run prototype -- protótipo.html  # o site inteiro num único HTML (página 
 | Rótulos das respostas (lado, desde quando…)                   | `src/data/content.json` → `labels`                                      |
 | As perguntas de cada área (ordem, tipo, quais áreas mostram)  | `src/data/questions.json`                                               |
 | Em que etapa cada tela fica na barra de progresso             | `src/data/flow.json`                                                    |
+| Procedimentos da página inicial (nome, cidade, texto)         | `src/data/content.json` → `procedures`                                  |
 | Cores e fontes                                                | `src/styles/theme.css` (fontes: `src/styles/fonts.js`, via `next/font`) |
 | Tempos, limites, escala de 1 a 5                              | `src/config.js`                                                         |
 | Título e descrição de cada página no Google                   | `src/data/content.json` → `seo.routes`                                  |
