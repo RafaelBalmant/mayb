@@ -18,7 +18,7 @@ export const metadata = pageMetadata({
 export default function StartPage() {
   return (
     <>
-      <StartScreen rating={loadRating()} />
+      <StartScreen rating={loadRating()} pages={content.pages.list} />
       <TrackScreen name="start" />
       <LegacyHashLinks />
     </>

@@ -752,6 +752,76 @@ a.btn[aria-disabled="true"] {
   font-weight: 500;
   color: var(--muted);
 }
+/* "Procedimentos" on the start page: one closed section, with a closed row per procedure (native <details>) */
+.procedures summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.procedures summary::-webkit-details-marker {
+  display: none;
+}
+.procedures summary::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform 0.2s;
+}
+.procedures details[open] > summary::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+.procedures > details > summary {
+  justify-content: center;
+  color: var(--ink);
+}
+.procedures h2 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 22px;
+}
+.procedure-list {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.procedure {
+  border-bottom: 1px solid var(--line);
+}
+.procedure > summary {
+  min-height: 48px;
+  color: var(--ink);
+}
+.procedure h3 {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: 500;
+}
+.procedure p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.procedure .procedure-where {
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.procedure-more {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--ink);
+}
 .profile-instagram {
   align-self: center;
   display: grid;

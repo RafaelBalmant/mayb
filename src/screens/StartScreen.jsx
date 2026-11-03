@@ -6,6 +6,7 @@ import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { CookiesLink } from "../components/start/CookiesLink.jsx";
 import { MapLinks } from "../components/start/MapLinks.jsx";
+import { Procedures } from "../components/start/Procedures.jsx";
 import { Tagline } from "../components/start/Tagline.jsx";
 
 // The photo lives in public/ (file name in content.json -> professional.photo). `npm run images` writes lighter AVIF
@@ -29,9 +30,9 @@ const InstagramIcon = () => (
  * Start page: photo on top (same width as the text), the name in big letters over the photo's lower edge, and the
  * paths. Built ahead of time as plain HTML (a Server Component); only the reviews carousel, the tagline animation,
  * the map buttons (behind ?mapa=1) and the cookie link run in the browser.
- * `rating`: the Google rating saved at build time, or null.
+ * `rating`: the Google rating saved at build time, or null. `pages`: the service pages (content.json -> pages.list).
  */
-export function StartScreen({ rating }) {
+export function StartScreen({ rating, pages = [] }) {
   return (
     <Layout className="app app-start" hideBar>
       <header className="profile">
@@ -83,6 +84,7 @@ export function StartScreen({ rating }) {
         <MapLinks />
       </nav>
       <GoogleReviews rating={rating} />
+      <Procedures pages={pages} />
       <footer className="start-footer">
         <p className="profile-locations">{t("start.locations")}</p>
         <a

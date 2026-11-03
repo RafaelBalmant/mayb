@@ -36,6 +36,17 @@ test.describe("start page", () => {
     await expect(page.getByRole("link", { name: /Instagram/ })).toHaveAttribute("href", /instagram\.com/);
   });
 
+  test("'Procedimentos' opens, then each procedure opens on its own", async ({ page }) => {
+    await page.goto("/");
+    const where = page.getByText("Harmonização facial em Maringá", { exact: true });
+    await expect(where).toBeHidden();
+    await page.getByText("Procedimentos", { exact: true }).click();
+    await expect(page.getByText("Limpeza de pele", { exact: true })).toBeVisible();
+    await expect(where).toBeHidden();
+    await page.getByText("Harmonização facial", { exact: true }).click();
+    await expect(where).toBeVisible();
+  });
+
   test("the action bar is hidden on the start page", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("#bar")).toBeHidden();
@@ -376,6 +387,28 @@ test.describe("HTML for search engines (without JavaScript)", () => {
       "href",
       "https://dramayarabacellar.com/agenda/",
     );
+  });
+
+  test("the start page has enough text, the specialty with both cities and a working WhatsApp link", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const words = (await page.locator("body").innerText()).split(/\s+/).filter((w) => /\p{L}/u.test(w));
+    expect(words.length).toBeGreaterThanOrEqual(300);
+    const specialty = page.getByText(/Harmonização facial/).filter({ hasText: "Maringá" });
+    await expect(specialty.filter({ hasText: "Siqueira Campos" }).first()).toBeVisible();
+    const contact = page.locator('a[data-track="whatsapp_contact"]');
+    await expect(contact).toBeVisible();
+    const href = new URL(await contact.getAttribute("href"));
+    expect(href.origin).toBe("https://wa.me");
+    expect(href.pathname).toMatch(/^\/55\d{10,11}$/);
+    expect(href.searchParams.get("text")).toBeTruthy();
+  });
+
+  test("the procedures are in the HTML, closed, each named with the city inside", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".procedures > details")).not.toHaveAttribute("open");
+    await expect(page.locator(".procedure-where").first()).toHaveText("Harmonização facial em Maringá");
   });
 
   test("the face map is kept out of Google", async ({ page }) => {
