@@ -18,7 +18,7 @@ function Pages() {
   if (pathname === PATHS.agenda) return <AgendaScreen builtAt={builtAt} />;
   if (pathname === PATHS.cases) return <CasesScreen />;
   if (pathname === PATHS.flow) return <FaceFlow />;
-  return <StartScreen rating={data.rating} />;
+  return <StartScreen rating={data.rating} pages={data.pages} />;
 }
 
 createRoot(document.getElementById("root")).render(
