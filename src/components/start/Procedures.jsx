@@ -2,7 +2,8 @@ import Link from "next/link";
 import { procedures } from "../../content.js";
 import { pagePath } from "../../lib/seo/site.js";
 
-const where = (name) => procedures.where.replace("{name}", name).replace("{city}", procedures.city);
+/** "Harmonização facial em Maringá": the item's own line, or its name with the city. */
+const where = (item) => item.where ?? procedures.where.replace("{name}", item.name).replace("{city}", procedures.city);
 
 /**
  * "Procedimentos" on the start page (content.json -> procedures): closed at first, with one section per procedure that
@@ -25,7 +26,7 @@ export function Procedures({ pages = [] }) {
               <summary>
                 <h3>{item.name}</h3>
               </summary>
-              <p className="procedure-where">{where(item.name)}</p>
+              <p className="procedure-where">{where(item)}</p>
               <p>{item.text}</p>
               {published.has(item.page) && (
                 <Link className="procedure-more" href={pagePath({ slug: item.page })}>

@@ -41,7 +41,7 @@ test.describe("start page", () => {
     const where = page.getByText("Harmonização facial em Maringá", { exact: true });
     await expect(where).toBeHidden();
     await page.getByText("Procedimentos", { exact: true }).click();
-    await expect(page.getByText("Limpeza de pele", { exact: true })).toBeVisible();
+    await expect(page.getByText("Bioestimulador de colágeno", { exact: true })).toBeVisible();
     await expect(where).toBeHidden();
     await page.getByText("Harmonização facial", { exact: true }).click();
     await expect(where).toBeVisible();
