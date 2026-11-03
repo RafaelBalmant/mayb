@@ -9,9 +9,9 @@ function CasePhoto({ src, moment, title, onOpen }) {
   const vars = { moment, title };
   return (
     <figure>
-      <span class="moment">{moment}</span>
+      <span className="moment">{moment}</span>
       <button
-        class="photo"
+        className="photo"
         aria-label={t("cases.openPhoto", vars)}
         onClick={(e) => onOpen({ src, label: moment, caption: title, origin: e.currentTarget })}
       >
@@ -29,21 +29,21 @@ export function CaseCard({ item, onOpen }) {
   const afterLabel = item.after ? t("cases.afterWhen", { when: item.after }) : t("cases.after");
 
   return (
-    <article class="case" data-folder={item.folder}>
-      <header class="case-head">
-        {item.example && <span class="case-example">{t("cases.example")}</span>}
+    <article className="case" data-folder={item.folder}>
+      <header className="case-head">
+        {item.example && <span className="case-example">{t("cases.example")}</span>}
         <h3>{item.title}</h3>
-        {item.procedures.length > 0 && <p class="case-procedures">{item.procedures.join(" · ")}</p>}
-        {item.areas.length > 1 && <span class="case-areas">{areasLabel(item.areas)}</span>}
+        {item.procedures.length > 0 && <p className="case-procedures">{item.procedures.join(" · ")}</p>}
+        {item.areas.length > 1 && <span className="case-areas">{areasLabel(item.areas)}</span>}
       </header>
       {item.audio && <AudioPlayer src={item.audio} text={item.audioText} />}
       {item.pairs.map((pair) => (
-        <div class="case-pair" key={pair.before}>
+        <div className="case-pair" key={pair.before}>
           <CasePhoto src={pair.before} moment={t("cases.before")} title={item.title} onOpen={onOpen} />
           <CasePhoto src={pair.after} moment={afterLabel} title={item.title} onOpen={onOpen} />
         </div>
       ))}
-      {item.description && <p class="case-description">{item.description}</p>}
+      {item.description && <p className="case-description">{item.description}</p>}
     </article>
   );
 }

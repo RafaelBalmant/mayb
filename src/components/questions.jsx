@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef } from "react";
 import { AREA_BY_CODE, labels, t } from "../content.js";
 import { INTENSITY_SCALE } from "../config.js";
 
@@ -10,7 +10,7 @@ import { INTENSITY_SCALE } from "../config.js";
 //   otherOpen / setOtherOpen  whether the free-text "Other" field is open (concerns only)
 
 const Chip = ({ pressed, onClick, children }) => (
-  <button type="button" class="chip" aria-pressed={pressed} onClick={onClick}>
+  <button type="button" className="chip" aria-pressed={pressed} onClick={onClick}>
     {children}
   </button>
 );
@@ -18,13 +18,13 @@ const Chip = ({ pressed, onClick, children }) => (
 /** Free-text question. */
 export function TextareaQuestion({ question: q, area, P, update }) {
   return (
-    <div class="question">
-      <label for={q.field}>{P[q.labelKey ?? q.field]}</label>
+    <div className="question">
+      <label htmlFor={q.field}>{P[q.labelKey ?? q.field]}</label>
       <textarea
         id={q.field}
         placeholder={t(q.placeholder)}
         value={area[q.field]}
-        onInput={(e) => update({ [q.field]: e.currentTarget.value })}
+        onChange={(e) => update({ [q.field]: e.currentTarget.value })}
       />
     </div>
   );
@@ -57,17 +57,17 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
   };
 
   return (
-    <fieldset class="question">
+    <fieldset className="question">
       <legend>
-        {P[q.field]} <span class="hint">{t("details.multipleAllowed")}</span>
+        {P[q.field]} <span className="hint">{t("details.multipleAllowed")}</span>
       </legend>
-      <div class="chips">
+      <div className="chips">
         {options.map((o) => (
           <Chip key={o.id} pressed={area.concerns.includes(o.id)} onClick={() => toggleOption(o.id)}>
             {o.label}
           </Chip>
         ))}
-        <button type="button" class="chip" id="other-btn" aria-pressed={withOther} onClick={toggleOther}>
+        <button type="button" className="chip" id="other-btn" aria-pressed={withOther} onClick={toggleOther}>
           {t("details.other")}
         </button>
       </div>
@@ -78,7 +78,7 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
           ref={inputRef}
           placeholder={t("details.otherPlaceholder")}
           value={area.concernsOther}
-          onInput={(e) => update({ concernsOther: e.currentTarget.value })}
+          onChange={(e) => update({ concernsOther: e.currentTarget.value })}
         />
       )}
     </fieldset>
@@ -89,9 +89,9 @@ export function ConcernsQuestion({ question: q, area, P, update, otherOpen, setO
 export function SingleQuestion({ question: q, area, P, update }) {
   const d = q.detail;
   return (
-    <fieldset class="question">
+    <fieldset className="question">
       <legend>{P[q.field]}</legend>
-      <div class="chips">
+      <div className="chips">
         {Object.entries(labels[q.labels]).map(([value, label]) => (
           <Chip
             key={value}
@@ -108,7 +108,7 @@ export function SingleQuestion({ question: q, area, P, update }) {
           id={`${d.field}-txt`}
           placeholder={t(d.placeholder)}
           value={area[d.field]}
-          onInput={(e) => update({ [d.field]: e.currentTarget.value })}
+          onChange={(e) => update({ [d.field]: e.currentTarget.value })}
         />
       )}
     </fieldset>
@@ -118,9 +118,9 @@ export function SingleQuestion({ question: q, area, P, update }) {
 /** 1..5 scale. */
 export function ScaleQuestion({ question: q, area, P, update }) {
   return (
-    <fieldset class="question">
+    <fieldset className="question">
       <legend>{P[q.field]}</legend>
-      <div class="scale">
+      <div className="scale">
         {INTENSITY_SCALE.map((n) => (
           <Chip
             key={n}
@@ -131,7 +131,7 @@ export function ScaleQuestion({ question: q, area, P, update }) {
           </Chip>
         ))}
       </div>
-      <div class="scale-legend">
+      <div className="scale-legend">
         <span>{t("details.intensityLow")}</span>
         <span>{t("details.intensityHigh")}</span>
       </div>

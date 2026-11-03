@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { areas } from "../src/content.js";
-import { getFace, parseFace, zonesOf } from "../src/faces/index.js";
+import { parseFace, zonesOf } from "../src/faces/index.js";
+import { loadFaces } from "../src/lib/server/faces.js";
+
+const allFaces = loadFaces({ withProfile: true });
+const getFace = (face, view) => allFaces[face][view];
 
 describe("parseFace", () => {
   const raw = `<svg viewBox="0 0 10 20">

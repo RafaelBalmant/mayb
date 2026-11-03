@@ -3,7 +3,8 @@ import { QUESTIONS } from "../domain/questions.js";
 import { Layout } from "../components/Layout.jsx";
 import { Topbar } from "../components/Topbar.jsx";
 import { QUESTION_COMPONENTS } from "../components/questions.jsx";
-import { useNavigation, useStore } from "../store/StoreProvider.jsx";
+import { useNavigation } from "../navigation/useNavigation.js";
+import { useStore } from "../store/StoreProvider.jsx";
 
 const isVisible = (q, def) =>
   (!q.onlyFor || q.onlyFor === def.code) &&
@@ -26,10 +27,14 @@ export function DetailsScreen() {
 
   const bar = (
     <>
-      <button class="btn secondary" id="back" onClick={() => (index === 0 ? goTo("next") : goTo("details", index - 1))}>
+      <button
+        className="btn secondary"
+        id="back"
+        onClick={() => (index === 0 ? goTo("next") : goTo("details", index - 1))}
+      >
         {t("general.back")}
       </button>
-      <button class="btn primary" id="nextArea" onClick={advance}>
+      <button className="btn primary" id="nextArea" onClick={advance}>
         {t(isLast ? "details.finish" : "details.nextArea")}
       </button>
     </>
@@ -38,11 +43,11 @@ export function DetailsScreen() {
   return (
     <Layout bar={bar}>
       <Topbar screen="details" />
-      <article class="card">
-        <div class="head">
-          <div class="counter">{t("details.counter", { current: index + 1, total })}</div>
+      <article className="card">
+        <div className="head">
+          <div className="counter">{t("details.counter", { current: index + 1, total })}</div>
           <h2>{def.name}</h2>
-          <p class="sub">{t("details.optional")}</p>
+          <p className="sub">{t("details.optional")}</p>
         </div>
         {QUESTIONS.filter((q) => isVisible(q, def)).map((q) => {
           const Question = QUESTION_COMPONENTS[q.type];
@@ -58,7 +63,7 @@ export function DetailsScreen() {
             />
           );
         })}
-        <button type="button" class="skip" id="skip" onClick={advance}>
+        <button type="button" className="skip" id="skip" onClick={advance}>
           {t("details.skip")}
         </button>
       </article>

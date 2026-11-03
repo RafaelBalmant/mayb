@@ -5,12 +5,12 @@ export function Progress({ flow, step }) {
   const names = t(`steps.${flow}`);
   return (
     <>
-      <div class="progress" aria-hidden="true">
+      <div className="progress" aria-hidden="true">
         {names.map((name, i) => (
-          <span key={name} class={i < step ? "ok" : ""} />
+          <span key={name} className={i < step ? "ok" : ""} />
         ))}
       </div>
-      <div class="step">{t("general.step", { current: step, total: names.length, title: names[step - 1] })}</div>
+      <div className="step">{t("general.step", { current: step, total: names.length, title: names[step - 1] })}</div>
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { createContext } from "preact";
-import { useCallback, useContext, useEffect, useMemo, useState } from "preact/hooks";
+"use client";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ANALYTICS_IDS, CONSENT_MODE } from "../config.js";
 import { listenToClicks } from "./clicks.js";
 import { CONSENT, readConsent, saveConsent } from "./consent.js";
@@ -32,47 +32,54 @@ const AnalyticsContext = createContext({
  * Owns the cookie answer and the tracker. Nothing is loaded or sent until the visitor accepts (unless Consent Mode
  * is on, see config.js); with no analytics ID in the build (`enabled` false) the notice never shows and nothing
  * else happens. `tracker`, `storage` and `consentMode` can be injected (tests).
+ * The pages are built ahead of time, so the browser's storage (the saved answer, the city, ?interno) is only read
+ * right after the first render: the notice appears then, never in the HTML itself. An injected `storage` is read
+ * at once.
  */
-export function AnalyticsProvider({
-  children,
-  tracker = defaultTracker,
-  storage = browserStorage(),
-  consentMode = CONSENT_MODE,
-}) {
-  const [choice, setChoice] = useState(() => readConsent(storage));
+export function AnalyticsProvider({ children, tracker = defaultTracker, storage, consentMode = CONSENT_MODE }) {
+  // undefined: not read yet; null: the visitor has not answered
+  const [choice, setChoice] = useState(() => (storage ? readConsent(storage) : undefined));
   const [reopened, setReopened] = useState(false);
-  // read once, before the first page view, so ?interno/?debug never show up in it
-  const [flags] = useState(() => (tracker.enabled ? applyTrafficFlags(storage) : {}));
+  // { storage, flags } once mounted; flags are read before the first page view, so ?interno/?debug never show in it
+  const [browser, setBrowser] = useState(null);
 
   useEffect(() => {
-    const city = readPreferredCity(storage);
+    const store = storage ?? browserStorage();
+    const flags = tracker.enabled ? applyTrafficFlags(store) : {};
+    // Reading the browser after the first render is the point here (the HTML is the same for everyone), and the
+    // flags must be read once, with their side effect of cleaning the address: hence state set in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setBrowser({ storage: store, flags });
+    setChoice((current) => (current === undefined ? readConsent(store) : current));
+    const city = readPreferredCity(store);
     if (tracker.enabled && city) tracker.user({ preferred_city: city }); // waits in the tracker for the consent
   }, [tracker, storage]);
   useEffect(() => {
+    if (!browser) return;
     const granted = choice === CONSENT.granted;
-    if (granted || consentMode) tracker.start({ ...flags, consentMode, granted });
+    if (granted || consentMode) tracker.start({ ...browser.flags, consentMode, granted });
     if (granted) tracker.grant();
-  }, [choice, tracker, flags, consentMode]);
+  }, [choice, tracker, browser, consentMode]);
   useEffect(() => (tracker.enabled ? listenToClicks(document, tracker.event) : undefined), [tracker]);
 
   const choose = useCallback(
     (value) => {
-      saveConsent(storage, value);
+      saveConsent(browser?.storage ?? storage, value);
       setReopened(false);
       // tools already running cannot be unloaded: a fresh page starts without them
       if (choice === CONSENT.granted && value === CONSENT.denied) location.reload();
       else setChoice(value);
     },
-    [choice, storage],
+    [choice, browser, storage],
   );
 
   const rememberCity = useCallback(
     (city) => {
       if (!tracker.enabled) return;
-      savePreferredCity(storage, city);
+      savePreferredCity(browser?.storage ?? storage, city);
       tracker.user({ preferred_city: city });
     },
-    [tracker, storage],
+    [tracker, browser, storage],
   );
 
   const value = useMemo(

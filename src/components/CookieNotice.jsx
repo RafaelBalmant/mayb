@@ -1,3 +1,4 @@
+"use client";
 import { CONSENT } from "../analytics/consent.js";
 import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
 import { t } from "../content.js";
@@ -8,14 +9,14 @@ export function CookieNotice() {
   if (!showNotice) return null;
 
   return (
-    <section class="cookie-notice" id="cookie-notice" role="region" aria-label={t("cookies.label")}>
-      <div class="in">
+    <section className="cookie-notice" id="cookie-notice" role="region" aria-label={t("cookies.label")}>
+      <div className="in">
         <p>{t(consentMode ? "cookies.textConsentMode" : "cookies.text")}</p>
-        <button class="btn primary" id="cookies-accept" onClick={() => choose(CONSENT.granted)}>
+        <button className="btn primary" id="cookies-accept" onClick={() => choose(CONSENT.granted)}>
           {t("cookies.accept")}
         </button>
         <button
-          class="cookie-close"
+          className="cookie-close"
           id="cookies-decline"
           aria-label={t("cookies.decline")}
           onClick={() => choose(CONSENT.denied)}

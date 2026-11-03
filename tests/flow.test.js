@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { SCREEN_IDS, resolveScreen, stepOf } from "../src/domain/flow.js";
-import { SCREENS } from "../src/screens/index.js";
+import { FLOW_SCREENS } from "../src/screens/index.js";
+import { PAGE_OF_SCREEN } from "../src/navigation/routes.js";
 
 const marked = [{ code: "eyes" }];
 const MAP_SCREENS = ["opening", "map", "results", "next", "details", "review", "sent"];
@@ -56,8 +57,8 @@ describe("resolveScreen with the map off", () => {
 });
 
 describe("flow wiring", () => {
-  it("every screen in flow.json has a component and vice versa", () => {
-    expect(Object.keys(SCREENS).sort()).toEqual([...SCREEN_IDS].sort());
+  it("every screen in flow.json is a page of its own or a step of the flow, and every step is in flow.json", () => {
+    expect([...Object.keys(FLOW_SCREENS), ...Object.keys(PAGE_OF_SCREEN)].sort()).toEqual([...SCREEN_IDS].sort());
   });
 
   it("exposes flow and step for the progress bars", () => {

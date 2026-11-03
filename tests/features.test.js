@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { isMapEnabled, screenFromHash } from "../src/domain/features.js";
+import { targetOfHash } from "../src/navigation/routes.js";
 import { createInitialState } from "../src/store/init.js";
 
 const memoryStorage = (initial = {}) => {
@@ -67,14 +68,29 @@ describe("createInitialState", () => {
     expect(s.features.map).toBe(false);
   });
 
-  it("a direct link overrides the saved screen", () => {
-    const saved = { state: { face: null, about: {}, areas: [] }, ui: { screen: "start" } };
+  it("keeps the saved screen (direct links are pages now, see targetOfHash)", () => {
+    const saved = { state: { face: null, about: {}, areas: [] }, ui: { screen: "map" } };
     const storage = memoryStorage({ "site-mayara:v3": JSON.stringify(saved) });
-    expect(createInitialState({ storage, location: { search: "", hash: "#agenda" } }).ui.screen).toBe("agenda");
+    expect(createInitialState({ storage, location: { search: "", hash: "#agenda" } }).ui.screen).toBe("map");
   });
 
   it("?mapa=1 turns the map on", () => {
     const s = createInitialState({ storage: memoryStorage(), location: { search: "?mapa=1", hash: "" } });
     expect(s.features.map).toBe(true);
+  });
+});
+
+describe("old direct links (/#agenda, /#mapa, /#casos)", () => {
+  it("lead to the pages that replaced them", () => {
+    expect(targetOfHash("#agenda", false)).toEqual({ screen: "agenda", path: "/agenda/" });
+    expect(targetOfHash("#casos", true)).toEqual({ screen: "cases", path: "/casos/" });
+    expect(targetOfHash("#mapa", true)).toEqual({ screen: "opening", path: "/mapa/" });
+  });
+
+  it("stay on the start page for the map and the cases while the map is off, and ignore other hashes", () => {
+    expect(targetOfHash("#mapa", false)).toBeNull();
+    expect(targetOfHash("#casos", false)).toBeNull();
+    expect(targetOfHash("#qualquer", true)).toBeNull();
+    expect(targetOfHash("", true)).toBeNull();
   });
 });

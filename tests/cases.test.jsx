@@ -1,4 +1,4 @@
-import { renderToString } from "preact-render-to-string";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { CaseCard, areasLabel } from "../src/components/CaseCard.jsx";
 import {

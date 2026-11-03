@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "preact/hooks";
+import { useLayoutEffect, useRef, useState } from "react";
 import { t } from "../content.js";
 import { useModal } from "./useModal.js";
 
@@ -21,31 +21,31 @@ export function OtherModal({ initialText, canRemove, onSave, onRemove, onClose }
   }, []);
 
   return (
-    <div class="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div class="modal" ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button class="modal-close" id="modal-close" aria-label={m("close")} onClick={onClose}>
+    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal" ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button className="modal-close" id="modal-close" aria-label={m("close")} onClick={onClose}>
           ×
         </button>
         <h2 id="modal-title">{m("title")}</h2>
-        <p class="sub">{m("explanation")}</p>
+        <p className="sub">{m("explanation")}</p>
         <textarea
           id="modal-text"
           ref={fieldRef}
           rows={4}
           placeholder={m("placeholder")}
           value={text}
-          onInput={(e) => setText(e.currentTarget.value)}
+          onChange={(e) => setText(e.currentTarget.value)}
         />
-        <div class="modal-actions">
-          <button class="btn secondary" id="modal-cancel" onClick={onClose}>
+        <div className="modal-actions">
+          <button className="btn secondary" id="modal-cancel" onClick={onClose}>
             {m("cancel")}
           </button>
-          <button class="btn primary" id="modal-save" disabled={!text.trim()} onClick={() => onSave(text.trim())}>
+          <button className="btn primary" id="modal-save" disabled={!text.trim()} onClick={() => onSave(text.trim())}>
             {m("save")}
           </button>
         </div>
         {canRemove && (
-          <button class="btn delete" id="modal-remove" onClick={onRemove}>
+          <button className="btn delete" id="modal-remove" onClick={onRemove}>
             {m("remove")}
           </button>
         )}

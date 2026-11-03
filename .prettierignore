@@ -1,4 +1,7 @@
-dist
+.next
+.next-*
+out
+out-*
 node_modules
 package-lock.json
 src/faces/*.svg

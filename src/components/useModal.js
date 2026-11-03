@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "preact/hooks";
+import { useLayoutEffect } from "react";
 
 const FOCUSABLE = "button:not([disabled]), textarea, input, [href], [tabindex]:not([tabindex='-1'])";
 

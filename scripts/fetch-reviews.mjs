@@ -4,14 +4,15 @@
 // Usage: GOOGLE_MAPS_KEY=... npm run reviews   (locally the key can also live in .env)
 // Never fails the build: without a key, or when Google fails, the previous file (if any) is kept as is.
 import { readFileSync, writeFileSync } from "node:fs";
-import { loadEnv } from "vite";
+import nextEnv from "@next/env";
 import { parseRating } from "../src/domain/reviews.js";
 import { fetchPlace } from "./reviews/google-places.mjs";
 
 const OUTPUT = new URL("../src/data/google-rating.generated.json", import.meta.url);
 const content = JSON.parse(readFileSync(new URL("../src/data/content.json", import.meta.url), "utf8"));
 const { placeId } = content.googleReviews ?? {};
-const key = process.env.GOOGLE_MAPS_KEY || loadEnv("", process.cwd(), "").GOOGLE_MAPS_KEY;
+nextEnv.loadEnvConfig(process.cwd()); // .env, as Next.js reads it
+const key = process.env.GOOGLE_MAPS_KEY;
 
 async function main() {
   if (!key || !placeId) {

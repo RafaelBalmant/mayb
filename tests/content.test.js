@@ -96,8 +96,8 @@ describe("agenda.json and cases.json", () => {
   });
 
   it.each([
-    ["cases.json", cases, "src/cases"],
-    ["case-examples.json", caseExamples, "src/case-examples"],
+    ["cases.json", cases, "public/cases"],
+    ["case-examples.json", caseExamples, "public/case-examples"],
   ])(
     "every case in %s has a unique folder with before/after photos, known areas and its audio file",
     (_, data, root) => {
