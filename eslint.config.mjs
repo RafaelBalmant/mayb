@@ -41,6 +41,11 @@ const config = [
     files: ["e2e/**/*.js"],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
+  {
+    // the prototype page: built in Node, its stand-ins for Next.js run in the browser
+    files: ["scripts/prototype/**/*.{js,jsx,mjs}"],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
   prettier,
 ];
 

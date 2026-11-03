@@ -14,11 +14,13 @@
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
     "faces": "node scripts/generate-faces.mjs",
-    "images": "node scripts/generate-images.mjs"
+    "images": "node scripts/generate-images.mjs",
+    "prototype": "node scripts/prototype/build.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.64.1",
+    "esbuild": "^0.21.5",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.4",
     "eslint-config-prettier": "^10.1.8",

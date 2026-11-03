@@ -18,6 +18,7 @@ npm run format       # Prettier (format:check só confere)
 npm test             # testes unitários e de telas renderizadas (Vitest, sem navegador)
 npm run test:e2e     # fluxo completo no navegador (Playwright; E2E_BASE_URL aponta para um site já no ar)
 npm run faces        # regera os SVGs do rosto
+npm run prototype -- protótipo.html  # o site inteiro num único HTML (página de teste; troca de página por #nome)
 ```
 
 ## Convenção de idioma
