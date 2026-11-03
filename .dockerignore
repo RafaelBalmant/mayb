@@ -1,5 +1,8 @@
 node_modules
-dist
+.next
+.next-*
+out
+out-*
 .env
 .env.*
 src/data/google-rating.generated.json
