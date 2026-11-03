@@ -55,16 +55,6 @@
         "id": "collagen_biostimulator",
         "name": "Bioestimulador de colágeno",
         "text": "Estimula o próprio organismo a produzir colágeno, melhorando aos poucos a firmeza e a qualidade da pele."
-      },
-      {
-        "id": "ultraformer_mpt",
-        "name": "Ultraformer MPT",
-        "text": "Ultrassom microfocado que atua nas camadas profundas da pele, indicado para firmeza e contorno do rosto."
-      },
-      {
-        "id": "skin_cleansing",
-        "name": "Limpeza de pele",
-        "text": "Remove impurezas, cravos e células mortas, deixando a pele preparada para os demais cuidados."
       }
     ]
   },
