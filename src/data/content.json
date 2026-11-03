@@ -18,8 +18,8 @@
     "_howToEdit": [
       "Seção \"Procedimentos\" da página inicial: vem fechada, e cada procedimento abre separado. O título de cada um mostra só o nome; ao abrir, a primeira linha mostra o nome com a cidade (ex.: \"Harmonização facial em Maringá\"), que é o que ajuda o Google, e em seguida o texto.",
       "Tudo fica no HTML da página, então o Google lê o conteúdo mesmo com a seção fechada. Não esconda texto só para o Google: ele trata isso como spam.",
-      "city: a cidade que aparece junto do nome. list: { id, name, text, page? }. page: slug de uma página de pages.list; quando existir, aparece o link more para ela.",
-      "Os textos são rascunhos curtos para a Dra. revisar. Regras de publicidade em saúde: nada de resultado garantido nem superlativos."
+      "city: a cidade que aparece junto do nome. list: { id, name, text, where?, page? }. where: a linha com a cidade quando ela não é só \"nome em cidade\" (ex.: \"Toxina botulínica em Maringá\"). page: slug de uma página de pages.list; quando existir, aparece o link more para ela.",
+      "Os textos foram revisados pela clínica em 03/11/2026. Regras de publicidade em saúde: nada de resultado garantido nem superlativos."
     ],
     "title": "Procedimentos",
     "city": "Maringá",
@@ -29,32 +29,33 @@
       {
         "id": "facial_harmonization",
         "name": "Harmonização facial",
-        "text": "Conjunto de procedimentos para equilibrar as proporções do rosto, planejado a partir de uma avaliação individual e respeitando as características de cada paciente."
+        "text": "Conjunto de procedimentos estéticos para equilibrar as proporções do rosto, trazer harmonia, reestruturação, embelezamento e rejuvenescimento facial. O plano de tratamento é elaborado a partir de uma avaliação individual, respeitando as características de cada paciente."
       },
       {
         "id": "botulinum_toxin",
         "name": "Toxina botulínica (Botox)",
-        "text": "Suaviza as linhas de expressão da testa, entre as sobrancelhas e ao redor dos olhos. A aplicação é planejada na avaliação, de acordo com a movimentação do rosto."
+        "text": "Procedimento preventivo, que suaviza rugas e linhas de expressão. A aplicação de Botox é realizada nas regiões indicadas após avaliação facial, como testa, entre as sobrancelhas (ruga do bravo), ao redor dos olhos (pés de galinha), rugas nasais e sorriso gengival.",
+        "where": "Toxina botulínica em Maringá"
       },
       {
         "id": "lip_filler",
         "name": "Preenchimento labial",
-        "text": "Ácido hialurônico para dar contorno, volume ou hidratação aos lábios, conforme o que for combinado na avaliação."
+        "text": "Ácido hialurônico aplicado de forma estratégica nos lábios, com técnicas que priorizam a naturalidade. Procedimento que proporciona contorno, volume, definição e hidratação labial."
       },
       {
         "id": "under_eye_filler",
         "name": "Preenchimento de olheiras",
-        "text": "Ácido hialurônico aplicado abaixo dos olhos para suavizar a aparência de cansaço causada pela perda de volume na região."
+        "text": "Procedimento realizado com ácido hialurônico para suavizar a profundidade das olheiras e a aparência de cansaço (olhar cansado), causada pela perda de estrutura na região abaixo dos olhos."
       },
       {
         "id": "chin_jawline_filler",
         "name": "Preenchimento de queixo e contorno facial",
-        "text": "Ácido hialurônico para projetar o queixo e definir a linha da mandíbula, buscando harmonia com o restante do rosto."
+        "text": "Procedimento indicado para projetar o queixo, definir a linha da mandíbula e melhorar o contorno facial, devolvendo a estrutura e o equilíbrio ao rosto e diminuindo a aparência da papada."
       },
       {
         "id": "collagen_biostimulator",
         "name": "Bioestimulador de colágeno",
-        "text": "Estimula o próprio organismo a produzir colágeno, melhorando aos poucos a firmeza e a qualidade da pele."
+        "text": "Estimula o próprio organismo a produzir colágeno, auxiliando no tratamento da flacidez e melhorando gradualmente a firmeza, a sustentação e a qualidade da pele. O bioestimulador de colágeno pode ser utilizado em tratamentos faciais e corporais, incluindo face, pescoço e corpo."
       }
     ]
   },

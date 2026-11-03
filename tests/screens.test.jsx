@@ -100,6 +100,7 @@ describe("start", () => {
     expect(out.match(/<details class="procedure"/g)).toHaveLength(procedures.list.length);
     expect(out).toContain("<summary><h3>Harmonização facial</h3></summary>");
     expect(out).toContain('<p class="procedure-where">Harmonização facial em Maringá</p>');
+    expect(out).toContain('<p class="procedure-where">Toxina botulínica em Maringá</p>'); // its own line
     expect(out).not.toContain("procedure-more");
     const linked = start({ pages: [{ slug: "harmonizacao-facial-maringa" }] });
     expect(linked).not.toContain("procedure-more"); // no procedure points to that page
