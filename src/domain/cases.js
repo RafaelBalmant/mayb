@@ -1,19 +1,16 @@
-import data from "../data/cases.json";
-import examples from "../data/case-examples.json";
-import { SHOW_CASE_EXAMPLES } from "../config.js";
+// Rules for the real cases (before/after photos). No file access here: the build reads the folders
+// (lib/server/cases.js) and hands the list of files to loadCases.
 import { areas } from "../content.js";
 
 /** Area codes that can have cases, in face order (top to bottom). "Other part" has none. */
 export const CASE_AREAS = areas.map((a) => a.code).filter((code) => code !== "other");
 
-// Every file inside src/cases/<folder>/, found at build time: { "../cases/labios-01/antes.jpg": url }.
-const FILES = import.meta.glob("../cases/*/*.*", { eager: true, query: "?url", import: "default" });
-// The same for the example cases (src/case-examples/), shown while SHOW_CASE_EXAMPLES is on.
-const EXAMPLE_FILES = import.meta.glob("../case-examples/*/*.*", { eager: true, query: "?url", import: "default" });
-
 const IMAGE = /\.(jpe?g|png|webp|svg)$/i;
 
-/** Files grouped by case folder, with lower-case names: { "labios-01": { "antes.jpg": url } }. */
+/**
+ * Files grouped by case folder, with lower-case names: { "labios-01": { "antes.jpg": url } }. `files` is
+ * { path: url }, where the last two parts of the path are the folder and the file name.
+ */
 export function filesByFolder(files) {
   const out = {};
   for (const [path, url] of Object.entries(files)) {
@@ -66,23 +63,17 @@ export function loadCases(list, files) {
 export const withExamples = (real, sample, show) =>
   show ? [...real, ...sample.map((c) => ({ ...c, example: true }))] : real;
 
-export const CASES = withExamples(
-  loadCases(data.cases, FILES),
-  loadCases(examples.cases, EXAMPLE_FILES),
-  SHOW_CASE_EXAMPLES,
-);
-
 /** Cases that include an area. */
-export const casesOf = (code, cases = CASES) => cases.filter((c) => c.areas.includes(code));
+export const casesOf = (code, cases) => cases.filter((c) => c.areas.includes(code));
 
 /** Areas that have at least one case, in face order. */
-export const areasWithCases = (cases = CASES) => CASE_AREAS.filter((code) => casesOf(code, cases).length > 0);
+export const areasWithCases = (cases) => CASE_AREAS.filter((code) => casesOf(code, cases).length > 0);
 
 /**
  * The cases of the chosen areas, one group per area in face order. A case with several areas shows only once,
  * in the first chosen area it belongs to; an area left without cases is dropped.
  */
-export function groupByArea(chosen, cases = CASES) {
+export function groupByArea(chosen, cases) {
   const shown = new Set();
   return CASE_AREAS.filter((code) => chosen.includes(code))
     .map((code) => {

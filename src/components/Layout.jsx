@@ -5,11 +5,11 @@
 export function Layout({ className = "app", bar, hideBar = false, children }) {
   return (
     <>
-      <div class={className} id="app">
+      <div className={className} id="app">
         {children}
       </div>
-      <div class="bar" id="bar" hidden={hideBar}>
-        <div class="in" id="bar-in">
+      <div className="bar" id="bar" hidden={hideBar}>
+        <div className="in" id="bar-in">
           {bar}
         </div>
       </div>

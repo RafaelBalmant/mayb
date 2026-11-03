@@ -6,7 +6,7 @@ import { Progress } from "./Progress.jsx";
 export function Topbar({ screen }) {
   const { flow, step } = stepOf(screen);
   return (
-    <header class="topbar">
+    <header className="topbar">
       <Brand />
       <Progress flow={flow} step={step} />
     </header>

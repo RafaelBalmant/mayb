@@ -1,4 +1,4 @@
-import { useRef, useState } from "preact/hooks";
+import { useRef, useState } from "react";
 import { t } from "../content.js";
 
 // The audio playing now: starting another one pauses it, so only one plays at a time.
@@ -25,8 +25,8 @@ export function AudioPlayer({ src, text }) {
   };
 
   return (
-    <div class="case-audio">
-      <div class="audio">
+    <div className="case-audio">
+      <div className="audio">
         <audio
           ref={audioRef}
           src={src}
@@ -36,23 +36,23 @@ export function AudioPlayer({ src, text }) {
           onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
         />
-        <button class="audio-play" aria-label={t(playing ? "cases.pause" : "cases.play")} onClick={toggle}>
+        <button className="audio-play" aria-label={t(playing ? "cases.pause" : "cases.play")} onClick={toggle}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             {playing ? <path d="M7 5h3v14H7zM14 5h3v14h-3z" /> : <path d="M8 5l11 7-11 7z" />}
           </svg>
         </button>
-        <div class="audio-info">
+        <div className="audio-info">
           <span>{t("cases.audio")}</span>
-          <div class="audio-bar" aria-hidden="true">
+          <div className="audio-bar" aria-hidden="true">
             <i style={{ width: `${duration ? (time / duration) * 100 : 0}%` }} />
           </div>
-          <span class="audio-time">
+          <span className="audio-time">
             {clock(time)} / {clock(duration)}
           </span>
         </div>
       </div>
       {text && (
-        <details class="audio-text">
+        <details className="audio-text">
           <summary>{t("cases.audioText")}</summary>
           <p>{text}</p>
         </details>

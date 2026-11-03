@@ -1,20 +1,50 @@
-import { useCallback, useMemo, useRef, useState } from "preact/hooks";
+"use client";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
 import { t } from "../content.js";
 import { citiesByDay, daysInMonth, monthKey, upcomingServiceDays, visibleMonths } from "../domain/agenda.js";
 import { BookingModal } from "../components/BookingModal.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { Topbar } from "../components/Topbar.jsx";
 import { useSwipe } from "../components/useSwipe.js";
-import { useNavigation, useStore } from "../store/StoreProvider.jsx";
+import { PATHS } from "../navigation/routes.js";
+import { useStore } from "../store/StoreProvider.jsx";
+
+/**
+ * Today's date. The page is built ahead of time, so its HTML (and the browser's first render, which must match it)
+ * uses the build date (`builtAt`); right after it, the browser's own date takes over. The Docker image is rebuilt
+ * every day, so both are normally the same day.
+ */
+function useToday(builtAt) {
+  const day = useSyncExternalStore(
+    noChanges,
+    () => dayKey(new Date()),
+    () => dayKey(builtAt ? new Date(builtAt) : new Date()),
+  );
+  return useMemo(() => fromDayKey(day), [day]);
+}
+
+// A day as a plain string (stable between renders): "2026-11-10" in the local time zone, and back.
+const dayKey = (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+const fromDayKey = (key) => {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d);
+};
+// the date is read again at each render; there is nothing to subscribe to
+const noChanges = () => () => {};
 
 // Agenda: the visitor picks the month and sees, day by day, whether the doctor works in Maringá,
 // in Siqueira Campos or not at all. The months are those in data/agenda.json (current month on, at most 4);
 // the city names are in content.json.
-export function AgendaScreen() {
+export function AgendaScreen({ builtAt }) {
   const { state, dispatch } = useStore();
-  const { goTo } = useNavigation();
-  const today = useMemo(() => new Date(), []);
-  const months = visibleMonths(today);
+  const today = useToday(builtAt);
+  const { trackScreen } = useAnalytics();
+  useEffect(() => {
+    trackScreen("agenda");
+  }, [trackScreen]);
+  const months = useMemo(() => visibleMonths(today), [today]);
   const index = Math.min(Math.max(state.ui.agendaMonth || 0, 0), months.length - 1);
   const month = months[index];
 
@@ -57,11 +87,11 @@ export function AgendaScreen() {
 
   const bar = (
     <>
-      <button class="btn secondary" id="back" onClick={() => goTo("start")}>
+      <Link className="btn secondary" id="back" href={PATHS.start}>
         {t("agenda.back")}
-      </button>
+      </Link>
       <button
-        class="btn primary two-lines"
+        className="btn primary two-lines"
         id="book"
         data-track="booking_open"
         ref={bookRef}
@@ -78,10 +108,10 @@ export function AgendaScreen() {
       <Layout className="app app-agenda" bar={bar}>
         <Topbar screen="agenda" />
         <h1>{t("agenda.title")}</h1>
-        <p class="explain">{t("agenda.explanation")}</p>
-        <div class="segmented months" role="group" aria-label={t("agenda.chooseMonth")}>
+        <p className="explain">{t("agenda.explanation")}</p>
+        <div className="segmented months" role="group" aria-label={t("agenda.chooseMonth")}>
           <span
-            class="indicator slides"
+            className="indicator slides"
             aria-hidden="true"
             style={{ width: `calc((100% - 6px) / ${months.length})`, transform: `translateX(${index * 100}%)` }}
           />
@@ -91,11 +121,11 @@ export function AgendaScreen() {
             </button>
           ))}
         </div>
-        <section key={index} ref={calendarRef} class={slide ? `calendar enter-${slide}` : "calendar"}>
+        <section key={index} ref={calendarRef} className={slide ? `calendar enter-${slide}` : "calendar"}>
           <h2>{t("agenda.monthYear", { month: monthNames[month.getMonth()], year: month.getFullYear() })}</h2>
-          <div class="grid" role="grid">
+          <div className="grid" role="grid">
             {t("agenda.weekdays").map((w) => (
-              <span key={w} class="weekday" aria-hidden="true">
+              <span key={w} className="weekday" aria-hidden="true">
                 {w}
               </span>
             ))}
@@ -111,7 +141,7 @@ export function AgendaScreen() {
               return (
                 <span
                   key={day}
-                  class={classes.join(" ")}
+                  className={classes.join(" ")}
                   role="gridcell"
                   aria-label={t("agenda.dayLabel", { day, month: monthName, status: statusOf(day) })}
                 >
@@ -120,16 +150,16 @@ export function AgendaScreen() {
               );
             })}
           </div>
-          <ul class="legend" aria-label={t("agenda.legend")}>
+          <ul className="legend" aria-label={t("agenda.legend")}>
             {Object.entries(locations).map(([code, name]) => (
               <li key={code}>
-                <i class={`location-${code}`} />
+                <i className={`location-${code}`} />
                 {name}
               </li>
             ))}
           </ul>
         </section>
-        {upcoming.length === 0 && <p class="empty">{t("agenda.noDates")}</p>}
+        {upcoming.length === 0 && <p className="empty">{t("agenda.noDates")}</p>}
       </Layout>
       {booking && <BookingModal monthName={monthName} daysByCity={daysByCity} onClose={closeBooking} />}
     </>

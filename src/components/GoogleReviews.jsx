@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+"use client";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { REVIEWS_AUTOPLAY_MS, REVIEWS_GROUP_KEY, REVIEWS_RESUME_AFTER_MS } from "../config.js";
 import { googleReviews, t, tn } from "../content.js";
 import { groupForVisit, reviewGroups, showableReviews } from "../domain/reviews.js";
-import { savedRating } from "../domain/saved-rating.js";
 
 const storage = (name) => {
   try {
@@ -13,20 +13,24 @@ const storage = (name) => {
 };
 
 // The reviews come from content.json and the rating from the file saved at build time (no request to Google).
-// Each visit shows the next group; chosen once per page load, so coming back to the start page keeps the same cards.
-let visitGroup;
-function reviewsForThisVisit() {
-  if (!visitGroup) {
-    const groups = reviewGroups(showableReviews(googleReviews.reviews, googleReviews));
-    const index = groupForVisit(groups.length, {
+const GROUPS = reviewGroups(showableReviews(googleReviews.reviews, googleReviews));
+
+// Each visit shows the next group, chosen once per page load, so coming back to the start page keeps the same cards.
+let visitGroup = null;
+function groupForThisVisit() {
+  if (visitGroup === null) {
+    visitGroup = groupForVisit(GROUPS.length, {
       local: storage("localStorage"),
       session: storage("sessionStorage"),
       key: REVIEWS_GROUP_KEY,
     });
-    visitGroup = groups[index] ?? [];
   }
-  return visitGroup.length ? { ...savedRating, reviews: visitGroup } : null;
+  return visitGroup;
 }
+
+// The visit's group never changes while the page is open: nothing to subscribe to.
+const noChanges = () => () => {};
+const firstGroup = () => 0;
 
 // Distance between two cards (card width plus the gap between them), so scrolling lands exactly on a card.
 const step = (track) => {
@@ -38,7 +42,12 @@ const decimal = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, max
 
 // Five stars filled up to the rating (4.8 -> the last one is 80% full). The fill comes from the CSS (--rating).
 const Stars = ({ value }) => (
-  <span class="stars" style={{ "--rating": value }} role="img" aria-label={t("reviews.stars", { n: decimal(value) })}>
+  <span
+    className="stars"
+    style={{ "--rating": value }}
+    role="img"
+    aria-label={t("reviews.stars", { n: decimal(value) })}
+  >
     ★★★★★
   </span>
 );
@@ -54,29 +63,36 @@ function Review({ review, index, total }) {
   }, []);
 
   return (
-    <figure class={open ? "review open" : "review"} aria-label={t("reviews.position", { current: index + 1, total })}>
+    <figure
+      className={open ? "review open" : "review"}
+      aria-label={t("reviews.position", { current: index + 1, total })}
+    >
       <Stars value={review.stars} />
-      <blockquote class="review-text" ref={textRef}>
+      <blockquote className="review-text" ref={textRef}>
         {review.text}
       </blockquote>
       {(overflows || open) && (
-        <button class="review-more" type="button" onClick={() => setOpen(!open)}>
+        <button className="review-more" type="button" onClick={() => setOpen(!open)}>
           {t(open ? "reviews.readLess" : "reviews.readMore")}
         </button>
       )}
-      <figcaption class="review-author">{review.author}</figcaption>
+      <figcaption className="review-author">{review.author}</figcaption>
     </figure>
   );
 }
 
 /**
- * Rating and reviews from Google on the start page: a carousel that moves on by itself every REVIEWS_AUTOPLAY_MS.
+ * Rating and reviews from Google on the start page (`rating`: { rating, total, link } saved at build time, or null): a carousel that moves on by itself every REVIEWS_AUTOPLAY_MS.
  * Once the visitor taps or drags it, it only moves by hand; after REVIEWS_RESUME_AFTER_MS without a change it
  * goes back to moving by itself. Renders nothing when there is no review to show; without the rating saved at build
  * time, the reviews show without the rating summary.
  */
-export function GoogleReviews() {
-  const [data] = useState(reviewsForThisVisit);
+export function GoogleReviews({ rating: saved = null }) {
+  // The page is built ahead of time with the first group; the visit's own group (read from the browser's storage)
+  // replaces it right after the first render, so the HTML and that render always match.
+  const group = useSyncExternalStore(noChanges, groupForThisVisit, firstGroup);
+  const reviewsShown = GROUPS[group] ?? [];
+  const data = reviewsShown.length ? { ...saved, reviews: reviewsShown } : null;
   const [current, setCurrent] = useState(0);
   const [manual, setManual] = useState(false); // the visitor took over; wait longer before moving on
   const [touches, setTouches] = useState(0); // every touch restarts the wait
@@ -109,25 +125,25 @@ export function GoogleReviews() {
 
   return (
     <section
-      class="reviews"
+      className="reviews"
       aria-label={t("reviews.title")}
       onPointerDown={takeOver}
       onTouchStart={takeOver}
-      onFocusIn={takeOver}
+      onFocus={takeOver}
       onWheel={takeOver}
     >
-      <h2 class="reviews-title">{t("reviews.title")}</h2>
+      <h2 className="reviews-title">{t("reviews.title")}</h2>
       {rating && (
-        <div class="reviews-summary">
-          <span class="reviews-rating" aria-label={t("reviews.rating", { rating: decimal(rating) })}>
+        <div className="reviews-summary">
+          <span className="reviews-rating" aria-label={t("reviews.rating", { rating: decimal(rating) })}>
             {decimal(rating)}
           </span>
           <Stars value={rating} />
-          <span class="reviews-total">{tn("reviews.total", total)}</span>
+          <span className="reviews-total">{tn("reviews.total", total)}</span>
         </div>
       )}
       <div
-        class="reviews-track"
+        className="reviews-track"
         role="region"
         aria-label={t("reviews.list")}
         tabIndex={0}
@@ -135,11 +151,11 @@ export function GoogleReviews() {
         onScroll={(e) => setCurrent(Math.round(e.currentTarget.scrollLeft / step(e.currentTarget)))}
       >
         {reviews.map((r, i) => (
-          <Review key={i} review={r} index={i} total={count} />
+          <Review key={`${group}:${i}`} review={r} index={i} total={count} />
         ))}
       </div>
       {count > 1 && (
-        <div class="reviews-dots">
+        <div className="reviews-dots">
           {reviews.map((_, i) => (
             <button
               key={i}
@@ -152,11 +168,17 @@ export function GoogleReviews() {
         </div>
       )}
       {link && (
-        <a class="reviews-link" data-track="google_reviews_open" href={link} target="_blank" rel="noopener noreferrer">
+        <a
+          className="reviews-link"
+          data-track="google_reviews_open"
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t("reviews.seeAll")}
         </a>
       )}
-      <p class="reviews-source">{t("reviews.source")}</p>
+      <p className="reviews-source">{t("reviews.source")}</p>
     </section>
   );
 }

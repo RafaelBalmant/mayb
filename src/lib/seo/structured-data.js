@@ -1,7 +1,7 @@
 // schema.org data for Google: the doctor (Person), one business per unit (same name as the Google Business Profile)
 // and, on the service pages, the visible FAQ. No ratings or reviews: Google ignores reviews a business publishes
 // about itself and may treat them as spam.
-import { absolute } from "./html.mjs";
+import { absolute } from "./site.js";
 
 const COUNTRY = "BR";
 
@@ -11,8 +11,8 @@ function registrationId(registration) {
   return { "@type": "PropertyValue", propertyID, value: rest.join(" ") };
 }
 
-const personId = (url) => absolute(url, "/#mayara-bacellar");
-const unitId = (url, location) => absolute(url, `/#${location.id}`);
+const personId = (url) => absolute("/#mayara-bacellar", url);
+const unitId = (url, location) => absolute(`/#${location.id}`, url);
 
 /** Leaves out empty values, so a field still to be filled in content.json never goes to Google half-done. */
 const compact = (obj) =>
@@ -28,7 +28,7 @@ export function person({ professional, business, url }) {
     honorificPrefix: "Dra.",
     jobTitle: business.jobTitle,
     identifier: registrationId(business.registration),
-    image: absolute(url, `/${professional.photo}`),
+    image: absolute(`/${professional.photo}`, url),
     sameAs: business.sameAs,
     worksFor: business.locations.map((l) => ({ "@id": unitId(url, l) })),
   });
@@ -75,10 +75,40 @@ export const faqPage = (faq) => ({
   })),
 });
 
-/** The full JSON-LD document: the doctor and every unit, plus any page-specific entities. */
+/** The site itself, published by the doctor (only with an official address: WebSite needs a URL). */
+export const website = ({ url, texts }) =>
+  url && {
+    "@type": "WebSite",
+    "@id": absolute("/#website", url),
+    url,
+    name: texts.general.pageTitle,
+    inLanguage: "pt-BR",
+    publisher: { "@id": personId(url) },
+  };
+
+/** BreadcrumbList for an inner page: [{ name, path }] from the start page down to the page itself. */
+export const breadcrumbs = (trail, { url }) => ({
+  "@type": "BreadcrumbList",
+  itemListElement: trail.map((step, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: step.name,
+    item: absolute(step.path, url),
+  })),
+});
+
+/** The site-wide JSON-LD document: the doctor, every unit and the website, plus any page-specific entities. */
 export function structuredData(content, extra = []) {
   return {
     "@context": "https://schema.org",
-    "@graph": [person(content), ...content.business.locations.map((l) => unit(l, content)), ...extra],
+    "@graph": [
+      person(content),
+      ...content.business.locations.map((l) => unit(l, content)),
+      website(content),
+      ...extra,
+    ].filter(Boolean),
   };
 }
+
+/** A JSON-LD document with only page-specific entities (the site-wide one is in every page already). */
+export const pageStructuredData = (entities) => ({ "@context": "https://schema.org", "@graph": entities });

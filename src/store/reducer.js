@@ -7,9 +7,11 @@ export const initialState = ({ mapEnabled = false } = {}) => ({
   areas: [],
   // agendaMonth: month tab chosen in the agenda; openCase: expanded results card; viewedCases: opened any
   ui: { screen: "start", view: "front", index: 0, agendaMonth: 0, openCase: null, viewedCases: false },
-  // not persisted: areas whose "Other" field is open but still empty, and the page-level feature flags
+  // not persisted: areas whose "Other" field is open but still empty, the page-level feature flags, and whether
+  // the saved state was loaded yet (false while the page shows what was built ahead of time)
   otherOpen: [],
   features: { map: mapEnabled },
+  loaded: false,
 });
 
 const updateArea = (areas, code, patch) => areas.map((a) => (a.code === code ? { ...a, ...patch } : a));
@@ -17,6 +19,8 @@ const updateArea = (areas, code, patch) => areas.map((a) => (a.code === code ? {
 /** Pure state transitions. Every action is a plain object: { type, ...payload }. */
 export function reducer(state, action) {
   switch (action.type) {
+    case "LOAD":
+      return { ...action.state, loaded: true };
     case "SET_FACE":
       return { ...state, face: action.face };
     case "SET_VIEW":
@@ -51,6 +55,7 @@ export function reducer(state, action) {
     case "RESTART":
       return {
         ...initialState({ mapEnabled: state.features.map }),
+        loaded: state.loaded,
         ui: { ...initialState().ui, screen: "opening", agendaMonth: state.ui.agendaMonth },
       };
     default:

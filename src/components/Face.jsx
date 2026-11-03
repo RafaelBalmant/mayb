@@ -1,4 +1,4 @@
-import { getFace } from "../faces/index.js";
+import { useFace } from "../faces/FacesContext.jsx";
 
 /**
  * The face illustration. Without `onToggle` it is a plain picture (no tappable zones);
@@ -6,7 +6,9 @@ import { getFace } from "../faces/index.js";
  * `highlight` is an area code to light up (e.g. while its name is hovered).
  */
 export function Face({ face, view, label, isMarked, nameOf, onToggle, highlight }) {
-  const { viewBox, defs, groups } = getFace(face, view);
+  const drawing = useFace(face, view);
+  if (!drawing) return null;
+  const { viewBox, defs, groups } = drawing;
   const interactive = Boolean(onToggle);
   return (
     <svg
@@ -17,20 +19,20 @@ export function Face({ face, view, label, isMarked, nameOf, onToggle, highlight 
       <defs dangerouslySetInnerHTML={{ __html: defs }} />
       {groups.map((group, i) => {
         if (group.type === "art")
-          return <g key={i} class={group.className} dangerouslySetInnerHTML={{ __html: group.html }} />;
+          return <g key={i} className={group.className} dangerouslySetInnerHTML={{ __html: group.html }} />;
         if (!interactive) return null;
         return (
-          <g key={i} class="zones" clip-path={group.clipPath}>
+          <g key={i} className="zones" clipPath={group.clipPath}>
             {group.zones.map((z) => {
               const marked = isMarked(z.code);
               const classes = [z.className, marked && "selected", highlight === z.code && "highlight"].filter(Boolean);
               return (
                 <path
                   key={z.code}
-                  class={classes.join(" ")}
+                  className={classes.join(" ")}
                   data-area={z.code}
                   d={z.d}
-                  tabindex="0" // lowercase: SVG attribute names are case-sensitive
+                  tabIndex={0}
                   role="button"
                   aria-pressed={marked}
                   aria-label={nameOf(z.code)}

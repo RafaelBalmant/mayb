@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "preact/hooks";
+import { useLayoutEffect } from "react";
 import { SWIPE_DIRECTION_RATIO, SWIPE_MIN_DISTANCE } from "../config.js";
 
 /**

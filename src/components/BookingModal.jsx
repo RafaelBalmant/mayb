@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "preact/hooks";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useAnalytics } from "../analytics/AnalyticsProvider.jsx";
 import { t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
@@ -21,7 +21,9 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
 
   useModal(dialogRef, onClose);
   // layout effect: the focus is in place before the next key press, so an early Tab cannot escape the dialog
-  useLayoutEffect(() => dialogRef.current.focus({ preventScroll: true }), []);
+  useLayoutEffect(() => {
+    dialogRef.current.focus({ preventScroll: true });
+  }, []);
 
   const send = (e) => {
     if (!ready) return e.preventDefault();
@@ -29,32 +31,32 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
   };
 
   return (
-    <div class="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div
-        class="modal modal-book"
+        className="modal modal-book"
         ref={dialogRef}
-        tabindex="-1"
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
-        <button class="modal-close" id="modal-close" aria-label={m("close")} onClick={onClose}>
+        <button className="modal-close" id="modal-close" aria-label={m("close")} onClick={onClose}>
           ×
         </button>
-        <div class="topbar">
+        <div className="topbar">
           <Progress flow="agenda" step={2} />
         </div>
         <h2 id="modal-title">{m("title", { month: monthName })}</h2>
-        <fieldset class="question">
+        <fieldset className="question">
           <legend>{m("city")}</legend>
-          <div class="routes">
+          <div className="routes">
             {Object.entries(locations).map(([code, name]) => {
               const hasDays = (daysByCity[code] ?? []).length > 0;
               return (
                 <button
                   key={code}
                   type="button"
-                  class={`route location-${code}`}
+                  className={`route location-${code}`}
                   aria-pressed={city === code}
                   disabled={!hasDays}
                   onClick={() => {
@@ -71,7 +73,7 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
               );
             })}
           </div>
-          <div class="info-card" role="note">
+          <div className="info-card" role="note">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9.5" />
               <path d="M12 11v6M12 7.5v.01" />
@@ -79,12 +81,12 @@ export function BookingModal({ monthName, daysByCity, onClose }) {
             <p>{m("info")}</p>
           </div>
         </fieldset>
-        <div class="modal-actions">
-          <button class="btn secondary" id="modal-cancel" onClick={onClose}>
+        <div className="modal-actions">
+          <button className="btn secondary" id="modal-cancel" onClick={onClose}>
             {m("cancel")}
           </button>
           <a
-            class="btn primary"
+            className="btn primary"
             id="modal-send"
             data-track="whatsapp_booking"
             data-track-city={city ?? undefined}

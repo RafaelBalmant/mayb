@@ -673,9 +673,11 @@ body {
   }
 }
 
-/* Review and send */
+/* Links that look like buttons (WhatsApp, and the links between pages): centred like a <button> */
 a.btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   text-decoration: none;
   color: inherit;
@@ -1665,4 +1667,9 @@ a.btn[aria-disabled="true"] {
   margin-top: -4px;
   font-size: 14px;
   color: var(--muted);
+}
+
+/* The start page's footer only groups its items for screen readers; they keep their place in the column. */
+.start-footer {
+  display: contents;
 }

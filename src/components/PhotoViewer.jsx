@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "preact/hooks";
+import { useLayoutEffect, useRef } from "react";
 import { t } from "../content.js";
 import { useModal } from "./useModal.js";
 
@@ -12,12 +12,12 @@ export function PhotoViewer({ src, label, caption, origin, onClose }) {
   }, [origin]);
 
   return (
-    <div class="modal-backdrop photo-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div class="photo-large" ref={dialogRef} tabindex="-1" role="dialog" aria-modal="true" aria-label={label}>
-        <button class="modal-close" aria-label={t("cases.close")} onClick={onClose}>
+    <div className="modal-backdrop photo-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="photo-large" ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={label}>
+        <button className="modal-close" aria-label={t("cases.close")} onClick={onClose}>
           ×
         </button>
-        <span class="moment">{label}</span>
+        <span className="moment">{label}</span>
         <img src={src} alt={caption || ""} />
         {caption && <p>{caption}</p>}
       </div>

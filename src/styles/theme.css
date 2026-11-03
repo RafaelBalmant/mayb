@@ -4,13 +4,14 @@
    The rest of the CSS and the face drawings use these variables.
    ========================================================== */
 
-/* 1. Fonts. They are served by this site (npm packages @fontsource/*, imported in main.jsx), not by Google.
-      To change them: install another @fontsource package, update the imports in main.jsx and the names below.
+/* 1. Fonts. Downloaded from Google Fonts at build time by next/font (src/styles/fonts.js) and served by this site
+      itself, never by Google. fonts.js gives each font a variable (--font-playfair, --font-jost); the names below
+      are the only place the rest of the CSS reads them from. To change a font: swap it in fonts.js, keep the variable.
       Previous fonts: Young Serif (titles) + Figtree (text). */
 
 :root {
-  --font-title: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-text: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-title: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-text: var(--font-jost), system-ui, -apple-system, "Segoe UI", sans-serif;
   /* the big name on the start screen (uppercase; for now the same font as the titles) */
   --font-display: var(--font-title);
 

@@ -3,7 +3,8 @@ import { Face } from "../components/Face.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { Paragraphs } from "../components/Paragraphs.jsx";
 import { Topbar } from "../components/Topbar.jsx";
-import { useNavigation, useStore } from "../store/StoreProvider.jsx";
+import { useNavigation } from "../navigation/useNavigation.js";
+import { useStore } from "../store/StoreProvider.jsx";
 
 // Opening of the map flow: the question, what comes next and the choice of face.
 export function OpeningScreen() {
@@ -13,10 +14,10 @@ export function OpeningScreen() {
 
   const bar = (
     <>
-      <button class="btn secondary" id="back" onClick={() => goTo("start")}>
+      <button className="btn secondary" id="back" onClick={() => goTo("start")}>
         {t("general.back")}
       </button>
-      <button class="btn primary" id="start" disabled={!face} onClick={() => goTo("map")}>
+      <button className="btn primary" id="start" disabled={!face} onClick={() => goTo("map")}>
         {t(face ? "opening.start" : "opening.startWithoutFace")}
       </button>
     </>
@@ -25,11 +26,11 @@ export function OpeningScreen() {
   return (
     <Layout bar={bar}>
       <Topbar screen="opening" />
-      <h1 class="big-question">{t("opening.title")}</h1>
+      <h1 className="big-question">{t("opening.title")}</h1>
       <Paragraphs items={t("opening.explanation")} className="explain" />
-      <section class="block">
+      <section className="block">
         <h3>{t("opening.chooseFace")}</h3>
-        <div class="choice">
+        <div className="choice">
           {["female", "male"].map((option) => (
             <button
               key={option}

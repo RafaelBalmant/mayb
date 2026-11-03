@@ -1,6 +1,6 @@
 {
   "_howToEdit": [
-    "Casos reais com antes e depois. Cada caso tem a sua pasta de fotos em src/cases/<pasta>/ (ex.: src/cases/labios-01/).",
+    "Casos reais com antes e depois. Cada caso tem a sua pasta de fotos em public/cases/<pasta>/ (ex.: public/cases/labios-01/).",
     "Dentro da pasta, os nomes são fixos: antes.jpg e depois.jpg. Outro ângulo do mesmo caso: antes-2.jpg e depois-2.jpg, e assim por diante. Também vale .jpeg, .png ou .webp.",
     "Cada caso é um bloco na lista \"cases\" (veja _example). A ordem da lista é a ordem em que aparecem no site.",
     "folder: nome da pasta. title: título do caso. areas: partes do rosto (códigos de content.json: forehead, eyes, cheeks, nose, mouth, chin, jawline, neck, skin).",

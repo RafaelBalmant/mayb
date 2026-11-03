@@ -70,12 +70,12 @@ export const REVIEWS_RESUME_AFTER_MS = 30000;
 export const SHOW_CASE_EXAMPLES = true;
 
 /**
- * Analytics IDs, given at build time (VITE_GA_MEASUREMENT_ID; see README). They are not secrets (they show in the
- * page), but they stay out of the code so a local or test build does not count as a real visit.
- * Empty: no cookie notice and nothing is loaded. (`?.`: plain Node scripts such as fetch-reviews import this file too.)
+ * Analytics IDs, given at build time (NEXT_PUBLIC_GA_MEASUREMENT_ID; see README). They are not secrets (they show in
+ * the page), but they stay out of the code so a local or test build does not count as a real visit.
+ * Empty: no cookie notice and nothing is loaded. Written out in full so Next.js can put the value into the page.
  */
 export const ANALYTICS_IDS = {
-  googleAnalytics: import.meta.env?.VITE_GA_MEASUREMENT_ID ?? "",
+  googleAnalytics: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "",
 };
 
 /** localStorage key that remembers the visitor's answer to the cookie notice. */

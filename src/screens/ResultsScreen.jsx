@@ -1,20 +1,22 @@
-import { useCallback, useState } from "preact/hooks";
+import { useCallback, useState } from "react";
 import { AREA_BY_CODE, t, tn } from "../content.js";
 import { PLACEHOLDER_PHOTOS } from "../config.js";
 import { casesOf, partsWithCases } from "../domain/cases.js";
 import { CaseCard } from "../components/CaseCard.jsx";
+import { useCases } from "../components/CasesContext.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { PhotoViewer } from "../components/PhotoViewer.jsx";
 import { Topbar } from "../components/Topbar.jsx";
-import { useNavigation, useStore } from "../store/StoreProvider.jsx";
+import { useNavigation } from "../navigation/useNavigation.js";
+import { useStore } from "../store/StoreProvider.jsx";
 
 // Empty frames while a part has no case yet: before above after, like a real case.
 const Placeholders = () => (
-  <div class="case-pair">
+  <div className="case-pair">
     {Array.from({ length: PLACEHOLDER_PHOTOS }, (_, i) => (
       <figure key={i}>
-        <span class="moment">{t(i % 2 ? "cases.after" : "cases.before")}</span>
-        <div class="photo placeholder" aria-hidden="true">
+        <span className="moment">{t(i % 2 ? "cases.after" : "cases.before")}</span>
+        <div className="photo placeholder" aria-hidden="true">
           <span>{t("results.comingSoon")}</span>
         </div>
       </figure>
@@ -27,6 +29,7 @@ const Placeholders = () => (
 export function ResultsScreen() {
   const { state, dispatch } = useStore();
   const { goTo } = useNavigation();
+  const allCases = useCases();
   const parts = partsWithCases(state.areas);
   const openCode = parts.includes(state.ui.openCase) ? state.ui.openCase : null;
   const [viewer, setViewer] = useState(null);
@@ -34,10 +37,10 @@ export function ResultsScreen() {
 
   const bar = (
     <>
-      <button class="btn secondary" id="back" onClick={() => goTo("map")}>
+      <button className="btn secondary" id="back" onClick={() => goTo("map")}>
         {t("general.back")}
       </button>
-      <button class="btn primary" id="skip" onClick={() => goTo("next")}>
+      <button className="btn primary" id="skip" onClick={() => goTo("next")}>
         {t(state.ui.viewedCases ? "results.continue" : "results.skip")}
       </button>
     </>
@@ -47,19 +50,19 @@ export function ResultsScreen() {
     <>
       <Layout bar={bar}>
         <Topbar screen="results" />
-        <div class="block snug">
+        <div className="block snug">
           <h1>{t("results.title")}</h1>
-          <p class="sub">{t(parts.length ? "results.explanation" : "results.none")}</p>
+          <p className="sub">{t(parts.length ? "results.explanation" : "results.none")}</p>
         </div>
-        <div class="case-cards">
+        <div className="case-cards">
           {parts.map((code) => {
-            const cases = casesOf(code);
+            const cases = casesOf(code, allCases);
             const isOpen = openCode === code;
             const name = AREA_BY_CODE[code].name;
             return (
-              <section key={code} class={isOpen ? "case-card open" : "case-card"} data-code={code}>
+              <section key={code} className={isOpen ? "case-card open" : "case-card"} data-code={code}>
                 <button
-                  class="case-card-top"
+                  className="case-card-top"
                   aria-expanded={isOpen}
                   aria-controls={`photos-${code}`}
                   onClick={() => dispatch({ type: "TOGGLE_CASE", code })}
@@ -72,12 +75,12 @@ export function ResultsScreen() {
                     </svg>
                   </i>
                 </button>
-                <div class="gallery" id={`photos-${code}`} hidden={!isOpen}>
+                <div className="gallery" id={`photos-${code}`} hidden={!isOpen}>
                   {cases.length ? (
                     cases.map((item) => <CaseCard key={item.folder} item={item} onOpen={setViewer} />)
                   ) : (
                     <>
-                      <p class="sub">{t("results.noPhotos")}</p>
+                      <p className="sub">{t("results.noPhotos")}</p>
                       <Placeholders />
                     </>
                   )}
@@ -86,7 +89,7 @@ export function ResultsScreen() {
             );
           })}
         </div>
-        {parts.length > 0 && <p class="sub note">{t("results.notice")}</p>}
+        {parts.length > 0 && <p className="sub note">{t("results.notice")}</p>}
       </Layout>
       {viewer && <PhotoViewer {...viewer} onClose={closeViewer} />}
     </>
