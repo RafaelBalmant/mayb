@@ -1,16 +1,21 @@
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { pagePath, readContent, wordCount } from "../scripts/seo/content.mjs";
-import { renderNotFoundPage, renderServicePage } from "../scripts/seo/pages.mjs";
-import { robots, sitemap } from "../scripts/seo/sitemap.mjs";
-import { structuredData } from "../scripts/seo/structured-data.mjs";
+import robots from "../src/app/robots.js";
+import sitemap, { sitemapPaths } from "../src/app/sitemap.js";
+import { JsonLd } from "../src/components/JsonLd.jsx";
 import { directionsUrl } from "../src/domain/locations.js";
+import { pageMetadata, rootMetadata, routeMetadata } from "../src/lib/seo/metadata.js";
+import { pagePath, siteContent, wordCount } from "../src/lib/seo/site.js";
+import { breadcrumbs, faqPage, pageStructuredData, structuredData } from "../src/lib/seo/structured-data.js";
+import { inlineScriptHashes, withScriptPolicy } from "../scripts/postbuild.mjs";
+import { NotFoundPage, ServicePage } from "../src/screens/ServicePage.jsx";
 
-const content = readContent();
-const assets = { styles: ["/assets/site.css"], script: "/assets/page.js" };
+const content = siteContent();
 const graph = structuredData(content)["@graph"];
 const byType = (type) => graph.filter((e) => e["@type"] === type);
 const unitFor = (id) => graph.find((e) => e["@id"]?.endsWith(`#${id}`));
 const jsonLdOf = (html) => JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+const render = (element) => renderToStaticMarkup(element);
 
 describe("structured data (schema.org)", () => {
   it("names each unit exactly like the Google Business Profile, with no ratings or reviews", () => {
@@ -117,44 +122,112 @@ describe("service pages: rules for the texts in content.json (pages.list)", () =
 describe("service pages: the HTML written at build time", () => {
   const list = fixtures;
 
-  it.each(list.map((p) => [p.slug, p]))("%s: canonical, H1, credential, WhatsApp button and FAQ", (slug, page) => {
-    const html = renderServicePage(withFixtures, page, assets);
+  it.each(list.map((p) => [p.slug, p]))("%s: H1, credential, WhatsApp button, links and FAQ", (slug, page) => {
+    const html = render(<ServicePage content={withFixtures} page={page} />);
     const location = content.locationsById[page.location];
-    expect(html).toContain(`<link rel="canonical" href="${content.url}${slug}/" />`);
-    expect(html).toContain(`<title>${page.title}</title>`);
     expect(html.match(/<h1>(.*?)<\/h1>/)[1]).toBe(page.h1);
     expect(html).toContain("Biomédica · CRBM 7137");
     expect(html).toContain(`data-track="whatsapp_contact" data-track-city="${location.id}" data-track-page="${slug}"`);
     expect(html).toContain(`href="${directionsUrl(location).replace(/&/g, "&amp;")}"`);
     expect(html).toContain('href="/"');
+    expect(html).toContain('href="/agenda/"');
     for (const other of list.filter((p) => p !== page)) expect(html).toContain(`href="${pagePath(other)}"`);
-    // FAQPage only for questions that are visible on the page
-    const faq = jsonLdOf(html)["@graph"].find((e) => e["@type"] === "FAQPage");
-    expect(faq.mainEntity.map((q) => q.name)).toEqual(page.faq.map((f) => f.question));
     for (const f of page.faq) expect(html).toContain(`<h3>${f.question.replace(/"/g, "&quot;")}</h3>`);
-    expect(html).not.toContain('name="keywords"');
+  });
+
+  it.each(list.map((p) => [p.slug, p]))("%s: own title, description and canonical link, no keywords", (slug, page) => {
+    const meta = pageMetadata({ title: page.title, description: page.description, path: pagePath(page) });
+    expect(meta.title).toBe(page.title);
+    expect(meta.description).toBe(page.description);
+    expect(meta.alternates.canonical).toBe(`/${slug}/`);
+    expect(new URL(meta.alternates.canonical, rootMetadata().metadataBase).href).toBe(`${content.url}${slug}/`);
+    expect(meta.robots).toEqual({ index: true, follow: true });
+    expect(meta).not.toHaveProperty("keywords");
+  });
+
+  it("FAQPage only for the questions that are visible on the page, plus the breadcrumb trail", () => {
+    const page = fixtures[0];
+    const trail = [
+      { name: "Início", path: "/" },
+      { name: page.h1, path: pagePath(page) },
+    ];
+    const html = render(<JsonLd data={pageStructuredData([faqPage(page.faq), breadcrumbs(trail, content)])} />);
+    const [faq, crumbs] = jsonLdOf(html)["@graph"];
+    expect(faq.mainEntity.map((q) => q.name)).toEqual(page.faq.map((f) => f.question));
+    expect(crumbs.itemListElement.map((i) => [i.position, i.item])).toEqual([
+      [1, content.url],
+      [2, `${content.url}${page.slug}/`],
+    ]);
   });
 
   it("a page naming an unknown unit stops the build", () => {
-    expect(() => renderServicePage(withFixtures, { ...fixtures[0], location: "curitiba" }, assets)).toThrow(/curitiba/);
+    expect(() =>
+      render(<ServicePage content={withFixtures} page={{ ...fixtures[0], location: "curitiba" }} />),
+    ).toThrow(/curitiba/);
   });
 
-  it("the 404 page is not indexed and links back to the site (and to the service pages, when there are any)", () => {
+  it("the 404 page links back to the site (and to the service pages, when there are any)", () => {
     for (const data of [content, withFixtures]) {
-      const html = renderNotFoundPage(data, assets);
-      expect(html).toContain('<meta name="robots" content="noindex" />');
+      const html = render(<NotFoundPage content={data} />);
       expect(html).toContain('href="/"');
-      expect(html).not.toContain("canonical");
       for (const page of data.pages.list) expect(html).toContain(`href="${pagePath(page)}"`);
     }
   });
 });
 
+describe("metadata of each page", () => {
+  it("the agenda has its own title, description and canonical link", () => {
+    const meta = routeMetadata("agenda", "/agenda/");
+    expect(meta.title).toBe(content.seo.routes.agenda.title);
+    expect(meta.title).not.toBe(content.texts.general.pageTitle);
+    expect(meta.alternates.canonical).toBe("/agenda/");
+    expect(meta.openGraph.images[0].url).toBe(`${content.url}share.jpg`);
+    expect(meta.twitter.card).toBe("summary_large_image");
+  });
+
+  it("the face map (and any page out of Google) is noindex and has no canonical link", () => {
+    const meta = routeMetadata("map", "/mapa/", false);
+    expect(meta.robots).toEqual({ index: false, follow: true });
+    expect(meta.alternates).toBeUndefined();
+  });
+
+  it("titles and descriptions are not repeated between pages", () => {
+    const pages = [
+      { title: content.texts.general.pageTitle, description: content.seo.description },
+      ...Object.values(content.seo.routes).filter((r) => r.title),
+    ];
+    expect(new Set(pages.map((p) => p.title)).size).toBe(pages.length);
+    expect(new Set(pages.map((p) => p.description)).size).toBe(pages.length);
+  });
+});
+
 describe("robots.txt and sitemap.xml", () => {
-  it("point Google to the sitemap, which lists the start page and every service page", () => {
-    expect(robots(content.url)).toContain(`Sitemap: ${content.url}sitemap.xml`);
-    const urls = ["/", ...fixtures.map(pagePath)].map((p) => new URL(p, content.url).href);
-    const xml = sitemap(urls, "2026-10-28");
-    for (const url of urls) expect(xml).toContain(`<url><loc>${url}</loc><lastmod>2026-10-28</lastmod></url>`);
+  it("robots allows everything and points Google to the sitemap", () => {
+    expect(robots()).toEqual({ rules: { userAgent: "*", allow: "/" }, sitemap: `${content.url}sitemap.xml` });
+  });
+
+  it("the sitemap lists the start page, the agenda and every service page, with absolute addresses", () => {
+    expect(sitemapPaths(withFixtures, false)).toEqual(["/", "/agenda/", ...fixtures.map(pagePath)]);
+    expect(sitemapPaths(content, true)).toContain("/casos/");
+    for (const entry of sitemap()) expect(entry.url).toMatch(/^https:\/\//);
+    expect(sitemap().map((e) => e.url)).not.toContain(`${content.url}mapa/`);
+  });
+});
+
+describe("script policy (scripts/postbuild.mjs)", () => {
+  const page = `<!DOCTYPE html><html><head><meta charSet="utf-8"/><script src="/_next/a.js" async=""></script></head><body><script type="application/ld+json">{"a":1}</script><script>self.x=1</script><script>self.y=2</script></body></html>`;
+
+  it("hashes only the inline scripts that run", () => {
+    expect(inlineScriptHashes(page)).toEqual([
+      "'sha256-OeQ5f9lOMes7jOc0cGCXX08CnAERweUkLpVXXpflaLg='",
+      "'sha256-GX+S9neY9N6OCh0PD2Ss4JrEAFf5BO9duQi2uoeNkok='",
+    ]);
+  });
+
+  it("puts the policy right after the charset, before any script, once", () => {
+    const out = withScriptPolicy(page);
+    expect(out.indexOf('http-equiv="Content-Security-Policy"')).toBeLessThan(out.indexOf("<script"));
+    expect(out).toContain("script-src 'self' 'sha256-");
+    expect(withScriptPolicy(out)).toBe(out);
   });
 });

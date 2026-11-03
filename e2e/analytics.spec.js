@@ -17,7 +17,7 @@ const commands = (page) => page.evaluate(() => (window.dataLayer ?? []).map((arg
 const events = async (page, name) => (await commands(page)).filter((c) => c[0] === "event" && c[1] === name);
 
 async function bookInMaringa(page) {
-  await page.getByRole("button", { name: "Verificar agenda" }).click();
+  await page.getByRole("link", { name: "Verificar agenda" }).click();
   await page.getByRole("button", { name: "Agendar horário em novembro" }).click();
   const dialog = page.getByRole("dialog");
   await dialog.getByRole("button", { name: /Maringá/ }).click();

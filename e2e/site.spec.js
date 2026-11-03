@@ -25,7 +25,7 @@ test.describe("start page", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: /Dra\. Mayara\s*Bacellar/ })).toBeVisible();
     await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Me conta o que te incomoda no rosto" })).toHaveCount(0);
     const contact = page.getByRole("link", { name: "Entrar em contato" });
     expect(await contact.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
@@ -52,12 +52,13 @@ test.describe("start page", () => {
 
   test("?mapa=1 also adds the real cases page, with back to the start page", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("button", { name: "Ver resultados reais" })).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Ver resultados reais" })).toHaveCount(0);
     await page.goto("/?mapa=1");
-    await page.getByRole("button", { name: "Ver resultados reais" }).click();
+    await page.getByRole("link", { name: "Ver resultados reais" }).click();
     await expect(page.getByRole("heading", { name: "Resultados reais" })).toBeVisible();
-    await page.getByRole("button", { name: "Voltar" }).click();
-    await expect(page.getByRole("button", { name: "Ver resultados reais" })).toBeVisible();
+    await expect(page).toHaveURL(/\/casos\/$/);
+    await page.getByRole("link", { name: "Voltar" }).click();
+    await expect(page.getByRole("link", { name: "Ver resultados reais" })).toBeVisible();
     await page.goto("/?mapa=0#casos");
     await expect(page.getByRole("heading", { name: "Resultados reais" })).toHaveCount(0);
   });
@@ -67,15 +68,16 @@ test.describe("start page", () => {
   }) => {
     await page.goto("/#agenda");
     await expect(page.getByRole("heading", { name: "Agenda" })).toBeVisible();
+    await expect(page).toHaveURL(/\/agenda\/$/);
     await page.goto("/?mapa=0#mapa");
-    await expect(page.getByRole("button", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
   });
 });
 
 test.describe("agenda", () => {
   test("shows the month, the tabs and the days of each city", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("button", { name: "Verificar agenda" }).click();
+    await page.getByRole("link", { name: "Verificar agenda" }).click();
     await expect(page.getByRole("heading", { name: "Novembro de 2026" })).toBeVisible();
     await expect(page.getByLabel("11 de novembro: Siqueira Campos", { exact: true })).toBeVisible();
     await expect(page.getByLabel("5 de novembro: Maringá", { exact: true })).toBeVisible();
@@ -148,8 +150,9 @@ test.describe("agenda", () => {
 
   test("back returns to the start page", async ({ page }) => {
     await page.goto("/#agenda");
-    await page.getByRole("button", { name: "Voltar" }).click();
-    await expect(page.getByRole("button", { name: "Verificar agenda" })).toBeVisible();
+    await page.getByRole("link", { name: "Voltar" }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
   });
 });
 
@@ -160,7 +163,7 @@ test.describe("face map", () => {
     await expect(page.getByRole("heading", { name: "Me conta o que anda te incomodando?" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Escolha um rosto para começar" })).toBeDisabled();
     await page.getByRole("button", { name: "Voltar" }).click();
-    await expect(page.getByRole("button", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
   });
 
   test("marks and unmarks areas from the names, shows the highlight on hover", async ({ page }) => {
@@ -233,7 +236,7 @@ test.describe("face map", () => {
 
   test("cases page: pick parts, see before above after, open a photo full screen and close it", async ({ page }) => {
     await page.goto("/?mapa=1");
-    await page.getByRole("button", { name: "Ver resultados reais" }).click();
+    await page.getByRole("link", { name: "Ver resultados reais" }).click();
     await page.getByRole("button", { name: /^Nariz/ }).click();
     const section = page.locator('.case-group[data-code="nose"]');
     await expect(section.getByRole("heading", { name: "Nariz", exact: true })).toBeVisible();
@@ -313,5 +316,70 @@ test.describe("face map", () => {
     await label(page, "Testa").click();
     await page.reload();
     await expect(label(page, "Testa")).toHaveAttribute("aria-pressed", "true");
+  });
+});
+
+test.describe("pages and addresses", () => {
+  test("each page has its own address, and the browser's back button returns to the start page", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: "Verificar agenda" }).click();
+    await expect(page).toHaveURL(/\/agenda\/$/);
+    await expect(page).toHaveTitle(/Agenda de atendimento/);
+    await page.goBack();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await page.goto("/?mapa=1");
+    await page.getByRole("button", { name: "Me conta o que te incomoda no rosto" }).click();
+    await expect(page).toHaveURL(/\/mapa\/$/);
+  });
+
+  test("the face map and the cases page send the visitor to the start page while the map is off", async ({ page }) => {
+    await page.goto("/mapa/");
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await page.goto("/casos/");
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test("an unknown address answers 404 with a page that links back", async ({ page }) => {
+    const response = await page.goto("/nao-existe/");
+    expect(response.status()).toBe(404);
+    await expect(page.getByRole("heading", { name: "Página não encontrada" })).toBeVisible();
+    await page.getByRole("link", { name: "Ir para a página inicial" }).click();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+  });
+
+  test("no script, hydration or security-policy errors on any page", async ({ page }) => {
+    const errors = [];
+    page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+    page.on("pageerror", (e) => errors.push(e.message));
+    for (const path of ["/", "/agenda/", "/?mapa=1", "/mapa/", "/casos/"]) {
+      await page.goto(path);
+      await page.waitForLoadState("networkidle");
+    }
+    expect(errors).toEqual([]);
+  });
+});
+
+test.describe("HTML for search engines (without JavaScript)", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("the start page and the agenda come with their content, title and canonical link", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Dra\. Mayara\s*Bacellar/);
+    await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
+    await expect(page.locator(".review").first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://dramayarabacellar.com/");
+    await page.goto("/agenda/");
+    await expect(page.getByRole("heading", { level: 1, name: "Agenda" })).toBeVisible();
+    await expect(page.locator(".calendar .day").first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      "https://dramayarabacellar.com/agenda/",
+    );
+  });
+
+  test("the face map is kept out of Google", async ({ page }) => {
+    await page.goto("/mapa/");
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, follow");
   });
 });

@@ -1,11 +1,21 @@
-import { renderToString } from "preact-render-to-string";
+import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { App } from "../src/App.jsx";
+import { CasesProvider } from "../src/components/CasesContext.jsx";
 import { professional } from "../src/content.js";
-import { SCREEN_IDS } from "../src/domain/flow.js";
+import { SCREEN_IDS, resolveScreen } from "../src/domain/flow.js";
 import { newArea } from "../src/domain/questions.js";
+import { FacesProvider } from "../src/faces/FacesContext.jsx";
+import { loadAllCases } from "../src/lib/server/cases.js";
+import { loadFaces } from "../src/lib/server/faces.js";
+import { AgendaScreen } from "../src/screens/AgendaScreen.jsx";
+import { CasesScreen } from "../src/screens/CasesScreen.jsx";
+import { FaceFlow } from "../src/screens/FaceFlow.jsx";
+import { StartScreen } from "../src/screens/StartScreen.jsx";
 import { initialState } from "../src/store/reducer.js";
 import { StoreProvider } from "../src/store/StoreProvider.jsx";
+
+const faces = loadFaces();
+const cases = loadAllCases();
 
 const stateOn = (screen, patch = {}, ui = {}, mapEnabled = true) => ({
   ...initialState({ mapEnabled }),
@@ -18,12 +28,25 @@ const stateOn = (screen, patch = {}, ui = {}, mapEnabled = true) => ({
   ...patch,
   ui: { ...initialState().ui, screen, ...ui },
 });
-const html = (state, index) =>
-  renderToString(
-    <StoreProvider initialState={{ ...state, ui: { ...state.ui, index: index ?? state.ui.index } }}>
-      <App />
+
+// The pages of their own; any other screen is a step of the face-map flow (page /mapa/).
+const PAGES = { start: StartScreen, agenda: AgendaScreen, cases: CasesScreen };
+
+// Renders the page that shows a screen, as the visitor would reach it: a screen behind the map switch, with the map
+// off, ends on the start page (the browser is sent there).
+const html = (state, index) => {
+  const s = { ...state, ui: { ...state.ui, index: index ?? state.ui.index } };
+  const Page = PAGES[resolveScreen(s.ui.screen, { ...s, mapEnabled: s.features.map })] ?? FaceFlow;
+  return renderToString(
+    <StoreProvider initialState={s}>
+      <FacesProvider faces={faces}>
+        <CasesProvider cases={cases}>
+          <Page />
+        </CasesProvider>
+      </FacesProvider>
     </StoreProvider>,
   );
+};
 
 afterEach(() => vi.useRealTimers());
 
