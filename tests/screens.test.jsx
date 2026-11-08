@@ -63,7 +63,7 @@ describe("with the map off (the default)", () => {
     "%s shows the start page",
     (id) => {
       const out = html(stateOn(id, {}, {}, false));
-      expect(out).toContain("Verificar agenda");
+      expect(out).toContain("Entrar em contato");
       expect(out).not.toContain("Me conta o que te incomoda no rosto");
     },
   );
@@ -75,10 +75,10 @@ describe("with the map off (the default)", () => {
 });
 
 describe("start", () => {
-  it("shows the name, the agenda and contact buttons, the cities and Instagram, without the action bar", () => {
+  it("shows the name and contact buttons, the cities and Instagram, without the agenda button nor the action bar", () => {
     const out = html(stateOn("start"));
     expect(out).toContain("Dra. Mayara");
-    expect(out).toContain("Verificar agenda");
+    expect(out).not.toContain('id="go-agenda"');
     expect(out).toContain(`https://wa.me/${professional.whatsapp}?text=`);
     expect(out).toContain(`href="${professional.googleReview}"`);
     expect(out).toContain("Compartilhe sua experiência");
@@ -202,7 +202,7 @@ describe("cases page", () => {
     const out = html(stateOn("cases", { face: null, areas: [] }));
     expect(out).toContain("Resultados reais");
     expect(out).toContain('id="back"');
-    expect(out).toContain('id="go-agenda"');
+    expect(out).not.toContain('id="go-agenda"'); // the agenda is off
     expect(out).not.toContain('class="progress"');
   });
 

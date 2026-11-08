@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { AGENDA_ENABLED } from "../src/config.js";
 
 // Runs against a dev server built with a test measurement ID (see playwright.config.js). gtag.js is answered with an
 // empty script, so the dataLayer keeps every command the site queued, which is what Google would receive.
@@ -29,11 +30,14 @@ test("nothing is loaded or sent before the visitor accepts the cookies", async (
   await expect(page.getByText("Usamos cookies para melhorar sua experiência.")).toBeVisible();
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
   await page.getByRole("button", { name: "Recusar cookies" }).click();
-  await bookInMaringa(page);
+  const popup = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Entrar em contato" }).click();
+  await (await popup).close();
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
 });
 
 test("a WhatsApp booking in Maringá sends whatsapp_booking, generate_lead and preferred_city", async ({ page }) => {
+  test.skip(!AGENDA_ENABLED, "the agenda is off (AGENDA_ENABLED in src/config.js)");
   await page.goto("/");
   await page.getByRole("button", { name: "OK", exact: true }).click();
   await bookInMaringa(page);

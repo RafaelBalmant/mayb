@@ -130,7 +130,7 @@ describe("service pages: the HTML written at build time", () => {
     expect(html).toContain(`data-track="whatsapp_contact" data-track-city="${location.id}" data-track-page="${slug}"`);
     expect(html).toContain(`href="${directionsUrl(location).replace(/&/g, "&amp;")}"`);
     expect(html).toContain('href="/"');
-    expect(html).toContain('href="/agenda/"');
+    expect(html).not.toContain('href="/agenda/"'); // the agenda is off
     for (const other of list.filter((p) => p !== page)) expect(html).toContain(`href="${pagePath(other)}"`);
     for (const f of page.faq) expect(html).toContain(`<h3>${f.question.replace(/"/g, "&quot;")}</h3>`);
   });
@@ -206,8 +206,9 @@ describe("robots.txt and sitemap.xml", () => {
     expect(robots()).toEqual({ rules: { userAgent: "*", allow: "/" }, sitemap: `${content.url}sitemap.xml` });
   });
 
-  it("the sitemap lists the start page, the agenda and every service page, with absolute addresses", () => {
-    expect(sitemapPaths(withFixtures, false)).toEqual(["/", "/agenda/", ...fixtures.map(pagePath)]);
+  it("the sitemap lists the start page and every service page, with absolute addresses", () => {
+    expect(sitemapPaths(withFixtures, false)).toEqual(["/", ...fixtures.map(pagePath)]);
+    expect(sitemapPaths(withFixtures, false, true)).toEqual(["/", "/agenda/", ...fixtures.map(pagePath)]);
     expect(sitemapPaths(content, true)).toContain("/casos/");
     for (const entry of sitemap()) expect(entry.url).toMatch(/^https:\/\//);
     expect(sitemap().map((e) => e.url)).not.toContain(`${content.url}mapa/`);

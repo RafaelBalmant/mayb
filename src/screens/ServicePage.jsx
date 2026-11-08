@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
-import { WHATSAPP_BASE_URL } from "../config.js";
+import { AGENDA_ENABLED, WHATSAPP_BASE_URL } from "../config.js";
 import { directionsUrl, fullAddress } from "../domain/locations.js";
 import { PATHS } from "../navigation/routes.js";
 import { pagePath } from "../lib/seo/site.js";
@@ -58,9 +58,11 @@ function LocationBlock({ location, common }) {
           <strong>{common.hours}:</strong> {location.hoursText}
         </p>
       )}
-      <p>
-        {common.agenda} <Link href={PATHS.agenda}>{common.agendaLink}</Link>
-      </p>
+      {AGENDA_ENABLED && (
+        <p>
+          {common.agenda} <Link href={PATHS.agenda}>{common.agendaLink}</Link>
+        </p>
+      )}
       {directions && (
         <p>
           <a className="page-directions" href={directions} target="_blank" rel="noopener noreferrer">

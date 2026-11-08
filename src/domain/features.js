@@ -1,4 +1,4 @@
-import { MAP_ENABLED, MAP_PREVIEW_KEY } from "../config.js";
+import { AGENDA_ENABLED, MAP_ENABLED, MAP_PREVIEW_KEY } from "../config.js";
 
 /**
  * Whether the face-map flow is shown: on for everyone (MAP_ENABLED) or, for this tab only, when the address
@@ -18,7 +18,10 @@ export function isMapEnabled({ search = "", storage = null } = {}) {
 }
 
 /** The screen a link like /#agenda, /#mapa or /#casos opens directly, or null. */
-export function screenFromHash(hash, mapEnabled) {
+export function screenFromHash(hash, mapEnabled, agendaEnabled = AGENDA_ENABLED) {
   const off = (screen) => (mapEnabled ? screen : "start");
-  return { agenda: "agenda", mapa: off("opening"), casos: off("cases") }[hash.replace(/^#/, "")] ?? null;
+  return (
+    { agenda: agendaEnabled ? "agenda" : "start", mapa: off("opening"), casos: off("cases") }[hash.replace(/^#/, "")] ??
+    null
+  );
 }

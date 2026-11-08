@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { CasesProvider } from "../../src/components/CasesContext.jsx";
 import { ClientProviders } from "../../src/components/ClientProviders.jsx";
 import { FacesProvider } from "../../src/faces/FacesContext.jsx";
+import { AGENDA_ENABLED } from "../../src/config.js";
 import { useRouterBridge } from "../../src/navigation/RouterProvider.jsx";
 import { PATHS } from "../../src/navigation/routes.js";
 import { AgendaScreen } from "../../src/screens/AgendaScreen.jsx";
@@ -15,7 +16,7 @@ const builtAt = new Date().toISOString();
 
 function Pages() {
   const { pathname } = useRouterBridge();
-  if (pathname === PATHS.agenda) return <AgendaScreen builtAt={builtAt} />;
+  if (AGENDA_ENABLED && pathname === PATHS.agenda) return <AgendaScreen builtAt={builtAt} />;
   if (pathname === PATHS.cases) return <CasesScreen />;
   if (pathname === PATHS.flow) return <FaceFlow />;
   return <StartScreen rating={data.rating} pages={data.pages} />;

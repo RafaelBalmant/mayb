@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { AGENDA_ENABLED } from "../src/config.js";
 
 // Selectors use the visible text (site content, in Portuguese) and ARIA roles,
 // so they keep working when ids and code names change.
@@ -21,11 +22,11 @@ async function openMapFlow(page) {
 }
 
 test.describe("start page", () => {
-  test("shows the doctor, the agenda and contact buttons and no map button by default", async ({ page }) => {
+  test("shows the doctor and the contact buttons, and no agenda nor map button by default", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: /Dra\. Mayara\s*Bacellar/ })).toBeVisible();
     await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Verificar agenda" })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Me conta o que te incomoda no rosto" })).toHaveCount(0);
     const contact = page.getByRole("link", { name: "Entrar em contato" });
     expect(await contact.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
@@ -74,18 +75,20 @@ test.describe("start page", () => {
     await expect(page.getByRole("heading", { name: "Resultados reais" })).toHaveCount(0);
   });
 
-  test("direct links: #agenda opens the agenda; #mapa stays on the start page while the map is off", async ({
+  test("direct links: #agenda and #mapa stay on the start page while the agenda and the map are off", async ({
     page,
   }) => {
     await page.goto("/#agenda");
-    await expect(page.getByRole("heading", { name: "Agenda" })).toBeVisible();
-    await expect(page).toHaveURL(/\/agenda\/$/);
+    await expect(page.getByRole("link", { name: "Entrar em contato" })).toBeVisible();
+    await expect(page).toHaveURL(/\/#agenda$/);
     await page.goto("/?mapa=0#mapa");
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Entrar em contato" })).toBeVisible();
   });
 });
 
 test.describe("agenda", () => {
+  test.skip(!AGENDA_ENABLED, "the agenda is off (AGENDA_ENABLED in src/config.js)");
+
   test("shows the month, the tabs and the days of each city", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("link", { name: "Verificar agenda" }).click();
@@ -174,7 +177,7 @@ test.describe("face map", () => {
     await expect(page.getByRole("heading", { name: "Me conta o que anda te incomodando?" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Escolha um rosto para começar" })).toBeDisabled();
     await page.getByRole("button", { name: "Voltar" }).click();
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Entrar em contato" })).toBeVisible();
   });
 
   test("marks and unmarks areas from the names, shows the highlight on hover", async ({ page }) => {
@@ -332,12 +335,6 @@ test.describe("face map", () => {
 
 test.describe("pages and addresses", () => {
   test("each page has its own address, and the browser's back button returns to the start page", async ({ page }) => {
-    await page.goto("/");
-    await page.getByRole("link", { name: "Verificar agenda" }).click();
-    await expect(page).toHaveURL(/\/agenda\/$/);
-    await expect(page).toHaveTitle(/Agenda de atendimento/);
-    await page.goBack();
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
     await page.goto("/?mapa=1");
     await page.getByRole("button", { name: "Me conta o que te incomoda no rosto" }).click();
     await expect(page).toHaveURL(/\/mapa\/$/);
@@ -346,9 +343,15 @@ test.describe("pages and addresses", () => {
   test("the face map and the cases page send the visitor to the start page while the map is off", async ({ page }) => {
     await page.goto("/mapa/");
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Entrar em contato" })).toBeVisible();
     await page.goto("/casos/");
     await expect(page).toHaveURL(/\/$/);
+  });
+
+  test("the agenda address answers 404 while the agenda is off", async ({ page }) => {
+    test.skip(AGENDA_ENABLED, "the agenda is on");
+    const response = await page.goto("/agenda/");
+    expect(response.status()).toBe(404);
   });
 
   test("an unknown address answers 404 with a page that links back", async ({ page }) => {
@@ -356,14 +359,14 @@ test.describe("pages and addresses", () => {
     expect(response.status()).toBe(404);
     await expect(page.getByRole("heading", { name: "Página não encontrada" })).toBeVisible();
     await page.getByRole("link", { name: "Ir para a página inicial" }).click();
-    await expect(page.getByRole("link", { name: "Verificar agenda" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Entrar em contato" })).toBeVisible();
   });
 
   test("no script, hydration or security-policy errors on any page", async ({ page }) => {
     const errors = [];
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
     page.on("pageerror", (e) => errors.push(e.message));
-    for (const path of ["/", "/agenda/", "/?mapa=1", "/mapa/", "/casos/"]) {
+    for (const path of ["/", ...(AGENDA_ENABLED ? ["/agenda/"] : []), "/?mapa=1", "/mapa/", "/casos/"]) {
       await page.goto(path);
       await page.waitForLoadState("networkidle");
     }
@@ -374,12 +377,16 @@ test.describe("pages and addresses", () => {
 test.describe("HTML for search engines (without JavaScript)", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("the start page and the agenda come with their content, title and canonical link", async ({ page }) => {
+  test("the start page comes with its content, title and canonical link", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Dra\. Mayara\s*Bacellar/);
     await expect(page.getByText("Harmonização facial em Maringá e Siqueira Campos")).toBeVisible();
     await expect(page.locator(".review").first()).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://dramayarabacellar.com/");
+  });
+
+  test("the agenda comes with its content, title and canonical link", async ({ page }) => {
+    test.skip(!AGENDA_ENABLED, "the agenda is off (AGENDA_ENABLED in src/config.js)");
     await page.goto("/agenda/");
     await expect(page.getByRole("heading", { level: 1, name: "Agenda" })).toBeVisible();
     await expect(page.locator(".calendar .day").first()).toBeVisible();
