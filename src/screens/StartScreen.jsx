@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { professional, t } from "../content.js";
 import { whatsappLink } from "../domain/summary.js";
+import { AGENDA_ENABLED } from "../config.js";
 import { PATHS } from "../navigation/routes.js";
 import { GoogleReviews } from "../components/GoogleReviews.jsx";
 import { Layout } from "../components/Layout.jsx";
@@ -60,9 +61,11 @@ export function StartScreen({ rating, pages = [] }) {
         </div>
       </header>
       <nav className="start-buttons" aria-label={t("start.paths")}>
-        <Link className="btn primary" id="go-agenda" data-track="agenda_open" href={PATHS.agenda}>
-          {t("start.agenda")}
-        </Link>
+        {AGENDA_ENABLED && (
+          <Link className="btn primary" id="go-agenda" data-track="agenda_open" href={PATHS.agenda}>
+            {t("start.agenda")}
+          </Link>
+        )}
         <a
           className="btn"
           data-track="whatsapp_contact"

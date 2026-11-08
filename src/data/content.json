@@ -324,7 +324,7 @@
       "O título da página (em azul no resultado do Google e na aba do navegador) fica em texts.general.pageTitle. Ter a especialidade e as cidades nele ajuda a aparecer nessas buscas.",
       "description: até uns 155 caracteres; é o texto que aparece embaixo do título no Google.",
       "content.title: o título da prévia do link (Open Graph) da página inicial.",
-      "routes: nome (na trilha que o Google mostra), título e descrição de cada página do site além da inicial. A agenda aparece no Google; resultados reais e o mapa do rosto não (ficam fora do Google enquanto estiverem desligados)."
+      "routes: nome (na trilha que o Google mostra), título e descrição de cada página do site além da inicial. A agenda, resultados reais e o mapa do rosto ficam fora do Google enquanto estiverem desligados."
     ],
     "url": "https://dramayarabacellar.com/",
     "image": "share.jpg",
@@ -332,7 +332,7 @@
       "width": 1200,
       "height": 630
     },
-    "description": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Veja a agenda de atendimento e agende pelo WhatsApp.",
+    "description": "Dra. Mayara Bacellar, harmonização facial em Maringá e Siqueira Campos (PR). Agende sua avaliação pelo WhatsApp.",
     "state": "PR",
     "content": {
       "title": "Dra. Mayara Bacellar · Harmonização facial em Maringá e Siqueira Campos"
@@ -420,7 +420,7 @@
       "common: textos que se repetem em todas as páginas. {city} e {title} são trocados pelo valor certo."
     ],
     "common": {
-      "home": "Página inicial: agenda e contato",
+      "home": "Página inicial e contato",
       "whatsapp": "Agendar avaliação pelo WhatsApp",
       "whatsappMessage": "Olá! Vi a página \"{title}\" no site da Dra. Mayara e gostaria de agendar uma avaliação.",
       "where": "Onde atende em {city}",

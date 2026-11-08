@@ -1,3 +1,5 @@
+// Not a route while the agenda is off (a folder starting with "_" is private in the App Router): rename the folder
+// to src/app/agenda/ and turn AGENDA_ENABLED on in src/config.js to publish it again.
 import { JsonLd } from "../../components/JsonLd.jsx";
 import content from "../../data/content.json";
 import { routeMetadata } from "../../lib/seo/metadata.js";

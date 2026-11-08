@@ -43,9 +43,11 @@ describe("isMapEnabled", () => {
 });
 
 describe("screenFromHash", () => {
-  it("#agenda opens the agenda", () => {
-    expect(screenFromHash("#agenda", false)).toBe("agenda");
-    expect(screenFromHash("#agenda", true)).toBe("agenda");
+  it("#agenda opens the agenda only when it is on, else the start page", () => {
+    expect(screenFromHash("#agenda", false, true)).toBe("agenda");
+    expect(screenFromHash("#agenda", true, true)).toBe("agenda");
+    expect(screenFromHash("#agenda", true, false)).toBe("start");
+    expect(screenFromHash("#agenda", true)).toBe("start"); // the agenda is off by default
   });
   it("#mapa opens the map flow only when it is on, else the start page", () => {
     expect(screenFromHash("#mapa", true)).toBe("opening");
@@ -82,12 +84,12 @@ describe("createInitialState", () => {
 
 describe("old direct links (/#agenda, /#mapa, /#casos)", () => {
   it("lead to the pages that replaced them", () => {
-    expect(targetOfHash("#agenda", false)).toEqual({ screen: "agenda", path: "/agenda/" });
     expect(targetOfHash("#casos", true)).toEqual({ screen: "cases", path: "/casos/" });
     expect(targetOfHash("#mapa", true)).toEqual({ screen: "opening", path: "/mapa/" });
   });
 
   it("stay on the start page for the map and the cases while the map is off, and ignore other hashes", () => {
+    expect(targetOfHash("#agenda", true)).toBeNull(); // the agenda is off
     expect(targetOfHash("#mapa", false)).toBeNull();
     expect(targetOfHash("#casos", false)).toBeNull();
     expect(targetOfHash("#qualquer", true)).toBeNull();

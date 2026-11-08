@@ -9,6 +9,7 @@ import { CaseCard } from "../components/CaseCard.jsx";
 import { useCases } from "../components/CasesContext.jsx";
 import { Layout } from "../components/Layout.jsx";
 import { PhotoViewer } from "../components/PhotoViewer.jsx";
+import { AGENDA_ENABLED } from "../config.js";
 import { PATHS } from "../navigation/routes.js";
 import { useMapGate } from "../navigation/useMapGate.js";
 
@@ -41,9 +42,11 @@ export function CasesScreen() {
       <Link className="btn secondary" id="back" href={PATHS.start}>
         {t("cases.back")}
       </Link>
-      <Link className="btn primary" id="go-agenda" data-track="agenda_open" href={PATHS.agenda}>
-        {t("cases.agenda")}
-      </Link>
+      {AGENDA_ENABLED && (
+        <Link className="btn primary" id="go-agenda" data-track="agenda_open" href={PATHS.agenda}>
+          {t("cases.agenda")}
+        </Link>
+      )}
     </>
   );
 

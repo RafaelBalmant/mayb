@@ -1,15 +1,15 @@
-import { MAP_ENABLED } from "../config.js";
+import { AGENDA_ENABLED, MAP_ENABLED } from "../config.js";
 import { absolute, pagePath, siteContent } from "../lib/seo/site.js";
 import { PATHS } from "../navigation/routes.js";
 
 // sitemap.xml: every public page Google should know (absolute addresses), with the build date. The face map is a
-// form, and the cases page stays out while the map switch is off. Written only when the site has an address.
+// form; the agenda and the cases page stay out while their switches are off. Written only when the site has an address.
 export const dynamic = "force-static";
 
 /** The paths listed in the sitemap. */
-export const sitemapPaths = (content = siteContent(), mapEnabled = MAP_ENABLED) => [
+export const sitemapPaths = (content = siteContent(), mapEnabled = MAP_ENABLED, agendaEnabled = AGENDA_ENABLED) => [
   PATHS.start,
-  PATHS.agenda,
+  ...(agendaEnabled ? [PATHS.agenda] : []),
   ...(mapEnabled ? [PATHS.cases] : []),
   ...content.pages.list.map(pagePath),
 ];

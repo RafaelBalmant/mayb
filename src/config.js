@@ -39,6 +39,14 @@ export const MAP_PREVIEW_KEY = "site-mayara:mapa";
 /** Whether the map offers the profile view (the drawings stay in src/faces/ either way). */
 export const SHOW_PROFILE_VIEW = false;
 
+/**
+ * Whether the agenda is public: its button on the start and cases pages, the link on the service pages, the old
+ * /#agenda link and its place in the sitemap. While false the agenda code (screens, domain, agenda.json) stays in the
+ * codebase but nothing reaches it. Turning it back on also needs its route: rename src/app/_agenda/ to src/app/agenda/
+ * (a folder starting with "_" is not a route in the App Router).
+ */
+export const AGENDA_ENABLED = false;
+
 /** How many months the agenda selector shows, counting from the current one. */
 export const AGENDA_MONTHS_SHOWN = 4;
 
